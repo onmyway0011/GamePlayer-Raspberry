@@ -1,0 +1,7 @@
+{
+  "bucket": "your-bucket",
+  "prefix": "retropie-logs",
+  "aws_access_key": "your-access-key",
+  "aws_secret_key": "your-secret-key",
+  "region": "ap-east-1"
+} 

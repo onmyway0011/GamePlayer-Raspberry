@@ -1,38 +1,30 @@
-# GamePlayer-Raspberry: 树莓派RetroPie游戏环境自动化工具集
+# GamePlayer-Raspberry
 
-这是一个完整的树莓派RetroPie游戏环境自动化安装和优化工具集，提供从镜像烧录到游戏生态扩展的全套解决方案。
+## 项目简介
 
-## 🎮 功能特性
+GamePlayer-Raspberry 是一套面向树莓派的多子系统游戏与多媒体环境自动化管理平台，支持 HDMI 配置优化、ROM 下载与上传、Retropie 镜像自动化、硬件环境检测等多种功能，适合树莓派游戏机、家庭娱乐和教育场景。
 
-### 核心功能
-- ✅ **跨平台镜像烧录**: 支持Windows/Linux/macOS的RetroPie镜像自动下载和烧录
-- ✅ **ROM自动下载**: 从合法资源站自动下载游戏合集并传输到树莓派
-- ✅ **HDMI优化配置**: 自动优化显示输出为1080p@60Hz，禁用过扫描
-- ✅ **蓝牙设备配对**: PS4手柄和蓝牙耳机的自动配对和连接
-- ✅ **系统性能调优**: SSD优化、服务精简、I/O调度器优化
-- ✅ **游戏生态扩展**: 自动封面下载、主题安装、云存档同步
+## 主要功能
 
-### 高级功能
-- ✅ **沉浸式体验**: 街机控制器校准、光枪配对、GPIO灯光控制
-- ✅ **零交互自动化**: 支持无人值守的批量部署
-- ✅ **智能错误处理**: 完整的回滚机制和错误恢复
-- ✅ **详细日志记录**: 所有操作都有完整的日志追踪
+- 一键优化树莓派 HDMI 显示参数，支持备份与回滚
+- 自动化下载、校验、上传 NES/SNES 等 ROM 到树莓派
+- RetroPie 镜像自动下载、烧录与依赖检测
+- 多子系统架构，支持生态扩展、沉浸式硬件等
+- 丰富的日志、API 文档与测试用例
 
-## 📋 系统要求
+## 版本记录
 
-### 基础要求
-- **树莓派**: 树莓派4B（推荐）或树莓派3B+
-- **操作系统**: RetroPie 4.8+
-- **存储**: 至少16GB SD卡（推荐32GB+）
-- **网络**: 稳定的网络连接
+- v2.0.0  (2024-06-24)
+  - 完全模块化架构，支持多子系统并行开发
+  - 全面自动化测试与覆盖率报告
+  - 代码风格、依赖、文档全面优化
+  - 兼容 Python 3.7+，支持 macOS/Linux/Raspberry Pi
 
-### 开发环境
-- **Python**: 3.7+
-- **依赖库**: 见requirements.txt
-- **权限**: sudo权限（用于系统配置修改）
+## 安装与运行说明
 
-## 🚀 快速开始
+1. **环境准备**
 
+<<<<<<< HEAD
 ### 1. 镜像批量烧录（无人值守/多卡自动化）
 
 本项目支持一键批量烧录SD卡，适合大批量部署：
@@ -80,22 +72,33 @@ pip install -r requirements.txt
 ```bash
 # 1. 镜像烧录
 python retropie_installer.py
+=======
+   - Python 3.7 及以上
+   - 推荐使用 venv 虚拟环境
+   - 安装依赖：
 
-# 2. ROM下载和传输
-python rom_downloader.py
+     ```bash
+     pip install -r requirements.txt
+     ```
 
-# 3. HDMI配置优化
-python hdmi_config.py
+   - ⚠️ 注意：不要写成 `pip install requirements.txt`，必须加 `-r` 参数，否则会报"找不到 requirements.txt 包"错误。
+>>>>>>> 清理大文件，规范 LFS，更新依赖与文档
 
-# 4. 游戏生态扩展
-bash retropie_ecosystem_auto.sh
+2. **运行 HDMI 配置优化**
 
-# 5. 沉浸式硬件配置
-bash immersive_hardware_auto.sh
-```
+   ```bash
+   python systems/hdmi/core/hdmi_config.py --help
+   ```
 
-## 📁 项目结构
+3. **运行 Retropie 镜像自动化**
 
+   ```bash
+   python systems/retropie/core/retropie_installer.py --help
+   ```
+
+4. **运行测试与生成覆盖率报告**
+
+<<<<<<< HEAD
 > 以下目录结构为自动生成，反映最新项目实际文件树：
 
 ```
@@ -179,277 +182,361 @@ bash immersive_hardware_auto.sh
 - `auto_refactor_structure.sh`：自动化目录结构整理脚本
 
 ## 🛠️ 详细使用指南
+=======
+   ```bash
+   pytest systems/hdmi/tests/ systems/retropie/tests/ --cov=systems --cov-report=html
+   ```
 
-### 1. RetroPie镜像安装
+## 主要目录结构
 
-#### 基本使用
-```bash
-# 完整流程（下载+烧录）
-python retropie_installer.py
-
-# 仅检查系统依赖
-python retropie_installer.py --check-only
-
-# 仅下载镜像
-python retropie_installer.py --download-only
-
-# 列出可用磁盘
-python retropie_installer.py --list-disks
+```text
+GamePlayer-Raspberry/
+├── downloads/
+│   └── roms/
+├── logs/
+│   ├── gameplayer_20250624.log
+│   ├── hdmi_config.log
+│   ├── retropie_installer.log
+│   └── rom_downloader.log
+├── publish_api_docs.sh
+├── requirements.txt
+├── systems/
+│   ├── ecosystem/
+│   │   ├── core/
+│   │   ├── docs/
+│   │   ├── logs/
+│   │   ├── README.md
+│   │   ├── scripts/
+│   │   │   └── retropie_ecosystem_auto.sh
+│   │   └── tests/
+│   ├── hdmi/
+│   │   ├── config/
+│   │   ├── core/
+│   │   │   └── hdmi_config.py
+│   │   ├── docs/
+│   │   │   ├── api/
+│   │   │   │   ├── core/
+│   │   │   │   │   └── hdmi_config.html
+│   │   │   │   ├── core.html
+│   │   │   │   ├── index.html
+│   │   │   │   └── search.js
+│   │   │   ├── INDEX.md
+│   │   │   └── README_HDMI.md
+│   │   ├── logs/
+│   │   │   └── hdmi_config.log
+│   │   ├── README.md
+│   │   ├── scripts/
+│   │   └── tests/
+│   │       ├── logs/
+│   │       │   └── gameplayer_20250624.log
+│   │       └── test_hdmi_config.py
+│   ├── immersive/
+│   │   ├── core/
+│   │   ├── docs/
+│   │   ├── logs/
+│   │   ├── README.md
+│   │   ├── scripts/
+│   │   │   └── immersive_hardware_auto.sh
+│   │   └── tests/
+│   └── retropie/
+│       ├── config/
+│       │   ├── log_upload_config.json
+│       │   ├── requirements.txt
+│       │   └── rom_config.json
+│       ├── core/
+│       │   ├── log_analyzer.py
+│       │   ├── log_uploader.py
+│       │   ├── logger_config.py
+│       │   └── retropie_installer.py
+│       ├── docs/
+│       │   ├── api/
+│       │   │   ├── core/
+│       │   │   │   ├── log_analyzer.html
+│       │   │   │   ├── log_uploader.html
+│       │   │   │   ├── logger_config.html
+│       │   │   │   └── retropie_installer.html
+│       │   │   ├── core.html
+│       │   │   ├── index.html
+│       │   │   ├── roms/
+│       │   │   │   └── rom_downloader.html
+│       │   │   ├── roms.html
+│       │   │   └── search.js
+│       │   ├── INDEX.md
+│       │   ├── LICENSE
+│       │   ├── PROJECT_SUMMARY.md
+│       │   └── README.md
+│       ├── logs/
+│       │   ├── log_reports/
+│       │   │   ├── elk_export_20250624_115111.json
+│       │   │   ├── log_report_20250624_114909.md
+│       │   │   └── trend.png
+│       │   ├── logs/
+│       │   │   ├── hdmi_config.log
+│       │   │   ├── retropie_installer.log
+│       │   │   └── rom_downloader.log
+│       │   ├── retropie_installer.log
+│       │   └── rom_downloader.log
+│       ├── README.md
+│       ├── roms/
+│       │   ├── downloads/
+│       │   │   ├── retropie-buster-4.8-rpi4_400.img
+│       │   │   ├── retropie-buster-4.8-rpi4_400.img.gz
+│       │   │   └── roms/
+│       │   └── rom_downloader.py
+│       ├── scripts/
+│       │   ├── deploy.sh
+│       │   ├── install.bat
+│       │   └── install.sh
+│       └── tests/
+│           ├── report.xml
+│           └── tests/
+│               ├── conftest.py
+│               ├── run_all_tests.py
+│               ├── test_installer.py
+│               └── test_rom_downloader.py
+└── ...
 ```
 
-#### 平台特定说明
-- **Windows**: 自动下载镜像，提示手动使用Win32DiskImager烧录
-- **Linux/macOS**: 支持自动dd命令烧录，需要sudo权限
-
-### 2. ROM下载和传输
-
-#### 配置设置
-编辑`rom_config.json`文件：
-```json
-{
-  "raspberry_pi": {
-    "host": "192.168.1.100",
-    "port": 22,
-    "username": "pi",
-    "password": "your_password",
-    "roms_path": "/home/pi/RetroPie/roms/nes/"
-  }
-}
-```
-
-#### 执行下载
-```bash
-# 搜索并下载NES 100-in-1合集
-python rom_downloader.py
-
-# 自定义搜索
-python rom_downloader.py --search "nes games collection"
-```
-
-### 3. HDMI配置优化
-
-#### 基本配置
-```bash
-# 应用HDMI优化配置
-python hdmi_config.py
-
-# 预览将要应用的更改
-python hdmi_config.py --dry-run
-
-# 恢复原始配置
-python hdmi_config.py --restore
-```
-
-#### 配置项说明
-- `hdmi_group=1`: HDMI组1（CEA标准）
-- `hdmi_mode=16`: 1080p@60Hz分辨率
-- `disable_overscan=1`: 禁用过扫描实现全屏
-- `gpu_mem=256`: GPU显存256MB
-
-### 4. 游戏生态扩展
-
-#### 全自动优化
-```bash
-# 一键优化所有游戏生态功能
-bash retropie_ecosystem_auto.sh
-```
-
-#### 功能包括
-- 自动封面和元数据下载（Skraper）
-- 主题批量安装和自动切换
-- Netplay局域网联机配置
-- 云存档同步（Google Drive/Dropbox）
-
-### 5. 沉浸式硬件配置
-
-#### 硬件支持
-```bash
-# 配置沉浸式外设
-bash immersive_hardware_auto.sh
-```
-
-#### 支持的外设
-- PS4手柄蓝牙配对
-- 蓝牙耳机A2DP连接
-- 街机控制器校准
-- Sinden光枪配对
-- Wii体感控制器
-- GPIO灯光控制（WS2812B）
-- 震动反馈引擎
-
-## 🔧 高级配置
-
-### 系统性能调优
-
-#### 自动调优脚本
-```bash
-# 系统级性能优化
-bash system_tuneup.sh
-```
-
-#### 优化项目
-- SSD替换和优化
-- 系统服务精简
-- I/O调度器切换为kyber
-- CPU超频和散热设置
-- 外置GPU扩展
-
-### 网络和存储优化
-
-#### 网络配置
-- 自动WiFi配置
-- 网络性能优化
-- 远程访问设置
-
-#### 存储优化
-- 自动SSD检测和迁移
-- 存储性能优化
-- 备份策略配置
-
-## 🐛 故障排除
-
-### 常见问题
-
-#### 1. 权限错误
-```bash
-# Linux/macOS权限问题
-sudo python retropie_installer.py
-
-# Windows管理员权限
-# 以管理员身份运行命令提示符
-```
-
-#### 2. 网络连接问题
-```bash
-# 检查网络连接
-ping -c 1 www.google.com
-
-# 检查DNS解析
-nslookup retropie.org.uk
-```
-
-#### 3. 磁盘空间不足
-```bash
-# 检查磁盘空间
-df -h
-
-# 清理临时文件
-rm -rf downloads/*.tmp
-```
-
-#### 4. 蓝牙配对失败
-```bash
-# 重启蓝牙服务
-sudo systemctl restart bluetooth
-
-# 清除蓝牙缓存
-sudo rm -rf /var/lib/bluetooth/*
-```
-
-### 日志文件
-所有工具都会生成详细的日志文件：
-- `retropie_installer.log`: 镜像安装日志
-- `rom_downloader.log`: ROM下载日志
-- `hdmi_config.log`: HDMI配置日志
-- `retropie_ecosystem_auto.log`: 生态优化日志
-
-## 📊 性能基准
-
-### 测试环境
-- **硬件**: 树莓派4B 4GB
-- **存储**: SanDisk Extreme 32GB
-- **网络**: 千兆以太网
-
-### 性能指标
-- **镜像下载**: ~15分钟（1GB镜像）
-- **ROM传输**: ~5分钟（100个ROM）
-- **系统启动**: ~30秒
-- **游戏加载**: ~2-5秒
-
-## 🔄 版本历史
-
-### v2.0.0 (2024-06-24)
-- 🎉 **重大更新**: 完整的游戏环境自动化工具集
-- ✨ **新功能**: 
-  - 沉浸式硬件自动配置
-  - 零交互全自动优化
-  - 智能错误处理和回滚
-  - 云存档同步功能
-- 🔧 **优化**: 
-  - 代码文档结构优化
-  - 错误处理机制改进
-  - 日志系统完善
-- 🐛 **修复**: 
-  - Pylance静态分析错误
-  - 变量定义问题
-  - 导入语句优化
-
-### v1.5.0 (2024-06-20)
-- ✨ **新功能**: 
-  - 游戏生态扩展脚本
-  - 自动封面和元数据下载
-  - 主题批量安装
-  - Netplay配置
-- 🔧 **优化**: 
-  - 系统性能调优
-  - 网络配置优化
-  - 存储性能提升
-
-### v1.2.0 (2024-06-15)
-- ✨ **新功能**: 
-  - HDMI配置优化
-  - 蓝牙设备自动配对
-  - ROM下载和传输
-- 🔧 **优化**: 
-  - 跨平台兼容性
-  - 错误处理机制
-  - 日志记录系统
-
-### v1.0.0 (2024-06-10)
-- 🎉 **初始版本**: 
-  - RetroPie镜像下载和烧录
-  - 跨平台支持
-  - 基础自动化功能
-
-## 🤝 贡献指南
-
-### 提交Issue
-1. 检查现有Issue避免重复
-2. 提供详细的错误信息和环境描述
-3. 附上相关的日志文件
-
-### 提交Pull Request
-1. Fork项目并创建功能分支
-2. 遵循代码风格和文档规范
-3. 添加必要的测试用例
-4. 更新相关文档
-
-### 代码规范
-- 使用Google风格的Python文档字符串
-- 遵循PEP 8代码风格
-- 添加类型注解
-- 包含错误处理
-
-## 📄 许可证
-
-本项目采用MIT许可证 - 详见[LICENSE](LICENSE)文件。
-
-## 🙏 致谢
-
-- [RetroPie](https://retropie.org.uk/) - 优秀的树莓派游戏系统
-- [Archive.org](https://archive.org/) - 提供ROM资源
-- [Skraper](https://www.skraper.net/) - 游戏封面和元数据工具
-- 开源社区 - 提供各种工具和库
-
-## 📞 支持
-
-- 📧 **邮箱**: support@example.com
-- 💬 **讨论**: [GitHub Discussions](https://github.com/yourusername/GamePlayer-Raspberry/discussions)
-- 🐛 **问题**: [GitHub Issues](https://github.com/yourusername/GamePlayer-Raspberry/issues)
-- 📖 **文档**: [Wiki](https://github.com/yourusername/GamePlayer-Raspberry/wiki)
+> 详细子系统说明请见各自 `README.md`。
+>>>>>>> 清理大文件，规范 LFS，更新依赖与文档
 
 ---
 
+如有问题请提交 Issue 或联系维护者。
+
+## 镜像自动集成与一键驱动脚本说明
+
+### 镜像内容说明
+
+- **树莓派系统**：镜像基于 Raspberry Pi OS Lite，已集成官方驱动，适配主流树莓派硬件。
+- **游戏模拟器**：内置 EmulationStation 前端及 NES/SNES 等主流模拟器。
+- **NES 游戏**：可将 NES ROM 文件直接集成到 `/home/pi/RetroPie/roms/nes/` 目录，烧录后即用。
+- **自动化驱动集成**：通过一键脚本自动集成高质量音频、蓝牙、手柄、4K 显示屏等驱动，首次开机自动配置。
+
+### 一键自动集成驱动脚本用法
+
+1. 准备镜像文件（如 `retropie-buster-4.8-rpi4_400.img`）和自动化脚本 `auto_hardware_setup.sh`，放在项目根目录。
+
+2. 运行一键集成脚本：
+
+   ```bash
+   chmod +x inject_drivers_to_img.sh
+   sudo ./inject_drivers_to_img.sh
+   ```
+
+   - 脚本会自动挂载镜像、复制驱动脚本、写入 systemd 服务，集成到镜像 rootfs。
+   - 烧录镜像到 SD 卡后，首次开机会自动执行驱动和硬件配置。
+
+### 驱动自动化脚本示例（auto_hardware_setup.sh）
+
+```bash
+#!/bin/bash
+set -e
+# 安装音频、蓝牙、手柄等驱动
+apt update
+apt install -y alsa-utils pi-bluetooth pulseaudio-module-bluetooth bluez
+# 配置音频/HDMI/手柄/蓝牙等（详见脚本内容）
+# 自清理
+rm -f /etc/systemd/system/auto_hw.service
+rm -f /home/pi/auto_hardware_setup.sh
+systemctl daemon-reload
+```
+
+### 检查镜像内容
+
+- 挂载 root 分区后，检查：
+  - `/home/pi/auto_hardware_setup.sh` 是否存在
+  - `/etc/systemd/system/auto_hw.service` 是否存在
+  - `/opt/retropie/emulators/` 是否有 NES/SNES 模拟器
+  - `/home/pi/RetroPie/roms/nes/` 是否有 NES 游戏 ROM
+
+### 烧录与启动
+
+- 烧录镜像到 SD 卡，插入树莓派，首次开机自动完成驱动和硬件配置。
+- 进入 EmulationStation 即可体验 NES/SNES 游戏。
+
+## 5. 自动化批量定制（进阶）
+
+- 可用 [PiBakery](https://www.pibakery.org/)、[CustomPiOS](https://github.com/CustomPiOS/CustomPiOS) 等工具，批量生成带自定义脚本和配置的树莓派镜像。
+- 也可用 shell 脚本自动化上述所有步骤。
+
+---
+
+### 如需具体某一项的详细操作脚本或配置模板，请告诉我你的需求（如"只保留 NES/SNES，开机自启动 myapp.py，最大化性能"），我可以为你生成完整的操作步骤和代码！
+
+## 6. 集成自启动脚本
+
+### 方法一：rc.local（适合简单脚本）
+1. 编辑 `/etc/rc.local`，在 `exit 0` 之前添加你的脚本调用，例如：
+   ```bash
+   python3 /home/pi/your_script.py &
+   ```
+
+### 方法二：systemd 服务（推荐，适合长期运行/守护进程）
+1. 创建服务文件 `/etc/systemd/system/myapp.service`：
+   ```ini
+   [Unit]
+   Description=My Custom Script
+
+   [Service]
+   ExecStart=/usr/bin/python3 /home/pi/your_script.py
+   Restart=always
+   User=pi
+
+   [Install]
+   WantedBy=multi-user.target
+   ```
+2. 启用并启动服务：
+   ```bash
+   sudo systemctl enable myapp
+   sudo systemctl start myapp
+   ```
+
+### 方法三：EmulationStation 启动前后钩子
+- 编辑 `/opt/retropie/configs/all/autostart.sh`，在 EmulationStation 启动前后插入自定义命令。
+
+---
+
+## 7. 优化性能建议
+
+- **关闭不必要的服务**：如 `bluetooth`、`cups`、`triggerhappy` 等，节省内存和 CPU。
+  ```bash
+  sudo systemctl disable bluetooth
+  sudo systemctl disable cups
+  sudo systemctl disable triggerhappy
+  ```
+- **GPU 内存分配**：编辑 `/boot/config.txt`，调整 `gpu_mem=64`（或更低/更高，视需求）。
+- **超频**（有风险）：同样在 `/boot/config.txt`，可设置 `arm_freq`、`over_voltage` 等参数。
+- **文件系统优化**：使用 ext4，关闭日志（如 SD 卡寿命要求高）。
+- **定期清理日志和缓存**：可用 cron 定时清理 `/var/log`、`/tmp` 等目录。
+
+---
+
+## 8. 镜像再打包与分发
+
+- 所有定制完成后，可用 `dd` 或 `Win32DiskImager` 重新打包 SD 卡镜像，便于批量部署或分发。
+
+---
+
+## 9. 自动化批量定制（进阶）
+
+- 可用 [PiBakery](https://www.pibakery.org/)、[CustomPiOS](https://github.com/CustomPiOS/CustomPiOS) 等工具，批量生成带自定义脚本和配置的树莓派镜像。
+- 也可用 shell 脚本自动化上述所有步骤。
+
+---
+
+### 如需具体某一项的详细操作脚本或配置模板，请告诉我你的需求（如"只保留 NES/SNES，开机自启动 myapp.py，最大化性能"），我可以为你生成完整的操作步骤和代码！ 
+
+## 2. 可选：安装桌面环境（如需）
+
+- 如果你需要传统的 Linux 桌面（如 LXDE），可以手动安装：
+  ```bash
+  sudo apt update
+  sudo apt install --no-install-recommends raspberrypi-ui-mods lxsession
+  ```
+- 安装后，重启即可在登录界面选择进入桌面环境。 
+
+sudo apt install -y alsa-utils
+amixer cset numid=3 1  # 1=HDMI, 0=auto, 2=3.5mm 
+
+#!/bin/bash
+set -e
+
+# 1. 安装必要软件包
+sudo apt update
+sudo apt install -y alsa-utils pi-bluetooth pulseaudio-module-bluetooth bluez
+
+# 2. 配置高质量音频输出（如有I2S DAC）
+if ! grep -q "dtoverlay=hifiberry-dac" /boot/config.txt; then
+  echo "dtoverlay=hifiberry-dac" | sudo tee -a /boot/config.txt
+fi
+
+# 3. 配置HDMI 4K输出（CFORCE便携屏）
+sudo sed -i '/^hdmi_group/d;/^hdmi_mode/d;/^hdmi_drive/d;/^config_hdmi_boost/d;/^hdmi_force_hotplug/d' /boot/config.txt
+echo -e "hdmi_group=1\nhdmi_mode=95\nhdmi_drive=2\nconfig_hdmi_boost=7\nhdmi_force_hotplug=1" | sudo tee -a /boot/config.txt
+
+# 4. 配置手柄权限
+echo 'KERNEL=="js[0-9]*", MODE="0666"' | sudo tee /etc/udev/rules.d/99-joystick.rules
+
+# 5. 启用蓝牙服务
+sudo systemctl enable bluetooth
+sudo systemctl start bluetooth
+
+echo "硬件驱动自动集成完成，请重启树莓派以生效。" 
+
+#!/bin/bash
+set -e
+
+IMG="retropie-buster-4.8-rpi4_400.img"
+SCRIPT="auto_hardware_setup.sh"
+
+# 检查依赖
+command -v fdisk >/dev/null || { echo "请先安装fdisk"; exit 1; }
+command -v mount >/dev/null || { echo "请先安装mount"; exit 1; }
+command -v sudo >/dev/null || { echo "请先安装sudo"; exit 1; }
+
+# 1. 计算分区偏移
+echo "正在计算分区偏移..."
+BOOT_START=$(fdisk -l $IMG | grep "FAT32" | awk '{print $2}')
+ROOT_START=$(fdisk -l $IMG | grep "Linux" | awk '{print $2}' | head -n1)
+SECTOR_SIZE=$(fdisk -l $IMG | grep "Units" | awk '{print $9}')
+
+BOOT_OFFSET=$((BOOT_START * SECTOR_SIZE))
+ROOT_OFFSET=$((ROOT_START * SECTOR_SIZE))
+
+echo "BOOT分区偏移: $BOOT_OFFSET"
+echo "ROOT分区偏移: $ROOT_OFFSET"
+
+# 2. 挂载分区
+sudo mkdir -p /mnt/rpi-boot /mnt/rpi-root
+sudo mount -o loop,offset=$BOOT_OFFSET $IMG /mnt/rpi-boot
+sudo mount -o loop,offset=$ROOT_OFFSET $IMG /mnt/rpi-root
+
+# 3. 复制脚本到镜像
+echo "复制自动化脚本到镜像..."
+sudo cp $SCRIPT /mnt/rpi-root/home/pi/
+sudo chmod +x /mnt/rpi-root/home/pi/$SCRIPT
+
+# 4. 写入 systemd 服务
+echo "写入 systemd 服务..."
+sudo tee /mnt/rpi-root/etc/systemd/system/auto_hw.service >/dev/null <<EOF
+[Unit]
+Description=Auto Hardware Setup
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash /home/pi/$SCRIPT
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+sudo ln -sf /etc/systemd/system/auto_hw.service /mnt/rpi-root/etc/systemd/system/multi-user.target.wants/auto_hw.service
+
+# 5. 卸载分区
+echo "卸载分区..."
+sudo umount /mnt/rpi-boot
+sudo umount /mnt/rpi-root
+sudo rmdir /mnt/rpi-boot /mnt/rpi-root
+
+echo "驱动和自动化脚本已集成到镜像！烧录后首次开机将自动完成驱动配置。" 
+
+# 以实际偏移为准
+sudo mkdir -p /mnt/rpi-root
+sudo mount -o loop,offset=偏移字节数 retropie-buster-4.8-rpi4_400.img /mnt/rpi-root
+
+# 检查驱动脚本
+ls /mnt/rpi-root/home/pi/auto_hardware_setup.sh
+ls /mnt/rpi-root/etc/systemd/system/auto_hw.service
+
+# 检查模拟器
+ls /mnt/rpi-root/opt/retropie/emulators/
+
+# 检查NES游戏
+ls /mnt/rpi-root/home/pi/RetroPie/roms/nes/
+
+<<<<<<< HEAD
 **注意**: 本项目仅用于教育和研究目的。请确保遵守当地法律法规，仅下载您拥有合法权利的游戏ROM。 
 
 ## 🧩 高级特性与架构亮点
@@ -459,3 +546,6 @@ sudo rm -rf /var/lib/bluetooth/*
 - **持续集成自动修复**：集成 pre-commit 钩子和本地 CI 脚本，自动格式化、lint、测试、依赖检测与修复，保障每次提交和部署的高质量。
 - **无人值守批量部署**：支持一键批量烧录、自动环境集成、自动测试与自愈，适合大规模生产和运维。
 - **可扩展性强**：所有组件和工具均支持自定义扩展，便于二次开发和功能集成。
+=======
+sudo umount /mnt/rpi-root 
+>>>>>>> 清理大文件，规范 LFS，更新依赖与文档

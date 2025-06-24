@@ -1,0 +1,231 @@
+total 16
+drwxr-xr-x  3 ON-MY-WAY  staff   96  6 24 11:57 downloads
+drwxr-xr-x  6 ON-MY-WAY  staff  192  6 24 12:33 logs
+-rw-r--r--  1 ON-MY-WAY  staff    0  6 24 15:19 project_file_tree.txt
+-rw-r--r--  1 ON-MY-WAY  staff  352  6 24 12:02 publish_api_docs.sh
+-rw-r--r--  1 ON-MY-WAY  staff    1  6 24 12:15 requirements.txt
+drwxr-xr-x  6 ON-MY-WAY  staff  192  6 24 11:52 systems
+
+./downloads:
+total 0
+drwxr-xr-x  2 ON-MY-WAY  staff  64  6 24 11:57 roms
+
+./downloads/roms:
+total 0
+
+./logs:
+total 40
+-rw-r--r--  1 ON-MY-WAY  staff  7197  6 24 12:44 gameplayer_20250624.log
+-rw-r--r--  1 ON-MY-WAY  staff   780  6 24 11:57 hdmi_config.log
+-rw-r--r--  1 ON-MY-WAY  staff   452  6 24 11:57 retropie_installer.log
+-rw-r--r--  1 ON-MY-WAY  staff   401  6 24 11:57 rom_downloader.log
+
+./systems:
+total 0
+drwxr-xr-x   8 ON-MY-WAY  staff  256  6 24 11:52 ecosystem
+drwxr-xr-x   9 ON-MY-WAY  staff  288  6 24 11:52 hdmi
+drwxr-xr-x   8 ON-MY-WAY  staff  256  6 24 11:52 immersive
+drwxr-xr-x  10 ON-MY-WAY  staff  320  6 24 11:52 retropie
+
+./systems/ecosystem:
+total 8
+drwxr-xr-x  2 ON-MY-WAY  staff   64  6 24 11:52 core
+drwxr-xr-x  2 ON-MY-WAY  staff   64  6 24 11:52 docs
+drwxr-xr-x  2 ON-MY-WAY  staff   64  6 24 11:52 logs
+-rw-r--r--  1 ON-MY-WAY  staff  924  6 24 12:04 README.md
+drwxr-xr-x  3 ON-MY-WAY  staff   96  6 24 11:53 scripts
+drwxr-xr-x  2 ON-MY-WAY  staff   64  6 24 11:52 tests
+
+./systems/ecosystem/core:
+total 0
+
+./systems/ecosystem/docs:
+total 0
+
+./systems/ecosystem/logs:
+total 0
+
+./systems/ecosystem/scripts:
+total 16
+-rw-r--r--  1 ON-MY-WAY  staff  5612  6 24 12:20 retropie_ecosystem_auto.sh
+
+./systems/ecosystem/tests:
+total 0
+
+./systems/hdmi:
+total 8
+drwxr-xr-x  2 ON-MY-WAY  staff    64  6 24 11:52 config
+drwxr-xr-x  3 ON-MY-WAY  staff    96  6 24 15:19 core
+drwxr-xr-x  5 ON-MY-WAY  staff   160  6 24 11:58 docs
+drwxr-xr-x  3 ON-MY-WAY  staff    96  6 24 11:53 logs
+-rw-r--r--  1 ON-MY-WAY  staff  1144  6 24 12:04 README.md
+drwxr-xr-x  2 ON-MY-WAY  staff    64  6 24 11:52 scripts
+drwxr-xr-x  4 ON-MY-WAY  staff   128  6 24 15:19 tests
+
+./systems/hdmi/config:
+total 0
+
+./systems/hdmi/core:
+total 24
+-rw-r--r--  1 ON-MY-WAY  staff  10817  6 24 12:43 hdmi_config.py
+
+./systems/hdmi/docs:
+total 24
+drwxr-xr-x  6 ON-MY-WAY  staff   192  6 24 11:57 api
+-rw-r--r--  1 ON-MY-WAY  staff   456  6 24 11:58 INDEX.md
+-rw-r--r--  1 ON-MY-WAY  staff  4882  6 24 11:27 README_HDMI.md
+
+./systems/hdmi/docs/api:
+total 216
+drwxr-xr-x  3 ON-MY-WAY  staff     96  6 24 11:57 core
+-rw-r--r--  1 ON-MY-WAY  staff  36455  6 24 11:57 core.html
+-rw-r--r--  1 ON-MY-WAY  staff    135  6 24 11:57 index.html
+-rw-r--r--  1 ON-MY-WAY  staff  69000  6 24 11:57 search.js
+
+./systems/hdmi/docs/api/core:
+total 536
+-rw-r--r--  1 ON-MY-WAY  staff  273228  6 24 11:57 hdmi_config.html
+
+./systems/hdmi/logs:
+total 8
+-rw-r--r--  1 ON-MY-WAY  staff  468  6 24 10:35 hdmi_config.log
+
+./systems/hdmi/scripts:
+total 0
+
+./systems/hdmi/tests:
+total 16
+drwxr-xr-x  3 ON-MY-WAY  staff    96  6 24 12:35 logs
+-rw-r--r--  1 ON-MY-WAY  staff  6897  6 24 12:44 test_hdmi_config.py
+
+./systems/hdmi/tests/logs:
+total 0
+-rw-r--r--  1 ON-MY-WAY  staff  0  6 24 12:35 gameplayer_20250624.log
+
+./systems/immersive:
+total 8
+drwxr-xr-x  2 ON-MY-WAY  staff   64  6 24 11:52 core
+drwxr-xr-x  2 ON-MY-WAY  staff   64  6 24 11:52 docs
+drwxr-xr-x  2 ON-MY-WAY  staff   64  6 24 11:52 logs
+-rw-r--r--  1 ON-MY-WAY  staff  949  6 24 12:04 README.md
+drwxr-xr-x  3 ON-MY-WAY  staff   96  6 24 11:53 scripts
+drwxr-xr-x  2 ON-MY-WAY  staff   64  6 24 11:52 tests
+
+./systems/immersive/core:
+total 0
+
+./systems/immersive/docs:
+total 0
+
+./systems/immersive/logs:
+total 0
+
+./systems/immersive/scripts:
+total 8
+-rw-r--r--  1 ON-MY-WAY  staff  3456  6 24 10:58 immersive_hardware_auto.sh
+
+./systems/immersive/tests:
+total 0
+
+./systems/retropie:
+total 8
+drwxr-xr-x  5 ON-MY-WAY  staff   160  6 24 11:53 config
+drwxr-xr-x  6 ON-MY-WAY  staff   192  6 24 15:19 core
+drwxr-xr-x  7 ON-MY-WAY  staff   224  6 24 11:58 docs
+drwxr-xr-x  6 ON-MY-WAY  staff   192  6 24 11:53 logs
+-rw-r--r--  1 ON-MY-WAY  staff  1413  6 24 12:04 README.md
+drwxr-xr-x  4 ON-MY-WAY  staff   128  6 24 15:19 roms
+drwxr-xr-x  5 ON-MY-WAY  staff   160  6 24 11:53 scripts
+drwxr-xr-x  4 ON-MY-WAY  staff   128  6 24 15:19 tests
+
+./systems/retropie/config:
+total 24
+-rw-r--r--  1 ON-MY-WAY  staff  162  6 24 11:48 log_upload_config.json
+-rw-r--r--  1 ON-MY-WAY  staff  102  6 24 10:23 requirements.txt
+-rw-r--r--  1 ON-MY-WAY  staff  762  6 24 10:26 rom_config.json
+
+./systems/retropie/core:
+total 80
+-rw-r--r--  1 ON-MY-WAY  staff   8405  6 24 12:01 log_analyzer.py
+-rw-r--r--  1 ON-MY-WAY  staff   1538  6 24 12:01 log_uploader.py
+-rw-r--r--  1 ON-MY-WAY  staff   1990  6 24 12:01 logger_config.py
+-rw-r--r--  1 ON-MY-WAY  staff  19197  6 24 12:43 retropie_installer.py
+
+./systems/retropie/docs:
+total 56
+drwxr-xr-x  8 ON-MY-WAY  staff   256  6 24 11:57 api
+-rw-r--r--  1 ON-MY-WAY  staff  1396  6 24 11:58 INDEX.md
+-rw-r--r--  1 ON-MY-WAY  staff  1075  6 24 10:17 LICENSE
+-rw-r--r--  1 ON-MY-WAY  staff  5686  6 24 11:37 PROJECT_SUMMARY.md
+-rw-r--r--  1 ON-MY-WAY  staff  9111  6 24 11:27 README.md
+
+./systems/retropie/docs/api:
+total 272
+drwxr-xr-x  6 ON-MY-WAY  staff    192  6 24 11:57 core
+-rw-r--r--  1 ON-MY-WAY  staff  36708  6 24 11:57 core.html
+-rw-r--r--  1 ON-MY-WAY  staff    135  6 24 11:57 index.html
+drwxr-xr-x  3 ON-MY-WAY  staff     96  6 24 11:57 roms
+-rw-r--r--  1 ON-MY-WAY  staff  36461  6 24 11:57 roms.html
+-rw-r--r--  1 ON-MY-WAY  staff  60611  6 24 11:57 search.js
+
+./systems/retropie/docs/api/core:
+total 1256
+-rw-r--r--  1 ON-MY-WAY  staff  162990  6 24 11:57 log_analyzer.html
+-rw-r--r--  1 ON-MY-WAY  staff   49439  6 24 11:57 log_uploader.html
+-rw-r--r--  1 ON-MY-WAY  staff   50054  6 24 11:57 logger_config.html
+-rw-r--r--  1 ON-MY-WAY  staff  369799  6 24 11:57 retropie_installer.html
+
+./systems/retropie/docs/api/roms:
+total 792
+-rw-r--r--  1 ON-MY-WAY  staff  403318  6 24 11:57 rom_downloader.html
+
+./systems/retropie/logs:
+total 16
+drwxr-xr-x  5 ON-MY-WAY  staff   160  6 24 11:51 log_reports
+drwxr-xr-x  5 ON-MY-WAY  staff   160  6 24 11:46 logs
+-rw-r--r--  1 ON-MY-WAY  staff  2034  6 24 11:20 retropie_installer.log
+-rw-r--r--  1 ON-MY-WAY  staff   311  6 24 10:25 rom_downloader.log
+
+./systems/retropie/logs/log_reports:
+total 48
+-rw-r--r--  1 ON-MY-WAY  staff   2806  6 24 11:51 elk_export_20250624_115111.json
+-rw-r--r--  1 ON-MY-WAY  staff    295  6 24 11:49 log_report_20250624_114909.md
+-rw-r--r--  1 ON-MY-WAY  staff  14798  6 24 11:49 trend.png
+
+./systems/retropie/logs/logs:
+total 24
+-rw-r--r--  1 ON-MY-WAY  staff  780  6 24 11:47 hdmi_config.log
+-rw-r--r--  1 ON-MY-WAY  staff  452  6 24 11:47 retropie_installer.log
+-rw-r--r--  1 ON-MY-WAY  staff  318  6 24 11:47 rom_downloader.log
+
+./systems/retropie/roms:
+total 40
+drwxr-xr-x  5 ON-MY-WAY  staff    160  6 24 10:46 downloads
+-rw-r--r--  1 ON-MY-WAY  staff  19163  6 24 12:44 rom_downloader.py
+
+./systems/retropie/roms/downloads:
+total 7920704
+-rw-r--r--  1 ON-MY-WAY  staff  3148873728  6 24 10:47 retropie-buster-4.8-rpi4_400.img
+-rw-r--r--  1 ON-MY-WAY  staff   900728157  6 24 10:46 retropie-buster-4.8-rpi4_400.img.gz
+drwxr-xr-x  2 ON-MY-WAY  staff          64  6 24 10:25 roms
+
+./systems/retropie/roms/downloads/roms:
+total 0
+
+./systems/retropie/scripts:
+total 24
+-rwxr-xr-x  1 ON-MY-WAY  staff  1455  6 24 11:27 deploy.sh
+-rw-r--r--  1 ON-MY-WAY  staff  1217  6 24 10:17 install.bat
+-rw-r--r--  1 ON-MY-WAY  staff  1422  6 24 10:17 install.sh
+
+./systems/retropie/tests:
+total 8
+-rw-r--r--  1 ON-MY-WAY  staff  1082  6 24 11:47 report.xml
+drwxr-xr-x  6 ON-MY-WAY  staff   192  6 24 15:19 tests
+
+./systems/retropie/tests/tests:
+total 32
+-rw-r--r--  1 ON-MY-WAY  staff   145  6 24 11:40 conftest.py
+-rw-r--r--  1 ON-MY-WAY  staff   195  6 24 11:40 run_all_tests.py
+-rw-r--r--  1 ON-MY-WAY  staff  1000  6 24 11:55 test_installer.py
+-rw-r--r--  1 ON-MY-WAY  staff   769  6 24 11:56 test_rom_downloader.py
