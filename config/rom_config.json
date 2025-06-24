@@ -11,7 +11,7 @@
     }
   },
   "nes_zip_urls": [
-    "https://dn790002.ca.archive.org/0/items/NesRomsArt/Nes%20Roms%26Art.zip"
+    "https://archive.org/download/nes-100-in-1/NES%20100-in-1.zip"
   ],
   "raspberry_pi": {
     "host": "192.168.1.100",

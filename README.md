@@ -207,13 +207,15 @@ python retropie_installer.py --list-disks
 编辑`rom_config.json`文件：
 ```json
 {
-  "nes_zip_urls": [
-    "https://dn790002.ca.archive.org/0/items/NesRomsArt/Nes%20Roms%26Art.zip"
-  ],
-  ...
+  "raspberry_pi": {
+    "host": "192.168.1.100",
+    "port": 22,
+    "username": "pi",
+    "password": "your_password",
+    "roms_path": "/home/pi/RetroPie/roms/nes/"
+  }
 }
 ```
-> 说明：已支持自定义ROM源，示例为加拿大高速节点。
 
 #### 执行下载
 ```bash

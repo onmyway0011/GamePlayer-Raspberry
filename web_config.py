@@ -1,11 +1,12 @@
-from flask import Flask, render_template_string, request, redirect
 import json
 import os
+
+from flask import Flask, redirect, render_template_string, request
 
 app = Flask(__name__)
 CONFIG_PATH = os.path.join(os.path.dirname(__file__), "project_config.json")
 
-HTML = '''
+HTML = """
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -42,7 +43,8 @@ HTML = '''
   </form>
 </body>
 </html>
-'''
+"""
+
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -64,6 +66,7 @@ def index():
             json.dump(config, f, indent=2, ensure_ascii=False)
         return redirect("/")
     return render_template_string(HTML, config=config)
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)

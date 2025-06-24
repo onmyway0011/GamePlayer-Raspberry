@@ -7,19 +7,19 @@
 - 启动模拟器前自动拉取云端存档，退出后自动上传
 - 存档和金手指目录均可配置
 """
-import os
-import sys
-import time
 import json
+import os
 import shutil
 import subprocess
+import sys
+import time
 from pathlib import Path
 
 try:
+    import boto3
+    import paramiko
     import requests
     import tqdm
-    import paramiko
-    import boto3
     from botocore.client import Config
 except ImportError:
     print("请先安装 requests tqdm paramiko boto3")
@@ -40,22 +40,25 @@ CLOUD_PROVIDER = config["cloud_save"]["provider"]
 COS_CONF = config["cloud_save"].get("cos", {})
 API_CONF = config["cloud_save"].get("custom_api", {})
 
+
 # ========== 云端存档操作 ==========
 def cos_client():
     return boto3.client(
-        's3',
+        "s3",
         aws_access_key_id=COS_CONF["secret_id"],
         aws_secret_access_key=COS_CONF["secret_key"],
         endpoint_url=COS_CONF.get("base_url"),
         region_name=COS_CONF["region"],
-        config=Config(signature_version='s3v4')
+        config=Config(signature_version="s3v4"),
     )
+
 
 def upload_to_cos(local_path, remote_key):
     client = cos_client()
     bucket = COS_CONF["bucket"]
     client.upload_file(str(local_path), bucket, remote_key)
     print(f"已上传到COS: {remote_key}")
+
 
 def download_from_cos(remote_key, local_path):
     client = cos_client()
@@ -68,6 +71,7 @@ def download_from_cos(remote_key, local_path):
         print(f"云端无存档: {remote_key}")
         return False
 
+
 def upload_to_api(local_path, remote_key):
     url = API_CONF["api_url"]
     api_key = API_CONF["api_key"]
@@ -75,6 +79,7 @@ def upload_to_api(local_path, remote_key):
     data = {"key": remote_key, "api_key": api_key}
     resp = requests.post(url, files=files, data=data)
     print(f"API上传结果: {resp.status_code}")
+
 
 def download_from_api(remote_key, local_path):
     url = API_CONF["api_url"]
@@ -90,11 +95,13 @@ def download_from_api(remote_key, local_path):
     print(f"API无存档: {remote_key}")
     return False
 
+
 def upload_save(local_path, remote_key):
     if CLOUD_PROVIDER == "cos":
         upload_to_cos(local_path, remote_key)
     else:
         upload_to_api(local_path, remote_key)
+
 
 def download_save(remote_key, local_path):
     if CLOUD_PROVIDER == "cos":
@@ -102,14 +109,17 @@ def download_save(remote_key, local_path):
     else:
         return download_from_api(remote_key, local_path)
 
+
 # ========== 存档同步主流程 ==========
 def get_latest_save(game_name):
     """获取本地最新存档文件"""
     game_save_dir = SAVES_DIR / game_name
     if not game_save_dir.exists():
         return None
-    saves = sorted(game_save_dir.glob("*.sav"), key=lambda p: p.stat().st_mtime, reverse=True)
+    saves = sorted(game_save_dir.glob("*.sav"),
+                   key=lambda p: p.stat().st_mtime, reverse=True)
     return saves[0] if saves else None
+
 
 def sync_save_from_cloud(game_name):
     """启动游戏前拉取云端存档"""
@@ -133,6 +143,7 @@ def sync_save_to_cloud(game_name):
     else:
         print(f"未找到本地存档: {game_name}")
 
+
 # ========== 金手指自动加载 ==========
 def enable_cheat(game_name):
     """启动模拟器时自动加载金手指"""
@@ -143,15 +154,18 @@ def enable_cheat(game_name):
     print(f"未检测到金手指: {cheat_file}")
     return None
 
+
 # ========== 启动模拟器 ==========
 def launch_emulator(game_name, rom_path):
     cheat_file = enable_cheat(game_name)
     if EMULATOR_TYPE == "retroarch":
         cmd = [
             "retroarch",
-            "-L", "/opt/retropie/libretro/nestopia_libretro.so",  # 可配置
-            "--config", "/opt/retropie/configs/all/retroarch.cfg",
-            rom_path
+            "-L",
+            "/opt/retropie/libretro/nestopia_libretro.so",  # 可配置
+            "--config",
+            "/opt/retropie/configs/all/retroarch.cfg",
+            rom_path,
         ]
         if cheat_file:
             cmd += ["--cheat", str(cheat_file)]
@@ -164,6 +178,7 @@ def launch_emulator(game_name, rom_path):
         return
     print(f"启动模拟器: {' '.join(cmd)}")
     subprocess.run(cmd)
+
 
 # ========== 主流程入口 ==========
 def main():
@@ -179,5 +194,6 @@ def main():
     # 3. 退出后上传最新存档
     sync_save_to_cloud(game_name)
 
+
 if __name__ == "__main__":
-    main() 
+    main()
