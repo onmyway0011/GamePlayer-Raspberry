@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ### AL ###
 #Template for AL projects for Dynamics 365 Business Central
 #launch.json folder
@@ -20,3 +21,81 @@ rad.json
 *.flf
 #Test results file
 TestResults.xml
+=======
+# 大文件和镜像文件
+*.img
+*.img.gz
+*.zip
+downloads/
+*.iso
+
+# 日志文件
+*.log
+logs/
+
+# Python缓存
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# 虚拟环境
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE文件
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 系统文件
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# 临时文件
+*.tmp
+*.temp
+*.bak
+*.backup
+
+# 配置文件（包含敏感信息）
+rom_config.json
+*.key
+*.pem
+
+# 测试覆盖率
+.coverage
+htmlcov/
+
+# 其他
+*.pid
+*.seed
+*.pid.lock 
+>>>>>>> 🎉 v2.0.0: 完整的树莓派RetroPie游戏环境自动化工具集

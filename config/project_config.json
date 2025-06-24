@@ -1,0 +1,60 @@
+{
+  "emulator": {
+    "type": "retroarch",  
+    "cheats_dir": "/home/pi/RetroPie/cheats/",
+    "saves_dir": "/home/pi/RetroPie/saves/"
+  },
+  "cloud_save": {
+    "provider": "cos",  
+    "cos": {
+      "bucket": "your-bucket",
+      "region": "ap-xxx",
+      "secret_id": "your-secret-id",
+      "secret_key": "your-secret-key",
+      "base_url": "https://xxx.cos.ap-xxx.myqcloud.com"
+    },
+    "custom_api": {
+      "api_url": "https://your-api.example.com/upload",
+      "api_key": "your-api-key"
+    }
+  },
+  "rom_sources": {
+    "archive_org": {
+      "base_url": "https://archive.org",
+      "search_url": "https://archive.org/advancedsearch.php",
+      "download_patterns": [
+        "nes-100-in-1",
+        "nes-games-collection",
+        "nintendo-entertainment-system-roms"
+      ]
+    }
+  },
+  "nes_zip_urls": [
+    "https://archive.org/download/nes-100-in-1/NES%20100-in-1.zip"
+  ],
+  "raspberry_pi": {
+    "host": "192.168.1.100",
+    "port": 22,
+    "username": "pi",
+    "password": "",
+    "key_file": "",
+    "roms_path": "/home/pi/RetroPie/roms/nes/"
+  },
+  "download": {
+    "timeout": 30,
+    "chunk_size": 8192,
+    "max_retries": 3,
+    "retry_delay": 5
+  },
+  "verification": {
+    "verify_checksum": true,
+    "checksum_algorithm": "sha256"
+  },
+  "log_upload": {
+    "bucket": "your-bucket",
+    "prefix": "retropie-logs",
+    "aws_access_key": "your-access-key",
+    "aws_secret_key": "your-secret-key",
+    "region": "ap-east-1"
+  }
+} 

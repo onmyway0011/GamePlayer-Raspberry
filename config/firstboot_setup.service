@@ -1,0 +1,14 @@
+[Unit]
+Description=首次开机自动集成GamePlayer-Raspberry环境
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash /home/pi/GamePlayer-Raspberry/setup_auto_sync.sh
+ExecStartPost=/bin/rm -f /etc/systemd/system/firstboot_setup.service
+ExecStartPost=/bin/systemctl daemon-reload
+RemainAfterExit=no
+User=pi
+
+[Install]
+WantedBy=multi-user.target 
