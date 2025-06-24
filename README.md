@@ -64,36 +64,57 @@ bash immersive_hardware_auto.sh
 
 ## 📁 项目结构
 
+> 以下目录结构为自动生成，反映最新项目实际文件树：
+
 ```
-GamePlayer-Raspberry/
-├── 📄 核心工具
-│   ├── retropie_installer.py      # RetroPie镜像下载和烧录
-│   ├── rom_downloader.py          # ROM下载和传输工具
-│   ├── hdmi_config.py             # HDMI配置优化
-│   └── requirements.txt           # Python依赖
-│
-├── 🔧 自动化脚本
-│   ├── retropie_ecosystem_auto.sh # 游戏生态全自动优化
-│   ├── immersive_hardware_auto.sh # 沉浸式硬件配置
-│   ├── install.sh                 # Linux/macOS安装脚本
-│   └── install.bat                # Windows安装脚本
-│
-├── 🧪 测试文件
-│   ├── test_installer.py          # 安装器测试
-│   ├── test_rom_downloader.py     # ROM下载器测试
-│   └── test_hdmi_config.py        # HDMI配置测试
-│
-├── 📋 配置文件
-│   ├── rom_config.json            # ROM下载配置
-│   └── .gitignore                 # Git忽略文件
-│
-├── 📚 文档
-│   ├── README.md                  # 主文档
-│   ├── README_HDMI.md             # HDMI配置详细说明
-│   └── LICENSE                    # 许可证
-│
-└── 📦 下载目录
-    └── downloads/                 # 自动创建的下载目录
+# 目录结构
+- GamePlayer-Raspberry/
+  - web_config.py
+  - .coverage
+  - auto_refactor_structure.sh
+  - .gitignore
+  - core/
+    - hdmi_config.py
+    - rom_downloader.py
+    - retropie_installer.py
+  - config/
+    - requirements.txt
+    - project_config.json
+    - install.sh
+    - install.bat
+    - firstboot_setup.service
+    - rom_config.json
+  - tests/
+    - test_installer.py
+    - test_rom_downloader.py
+    - test_hdmi_config.py
+    - logs/
+      - gameplayer_20250624.log
+  - docs/
+    - DIR_TREE.md
+    - LICENSE
+    - README_HDMI.md
+    - README.md
+  - logs/
+    - rom_downloader.log
+    - hdmi_config.log
+    - retropie_installer.log
+    - gameplayer_20250624.log
+    - logs/
+      - rom_downloader.log
+      - hdmi_config.log
+      - retropie_installer.log
+    - log_reports/
+      - elk_export_20250624_115111.json
+      - log_report_20250624_114909.md
+      - trend.png
+  - scripts/
+    - auto_save_sync.py
+    - auto_save_sync_hook.sh
+    - retropie_ecosystem_auto.sh
+    - auto_migrate_to_pi.sh
+    - immersive_hardware_auto.sh
+    - setup_auto_sync.sh
 ```
 
 ## 🛠️ 详细使用指南
