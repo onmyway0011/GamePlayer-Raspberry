@@ -117,6 +117,19 @@ bash immersive_hardware_auto.sh
     - setup_auto_sync.sh
 ```
 
+**目录说明：**
+- `core/`：核心功能Python脚本（如镜像烧录、ROM下载、HDMI配置等）
+- `scripts/`：自动化运维与集成脚本（如环境自愈、批量部署、硬件自动配置等）
+- `tests/`：单元测试与集成测试脚本
+  - `logs/`：测试运行日志
+- `config/`：所有配置文件（依赖、项目参数、服务、安装脚本等）
+- `docs/`：项目文档、许可证、详细说明
+- `logs/`：运行日志、历史日志、日志报告
+- `web_config.py`：Web可视化配置界面主程序
+- `.gitignore`：Git忽略规则
+- `.coverage`：测试覆盖率数据
+- `auto_refactor_structure.sh`：自动化目录结构整理脚本
+
 ## 🛠️ 详细使用指南
 
 ### 1. RetroPie镜像安装
