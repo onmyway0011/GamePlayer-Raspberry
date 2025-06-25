@@ -28,11 +28,11 @@ import hashlib
 import json
 import logging
 import os
-import sys
 import time
 import zipfile
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional
+from functools import lru_cache
 
 import paramiko
 import requests
@@ -67,6 +67,19 @@ class ROMDownloader:
         config (Dict): 配置字典
         session (requests.Session): HTTP会话对象
     """
+
+    @lru_cache(maxsize=128)
+    def _get_cached_download(self, url: str) -> bytes:
+        """
+        Cached download method to avoid redundant downloads
+        """
+        try:
+            response = requests.get(url, stream=True)
+            response.raise_for_status()
+            return response.content
+        except requests.RequestException as e:
+            logger.error(f"Failed to download {url}: {e}")
+            raise
 
     def __init__(self, config_file: str = "rom_config.json"):
         """
@@ -187,7 +200,7 @@ class ROMDownloader:
             files = data.get("files", {})
 
             # 查找ZIP文件
-            for filename, file_info in files.items():
+            for filename in files.keys():
                 if filename.lower().endswith(".zip"):
                     download_url = (
                         f"{self.config['rom_sources']['archive_org']['base_url']}/download/{identifier}/{filename}"

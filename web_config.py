@@ -48,6 +48,26 @@ HTML = """
 
 @app.route("/", methods=["GET", "POST"])
 def index():
+    """
+    处理根路由("/")的GET和POST请求，用于展示和更新模拟器配置。
+    
+    GET请求:
+        - 读取并返回当前配置文件内容
+        - 渲染配置页面模板
+    
+    POST请求:
+        - 接收表单数据并更新配置项:
+            - 模拟器类型(emulator_type)
+            - 作弊码目录(cheats_dir)
+            - 存档目录(saves_dir)
+            - 云存储相关配置(provider/bucket/region等)
+        - 将更新后的配置写入文件
+        - 重定向到根路由
+    
+    返回:
+        - GET: 渲染的HTML模板
+        - POST: 重定向响应
+    """
     with open(CONFIG_PATH, "r", encoding="utf-8") as f:
         config = json.load(f)
     if request.method == "POST":

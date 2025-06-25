@@ -35,9 +35,10 @@ import argparse
 import logging
 import os
 import shutil
-import sys
+
 from pathlib import Path
 from typing import Dict, List, Optional
+from core.base_installer import BaseInstaller
 
 # 配置日志
 logging.basicConfig(
@@ -48,7 +49,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-class HDMIConfigurator:
+class HDMIConfigurator(BaseInstaller):
     """
     HDMI配置器类
 
@@ -72,6 +73,7 @@ class HDMIConfigurator:
         Args:
             config_path (str): 配置文件路径
         """
+        super().__init__(config_path)
         self.config_path = Path(config_path)
         self.backup_path = self.config_path.with_suffix(".txt.backup")
 
@@ -91,6 +93,23 @@ class HDMIConfigurator:
             "hdmi_ignore_cec": "1",
             "config_hdmi_boost": "4",
         }
+
+    def _get_required_packages(self) -> List[str]:
+        """返回所需依赖包列表"""
+        return []  # HDMI配置不需要额外的包
+
+    def check_dependencies(self):
+        """检查HDMI配置所需的依赖"""
+        required_commands = ["vcgencmd", "tvservice"]
+        for cmd in required_commands:
+            if not shutil.which(cmd):
+                raise RuntimeError(f"缺少依赖命令: {cmd}")
+        return True
+
+    def install(self):
+        """应用HDMI配置"""
+        self.backup_config()
+        self.apply_hdmi_configs()
 
     def check_permissions(self) -> bool:
         """检查文件权限"""

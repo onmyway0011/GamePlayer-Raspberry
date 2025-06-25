@@ -1,8 +1,80 @@
 {
   "emulator": {
-    "type": "retroarch",  
+    "type": "retroarch",
+    "default": "nesticle",
     "cheats_dir": "/home/pi/RetroPie/cheats/",
-    "saves_dir": "/home/pi/RetroPie/saves/"
+    "saves_dir": "/home/pi/RetroPie/saves/",
+    "nesticle": {
+      "version": "95",
+      "enabled": true,
+      "auto_install": true,
+      "is_default": true,
+      "config_path": "/home/pi/RetroPie/configs/nes/",
+      "core_path": "/opt/retropie/emulators/retroarch/cores/",
+      "download_url": "https://github.com/RetroPie/RetroPie-Setup/raw/master/scriptmodules/emulators/nesticle.sh",
+      "install_script": "nesticle_install.sh",
+      "config_template": "nesticle_config.cfg",
+      "rom_extensions": [".nes", ".NES"],
+      "features": [
+        "high_compatibility",
+        "save_states",
+        "cheat_support",
+        "netplay",
+        "rewind",
+        "shaders",
+        "infinite_lives",
+        "auto_save"
+      ],
+      "cheats": {
+        "enabled": true,
+        "infinite_lives": true,
+        "auto_cheat": true,
+        "cheat_codes": {
+          "super_mario_bros": {
+            "infinite_lives": "00FF-01-99",
+            "invincible": "00FF-01-FF",
+            "max_power": "00FF-01-03"
+          },
+          "contra": {
+            "infinite_lives": "00FF-01-99",
+            "infinite_ammo": "00FF-01-FF",
+            "spread_gun": "00FF-01-01"
+          },
+          "mega_man": {
+            "infinite_lives": "00FF-01-99",
+            "infinite_energy": "00FF-01-FF",
+            "all_weapons": "00FF-01-FF"
+          }
+        }
+      },
+      "save_states": {
+        "enabled": true,
+        "auto_save": true,
+        "save_interval": 30,
+        "max_saves": 10,
+        "save_path": "/home/pi/RetroPie/saves/nes/"
+      }
+    },
+    "virtuanes": {
+      "version": "0.97",
+      "enabled": true,
+      "auto_install": true,
+      "is_default": false,
+      "config_path": "/home/pi/RetroPie/configs/nes/",
+      "core_path": "/opt/retropie/emulators/retroarch/cores/",
+      "download_url": "https://github.com/RetroPie/RetroPie-Setup/raw/master/scriptmodules/emulators/virtuanes.sh",
+      "install_script": "virtuanes_install.sh",
+      "config_template": "virtuanes_config.cfg",
+      "rom_extensions": [".nes", ".NES"],
+      "features": [
+        "high_compatibility",
+        "save_states",
+        "cheat_support",
+        "netplay",
+        "rewind",
+        "shaders"
+      ]
+    }
   },
   "cloud_save": {
     "provider": "cos",  
