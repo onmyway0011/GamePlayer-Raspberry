@@ -54,7 +54,8 @@ RUN pip3 install --user \
     pillow \
     pyyaml \
     psutil \
-    tqdm
+    tqdm \
+    numpy
 
 # 复制项目文件
 COPY --chown=pi:pi . /home/pi/GamePlayer-Raspberry/
@@ -119,12 +120,17 @@ if [ ! -d "$ROM_DIR" ] || [ -z "$(ls -A $ROM_DIR/*.nes 2>/dev/null)" ]; then\n\
     python3 scripts/rom_downloader.py --output "$ROM_DIR"\n\
 fi\n\
 \n\
+# 列出可用模拟器\n\
+echo "🎮 可用模拟器:"\n\
+python3 scripts/run_nes_game.py --list-emulators\n\
+\n\
 # 列出可用ROM\n\
 echo "📋 可用游戏:"\n\
 python3 scripts/rom_manager.py --roms-dir "$ROM_DIR" list\n\
 \n\
 # 启动游戏选择界面\n\
-python3 scripts/nes_game_launcher.py\n\
+echo "🚀 启动游戏选择界面..."\n\
+python3 scripts/nes_game_launcher.py --roms-dir "$ROM_DIR"\n\
 ' > /home/pi/start-nes-games.sh && chmod +x /home/pi/start-nes-games.sh
 
 # 创建RetroPie配置文件

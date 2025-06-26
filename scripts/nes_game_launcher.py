@@ -279,39 +279,161 @@ class NESGameLauncher:
         """启动游戏"""
         if not self.games or self.selected_index >= len(self.games):
             return
-        
+
         game = self.games[self.selected_index]
         print(f"🎮 启动游戏: {game['name']}")
-        
+
         # 显示启动信息
         self.screen.fill(self.BLACK)
         loading_text = self.font_large.render(f"启动游戏: {game['name']}", True, self.WHITE)
         loading_rect = loading_text.get_rect(center=(400, 300))
         self.screen.blit(loading_text, loading_rect)
+
+        # 显示控制说明
+        controls = [
+            "游戏控制:",
+            "WASD/方向键: 移动",
+            "空格/Z: 开火",
+            "P: 暂停",
+            "ESC: 退出游戏"
+        ]
+
+        y_offset = 350
+        for control in controls:
+            control_text = self.font_medium.render(control, True, self.WHITE)
+            control_rect = control_text.get_rect(center=(400, y_offset))
+            self.screen.blit(control_text, control_rect)
+            y_offset += 30
+
         pygame.display.flip()
-        
+
+        # 等待用户确认
+        waiting = True
+        while waiting:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    return
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        return
+                    else:
+                        waiting = False
+
         try:
-            # 尝试使用不同的模拟器启动游戏
-            emulators = [
-                ["python3", "core/nesticle_installer.py", "--run", game["path"]],
-                ["python3", "core/virtuanes_installer.py", "--run", game["path"]],
-                ["python3", "scripts/simple_nes_player.py", game["path"]]
-            ]
-            
-            for emulator_cmd in emulators:
-                try:
-                    subprocess.run(emulator_cmd, check=True, timeout=5)
-                    break
-                except (subprocess.CalledProcessError, subprocess.TimeoutExpired, FileNotFoundError):
-                    continue
+            # 使用专用的游戏运行器
+            runner_cmd = ["python3", "scripts/run_nes_game.py", game["path"]]
+
+            print(f"🎮 启动游戏运行器: {' '.join(runner_cmd)}")
+
+            # 在新进程中启动游戏
+            process = subprocess.Popen(runner_cmd,
+                                     stdout=subprocess.PIPE,
+                                     stderr=subprocess.STDOUT,
+                                     text=True,
+                                     bufsize=1,
+                                     universal_newlines=True)
+
+            # 等待一小段时间检查是否成功启动
+            time.sleep(3)
+
+            if process.poll() is None:  # 进程仍在运行
+                print(f"✅ 游戏启动成功: {game['name']}")
+
+                # 显示游戏运行中的界面
+                self.show_game_running(game, process)
+
+                # 等待游戏进程结束
+                process.wait()
+                print(f"👋 游戏已退出: {game['name']}")
             else:
-                # 如果所有模拟器都失败，显示ROM信息
+                # 进程已结束，可能启动失败
+                stdout, stderr = process.communicate()
+                error_msg = stdout if stdout else "未知错误"
+                print(f"❌ 游戏启动失败: {error_msg}")
+
+                # 显示错误信息
+                self.show_error(f"启动失败: {error_msg}")
+
+                # 如果启动失败，显示ROM信息作为备选
                 self.show_rom_info(game)
-        
+
         except Exception as e:
             print(f"❌ 启动游戏失败: {e}")
             self.show_error(f"启动失败: {str(e)}")
-    
+
+    def show_game_running(self, game: Dict, process):
+        """显示游戏运行中的界面"""
+        print(f"🎮 显示游戏运行界面: {game['name']}")
+
+        running = True
+        clock = pygame.time.Clock()
+
+        while running and process.poll() is None:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    # 终止游戏进程
+                    process.terminate()
+                    running = False
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        # 终止游戏进程
+                        process.terminate()
+                        running = False
+
+            self.screen.fill(self.BLACK)
+
+            # 标题
+            title_text = self.font_large.render("游戏运行中", True, self.GREEN)
+            title_rect = title_text.get_rect(center=(400, 100))
+            self.screen.blit(title_text, title_rect)
+
+            # 游戏信息
+            game_text = self.font_medium.render(f"正在运行: {game['name']}", True, self.WHITE)
+            game_rect = game_text.get_rect(center=(400, 150))
+            self.screen.blit(game_text, game_rect)
+
+            # 状态信息
+            status_lines = [
+                "🎮 游戏已在新窗口中启动",
+                "📋 游戏控制:",
+                "   • WASD/方向键: 移动",
+                "   • 空格/Z: A按钮",
+                "   • Shift/X: B按钮",
+                "   • Enter: Start",
+                "   • Tab: Select",
+                "   • P: 暂停",
+                "   • ESC: 退出游戏",
+                "",
+                "💡 提示:",
+                "   • 游戏在独立窗口中运行",
+                "   • 关闭游戏窗口或按ESC退出",
+                "   • 按ESC返回游戏选择器"
+            ]
+
+            y_offset = 200
+            for line in status_lines:
+                if line.startswith("   "):
+                    # 缩进的行使用小字体
+                    text_surface = self.font_small.render(line, True, self.GRAY)
+                elif line.startswith("💡") or line.startswith("📋"):
+                    # 标题行使用中等字体
+                    text_surface = self.font_medium.render(line, True, self.YELLOW)
+                else:
+                    # 普通行使用小字体
+                    text_surface = self.font_small.render(line, True, self.WHITE)
+
+                if line:  # 非空行
+                    self.screen.blit(text_surface, (100, y_offset))
+                y_offset += 25
+
+            # 底部提示
+            hint_text = self.font_small.render("按 ESC 返回游戏选择器", True, self.RED)
+            hint_rect = hint_text.get_rect(center=(400, 550))
+            self.screen.blit(hint_text, hint_rect)
+
+            pygame.display.flip()
+            clock.tick(30)  # 降低刷新率以节省资源
+
     def show_rom_info(self, game: Dict):
         """显示ROM信息"""
         print(f"📋 显示ROM信息: {game['name']}")
