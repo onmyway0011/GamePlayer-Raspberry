@@ -42,7 +42,7 @@ API_CONF = config["cloud_save"].get("custom_api", {})
 
 
 # ========== 云端存档操作 ==========
-def cos_client():
+def cos_client() -> bool:
     return boto3.client(
         "s3",
         aws_access_key_id=COS_CONF["secret_id"],
@@ -53,14 +53,14 @@ def cos_client():
     )
 
 
-def upload_to_cos(local_path, remote_key):
+def upload_to_cos(local_path, remote_key) -> bool:
     client = cos_client()
     bucket = COS_CONF["bucket"]
     client.upload_file(str(local_path), bucket, remote_key)
     print(f"已上传到COS: {remote_key}")
 
 
-def download_from_cos(remote_key, local_path):
+def download_from_cos(remote_key, local_path) -> bool:
     client = cos_client()
     bucket = COS_CONF["bucket"]
     try:
@@ -72,7 +72,7 @@ def download_from_cos(remote_key, local_path):
         return False
 
 
-def upload_to_api(local_path, remote_key):
+def upload_to_api(local_path, remote_key) -> bool:
     url = API_CONF["api_url"]
     api_key = API_CONF["api_key"]
     files = {"file": open(local_path, "rb")}
@@ -81,7 +81,7 @@ def upload_to_api(local_path, remote_key):
     print(f"API上传结果: {resp.status_code}")
 
 
-def download_from_api(remote_key, local_path):
+def download_from_api(remote_key, local_path) -> bool:
     url = API_CONF["api_url"]
     api_key = API_CONF["api_key"]
     params = {"key": remote_key, "api_key": api_key}
@@ -96,14 +96,14 @@ def download_from_api(remote_key, local_path):
     return False
 
 
-def upload_save(local_path, remote_key):
+def upload_save(local_path, remote_key) -> bool:
     if CLOUD_PROVIDER == "cos":
         upload_to_cos(local_path, remote_key)
     else:
         upload_to_api(local_path, remote_key)
 
 
-def download_save(remote_key, local_path):
+def download_save(remote_key, local_path) -> bool:
     if CLOUD_PROVIDER == "cos":
         return download_from_cos(remote_key, local_path)
     else:
@@ -111,7 +111,7 @@ def download_save(remote_key, local_path):
 
 
 # ========== 存档同步主流程 ==========
-def get_latest_save(game_name):
+def get_latest_save(game_name) -> bool:
     """获取本地最新存档文件"""
     game_save_dir = SAVES_DIR / game_name
     if not game_save_dir.exists():
@@ -121,7 +121,7 @@ def get_latest_save(game_name):
     return saves[0] if saves else None
 
 
-def sync_save_from_cloud(game_name):
+def sync_save_from_cloud(game_name) -> bool:
     """启动游戏前拉取云端存档"""
     game_save_dir = SAVES_DIR / game_name
     game_save_dir.mkdir(parents=True, exist_ok=True)
@@ -134,7 +134,7 @@ def sync_save_from_cloud(game_name):
         print(f"无云端存档，首次游玩: {game_name}")
 
 
-def sync_save_to_cloud(game_name):
+def sync_save_to_cloud(game_name) -> bool:
     """退出游戏后上传最新存档"""
     latest_save = get_latest_save(game_name)
     if latest_save:
@@ -145,7 +145,7 @@ def sync_save_to_cloud(game_name):
 
 
 # ========== 金手指自动加载 ==========
-def enable_cheat(game_name):
+def enable_cheat(game_name) -> bool:
     """启动模拟器时自动加载金手指"""
     cheat_file = CHEATS_DIR / f"{game_name}.cht"
     if cheat_file.exists():
@@ -156,7 +156,7 @@ def enable_cheat(game_name):
 
 
 # ========== 启动模拟器 ==========
-def launch_emulator(game_name, rom_path):
+def launch_emulator(game_name, rom_path) -> bool:
     cheat_file = enable_cheat(game_name)
     if EMULATOR_TYPE == "retroarch":
         cmd = [
@@ -181,7 +181,7 @@ def launch_emulator(game_name, rom_path):
 
 
 # ========== 主流程入口 ==========
-def main():
+def main() -> bool:
     if len(sys.argv) < 3:
         print("用法: python auto_save_sync.py <game_name> <rom_path>")
         sys.exit(1)

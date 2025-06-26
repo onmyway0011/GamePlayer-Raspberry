@@ -19,7 +19,7 @@ sys.path.insert(0, str(project_root))
 class NESGameRunner:
     """NES游戏运行器"""
     
-    def __init__(self):
+    def __init__(self) -> bool:
         self.project_root = project_root
         self.running_process = None
         
@@ -179,7 +179,7 @@ class NESGameRunner:
             print(f"❌ 启动失败: {e}")
             return False
     
-    def stop_game(self):
+    def stop_game(self) -> bool:
         """停止游戏"""
         if self.running_process:
             try:
@@ -235,7 +235,7 @@ class NESGameRunner:
         # 运行游戏
         return self.run_with_emulator(selected_emulator, rom_path)
 
-def main():
+def main() -> bool:
     """主函数"""
     import argparse
     
@@ -261,7 +261,7 @@ def main():
         sys.exit(1)
     
     # 设置信号处理
-    def signal_handler(signum, frame):
+    def signal_handler(signum, frame) -> bool:
         print(f"\n🛑 收到信号 {signum}，正在停止游戏...")
         runner.stop_game()
         sys.exit(0)

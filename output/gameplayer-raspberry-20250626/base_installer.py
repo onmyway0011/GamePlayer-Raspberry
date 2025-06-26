@@ -9,7 +9,7 @@ class BaseInstaller(ABC):
     Abstract base class for emulator installers to reduce code duplication
     """
     
-    def __init__(self, config_path=None):
+    def __init__(self, config_path=None) -> bool:
         self.logger = logging.getLogger(self.__class__.__name__)
         self.config = self._load_config(config_path) if config_path else {}
     
@@ -37,11 +37,11 @@ class BaseInstaller(ABC):
         pass
     
     @abstractmethod
-    def install(self):
+    def install(self) -> bool:
         """Main installation method"""
         pass
     
-    def _load_config(self, config_path):
+    def _load_config(self, config_path) -> bool:
         """Load configuration from JSON file"""
         try:
             with open(config_path) as f:
@@ -73,7 +73,7 @@ class BaseInstaller(ABC):
             self.logger.error(f"安装包失败 {package}: {e}")
             return False
 
-    def _run_command(self, command):
+    def _run_command(self, command) -> bool:
         """Helper method to run shell commands"""
         import subprocess
         try:

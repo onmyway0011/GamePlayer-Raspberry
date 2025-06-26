@@ -38,7 +38,7 @@ class PackageInfo:
 class VersionManager:
     """版本管理器"""
     
-    def __init__(self, cache_file: str = ".version_cache.json"):
+    def __init__(self, cache_file -> bool: str = ".version_cache.json") -> bool:
         self.cache_file = Path(cache_file)
         self.cache = self._load_cache()
     
@@ -52,7 +52,7 @@ class VersionManager:
                 logger.warning(f"加载版本缓存失败: {e}")
         return {}
     
-    def _save_cache(self):
+    def _save_cache(self) -> bool:
         """保存版本缓存"""
         try:
             with open(self.cache_file, 'w', encoding='utf-8') as f:
@@ -98,7 +98,7 @@ class VersionManager:
                 return 1
             return 0
     
-    def register_package(self, package_info: PackageInfo):
+    def register_package(self, package_info -> bool: PackageInfo) -> bool:
         """注册已安装的包"""
         self.cache[package_info.name] = {
             'version': package_info.version,
@@ -113,7 +113,7 @@ class VersionManager:
 class SmartInstaller:
     """智能安装器"""
     
-    def __init__(self):
+    def __init__(self) -> bool:
         self.version_manager = VersionManager()
         self.packages_config = self._load_packages_config()
     
@@ -419,7 +419,7 @@ class SmartInstaller:
         logger.info("🎉 智能安装完成!")
         return True
 
-def main():
+def main() -> bool:
     """主函数"""
     installer = SmartInstaller()
     

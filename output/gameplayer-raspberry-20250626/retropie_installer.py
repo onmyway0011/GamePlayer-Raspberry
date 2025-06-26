@@ -72,7 +72,7 @@ class RetroPieInstaller:
         download_dir (Path): 下载目录路径
     """
 
-    def __init__(self):
+    def __init__(self) -> bool:
         """
         初始化RetroPie安装器
 
@@ -641,7 +641,7 @@ fi
             logger.error(f"Nesticle 镜像集成失败: {e}")
             return False
 
-    def run(self):
+    def run(self) -> bool:
         """运行主程序"""
         logger.info("=== RetroPie 镜像下载和烧录工具 ===")
         logger.info(f"操作系统: {self.system}")
@@ -739,7 +739,7 @@ fi
         return False
 
 
-def main():
+def main() -> bool:
     """主函数"""
     parser = argparse.ArgumentParser(description="RetroPie 镜像下载和烧录工具")
     parser.add_argument("--check-only", action="store_true", help="仅检查系统依赖")

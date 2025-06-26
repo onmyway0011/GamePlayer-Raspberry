@@ -54,7 +54,7 @@ class VirtuaNESInstaller(BaseInstaller):
     提供完整的 VirtuaNES 0.97 自动化安装和配置功能。
     """
 
-    def __init__(self, config_file: str = "config/project_config.json"):
+    def __init__(self, config_file -> bool: str = "config/project_config.json") -> bool:
         """
         初始化 VirtuaNES 安装器
 
@@ -103,7 +103,7 @@ class VirtuaNESInstaller(BaseInstaller):
             "libsdl2-ttf-dev"
         ]
 
-    def install(self):
+    def install(self) -> bool:
         """Main installation method"""
         return self.run()
 
@@ -394,7 +394,7 @@ exec virtuanes "$@"
         return True
 
 
-def main():
+def main() -> bool:
     """主函数"""
     parser = argparse.ArgumentParser(description="VirtuaNES 0.97 自动安装器")
     parser.add_argument("--config", default="config/project_config.json", help="配置文件路径")

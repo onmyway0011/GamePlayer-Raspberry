@@ -66,7 +66,7 @@ class HDMIConfigurator(BaseInstaller):
         hdmi_configs (Dict): HDMI配置项字典
     """
 
-    def __init__(self, config_path: str = "/boot/config.txt"):
+    def __init__(self, config_path -> bool: str = "/boot/config.txt") -> bool:
         """
         初始化HDMI配置器
 
@@ -98,7 +98,7 @@ class HDMIConfigurator(BaseInstaller):
         """返回所需依赖包列表"""
         return []  # HDMI配置不需要额外的包
 
-    def check_dependencies(self):
+    def check_dependencies(self) -> bool:
         """检查HDMI配置所需的依赖"""
         required_commands = ["vcgencmd", "tvservice"]
         for cmd in required_commands:
@@ -106,7 +106,7 @@ class HDMIConfigurator(BaseInstaller):
                 raise RuntimeError(f"缺少依赖命令: {cmd}")
         return True
 
-    def install(self):
+    def install(self) -> bool:
         """应用HDMI配置"""
         self.backup_config()
         self.apply_hdmi_configs()
@@ -340,7 +340,7 @@ class HDMIConfigurator(BaseInstaller):
         return True
 
 
-def main():
+def main() -> bool:
     """主函数"""
     parser = argparse.ArgumentParser(description="树莓派HDMI配置优化工具")
     parser.add_argument("--config", default="/boot/config.txt", help="配置文件路径")

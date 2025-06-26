@@ -26,7 +26,7 @@ logger = logging.getLogger(__name__)
 class ROMDownloader:
     """ROM下载器"""
     
-    def __init__(self, download_dir: str = "roms"):
+    def __init__(self, download_dir -> bool: str = "roms") -> bool:
         self.download_dir = Path(download_dir)
         self.download_dir.mkdir(exist_ok=True)
         
@@ -485,7 +485,7 @@ class ROMDownloader:
         self.fallback_roms = {}
         self._generate_fallback_roms()
 
-    def _generate_fallback_roms(self):
+    def _generate_fallback_roms(self) -> bool:
         """生成备用ROM列表，确保总数达到50款"""
         # 计算现有ROM数量
         total_roms = sum(len(category["roms"]) for category in self.recommended_roms.values())
@@ -799,7 +799,7 @@ class ROMDownloader:
         total_size = sum(f.stat().st_size for f in self.download_dir.glob("*.nes"))
         logger.info(f"💾 总大小: {total_size // 1024}KB ({total_size // 1024 // 1024}MB)")
 
-def main():
+def main() -> bool:
     """主函数"""
     import argparse
     

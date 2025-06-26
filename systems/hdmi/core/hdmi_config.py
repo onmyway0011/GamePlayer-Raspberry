@@ -67,7 +67,7 @@ class HDMIConfigurator:
         hdmi_configs (Dict): HDMI配置项字典
     """
 
-    def __init__(self, config_path: str = "/boot/config.txt"):
+    def __init__(self, config_path -> bool: str = "/boot/config.txt") -> bool:
         """
         初始化HDMI配置器
 
@@ -321,7 +321,7 @@ class HDMIConfigurator:
         return True
 
 
-def main():
+def main() -> bool:
     """主函数"""
     parser = argparse.ArgumentParser(description="树莓派HDMI配置优化工具")
     parser.add_argument("--config", default="/boot/config.txt", help="配置文件路径")

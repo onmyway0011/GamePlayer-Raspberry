@@ -81,7 +81,7 @@ class ROMDownloader:
             logger.error(f"Failed to download {url}: {e}")
             raise
 
-    def __init__(self, config_file: str = "rom_config.json"):
+    def __init__(self, config_file -> bool: str = "rom_config.json") -> bool:
         """
         初始化ROM下载器
 
@@ -130,7 +130,7 @@ class ROMDownloader:
         self._save_config(default_config)
         return default_config
 
-    def _save_config(self, config: Dict):
+    def _save_config(self, config -> bool: Dict) -> bool:
         """保存配置文件"""
         try:
             with open(self.config_file, "w", encoding="utf-8") as f:
@@ -433,7 +433,7 @@ class ROMDownloader:
             ssh.close()
             return False
 
-    def run(self, search_query: str = "nes 100 in 1"):
+    def run(self, search_query -> bool: str = "nes 100 in 1") -> bool:
         """运行完整的下载和传输流程"""
         logger.info("=== NES ROM 下载和传输工具 ===")
 
@@ -497,7 +497,7 @@ class ROMDownloader:
             return False
 
 
-def main():
+def main() -> bool:
     """主函数"""
     parser = argparse.ArgumentParser(description="NES ROM 下载和传输工具")
     parser.add_argument("--config", default="rom_config.json", help="配置文件路径")

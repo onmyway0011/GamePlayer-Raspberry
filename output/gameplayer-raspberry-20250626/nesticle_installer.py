@@ -56,7 +56,7 @@ class NesticleInstaller(BaseInstaller):
     提供完整的 Nesticle 95 自动化安装和配置功能，包含金手指和自动保存。
     """
 
-    def __init__(self, config_file: str = "config/project_config.json"):
+    def __init__(self, config_file -> bool: str = "config/project_config.json") -> bool:
         """
         初始化 Nesticle 安装器
 
@@ -125,7 +125,7 @@ class NesticleInstaller(BaseInstaller):
             "libharfbuzz-dev"
         ]
 
-    def install(self):
+    def install(self) -> bool:
         """Main installation method"""
         return self.run()
 
@@ -635,7 +635,7 @@ exec nesticle "$@"
         return True
 
 
-def main():
+def main() -> bool:
     """主函数"""
     parser = argparse.ArgumentParser(description="Nesticle 95 自动安装器")
     parser.add_argument("--config", default="config/project_config.json", help="配置文件路径")

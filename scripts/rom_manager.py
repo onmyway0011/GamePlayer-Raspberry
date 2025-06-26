@@ -23,7 +23,7 @@ logger = logging.getLogger(__name__)
 class ROMManager:
     """ROM管理器"""
     
-    def __init__(self, roms_dir: str = "/home/pi/RetroPie/roms/nes"):
+    def __init__(self, roms_dir -> None: str = "/home/pi/RetroPie/roms/nes") -> None:
         self.roms_dir = Path(roms_dir)
         self.roms_dir.mkdir(parents=True, exist_ok=True)
         
@@ -276,7 +276,7 @@ class ROMManager:
         except Exception as e:
             logger.error(f"❌ 恢复失败: {e}")
 
-def main():
+def main() -> None:
     """主函数"""
     parser = argparse.ArgumentParser(description="ROM管理器")
     parser.add_argument("--roms-dir", default="/home/pi/RetroPie/roms/nes", help="ROM目录路径")

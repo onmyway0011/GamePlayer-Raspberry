@@ -1,0 +1,131 @@
+{
+  "project": {
+    "name": "GamePlayer-Raspberry",
+    "version": "3.0.0",
+    "description": "Enhanced NES Game Player for Raspberry Pi with Auto-Save, Cheats, and Device Management",
+    "author": "GamePlayer Team",
+    "license": "MIT"
+  },
+  
+  "emulator": {
+    "default_scale": 3,
+    "fullscreen": false,
+    "vsync": true,
+    "fps_limit": 60,
+    "audio_enabled": true,
+    "audio_sample_rate": 44100,
+    "audio_buffer_size": 1024
+  },
+  
+  "save_system": {
+    "auto_save_enabled": true,
+    "auto_save_interval": 30,
+    "max_save_slots": 10,
+    "saves_directory": "saves",
+    "cloud_sync": {
+      "enabled": false,
+      "url": "https://api.gameplayer.cloud",
+      "token": "",
+      "auto_sync": true
+    }
+  },
+  
+  "cheat_system": {
+    "auto_enable": true,
+    "cheats_directory": "cheats",
+    "universal_cheats": {
+      "infinite_lives": true,
+      "infinite_health": true,
+      "infinite_ammo": true,
+      "invincibility": true,
+      "max_power": true
+    },
+    "game_specific_cheats": true
+  },
+  
+  "device_management": {
+    "auto_connect_controllers": true,
+    "auto_connect_audio": true,
+    "controller_deadzone": 0.3,
+    "monitor_devices": true,
+    "supported_controllers": [
+      "Xbox",
+      "PlayStation", 
+      "Nintendo",
+      "Generic"
+    ],
+    "supported_audio": [
+      "AirPods",
+      "Sony",
+      "Bose",
+      "JBL",
+      "Generic"
+    ]
+  },
+  
+  "rom_management": {
+    "roms_directory": "roms",
+    "auto_download": true,
+    "download_categories": [
+      "homebrew",
+      "public_domain",
+      "demo_roms",
+      "puzzle_games",
+      "action_games",
+      "rpg_games",
+      "sports_games"
+    ],
+    "backup_enabled": true,
+    "verify_integrity": true
+  },
+  
+  "ui": {
+    "theme": "dark",
+    "language": "zh-CN",
+    "show_fps": false,
+    "show_debug_info": false,
+    "control_hints_duration": 5,
+    "status_display": true
+  },
+  
+  "docker": {
+    "raspberry_sim": {
+      "image": "gameplayer-raspberry:raspberry-sim",
+      "container_name": "gameplayer-raspberry-sim",
+      "ports": {
+        "vnc": 5901,
+        "web_vnc": 6080,
+        "http": 8080,
+        "web_manager": 3000
+      },
+      "volumes": {
+        "roms": "./roms:/home/pi/RetroPie/roms/nes",
+        "saves": "./saves:/home/pi/RetroPie/saves",
+        "configs": "./configs:/home/pi/RetroPie/configs"
+      }
+    }
+  },
+  
+  "logging": {
+    "level": "INFO",
+    "file": "logs/gameplayer.log",
+    "max_size_mb": 10,
+    "backup_count": 5,
+    "console_output": true
+  },
+  
+  "performance": {
+    "cpu_limit": 80,
+    "memory_limit_mb": 512,
+    "gpu_acceleration": true,
+    "multi_threading": true,
+    "optimization_level": "balanced"
+  },
+  
+  "security": {
+    "rom_verification": true,
+    "safe_mode": false,
+    "allowed_file_types": [".nes"],
+    "max_file_size_mb": 10
+  }
+}
