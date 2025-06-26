@@ -1,0 +1,162 @@
+{
+  "system_packages": {
+    "python3": {
+      "version": "3.7.0",
+      "check_cmd": "python3 --version",
+      "description": "Python 3 解释器"
+    },
+    "python3-pip": {
+      "version": "20.0.0",
+      "check_cmd": "pip3 --version",
+      "description": "Python 包管理器"
+    },
+    "python3-dev": {
+      "version": "3.7.0",
+      "check_cmd": "python3-config --version",
+      "description": "Python 开发头文件"
+    },
+    "git": {
+      "version": "2.20.0",
+      "check_cmd": "git --version",
+      "description": "版本控制系统"
+    },
+    "wget": {
+      "version": "1.20.0",
+      "check_cmd": "wget --version",
+      "description": "文件下载工具"
+    },
+    "curl": {
+      "version": "7.64.0",
+      "check_cmd": "curl --version",
+      "description": "HTTP 客户端"
+    },
+    "build-essential": {
+      "version": "12.8",
+      "check_cmd": "gcc --version",
+      "description": "编译工具链"
+    },
+    "unzip": {
+      "version": "6.0.0",
+      "check_cmd": "unzip -v",
+      "description": "解压工具"
+    },
+    "losetup": {
+      "version": "2.33.0",
+      "check_cmd": "losetup --version",
+      "description": "Loop 设备工具"
+    },
+    "xz-utils": {
+      "version": "5.2.0",
+      "check_cmd": "xz --version",
+      "description": "XZ 压缩工具"
+    }
+  },
+  "python_packages": {
+    "requests": {
+      "version": "2.25.0",
+      "description": "HTTP 库"
+    },
+    "paramiko": {
+      "version": "2.7.0",
+      "description": "SSH 客户端"
+    },
+    "tqdm": {
+      "version": "4.60.0",
+      "description": "进度条库"
+    },
+    "flask": {
+      "version": "2.0.0",
+      "description": "Web 框架"
+    },
+    "pygame": {
+      "version": "2.0.0",
+      "description": "游戏开发库"
+    },
+    "pillow": {
+      "version": "8.0.0",
+      "description": "图像处理库"
+    },
+    "pyyaml": {
+      "version": "5.4.0",
+      "description": "YAML 解析器"
+    },
+    "psutil": {
+      "version": "5.8.0",
+      "description": "系统信息库"
+    },
+    "pytest": {
+      "version": "6.0.0",
+      "description": "测试框架"
+    },
+    "pytest-cov": {
+      "version": "2.10.0",
+      "description": "测试覆盖率"
+    },
+    "pytest-asyncio": {
+      "version": "0.15.0",
+      "description": "异步测试支持"
+    },
+    "pytest-mock": {
+      "version": "3.6.0",
+      "description": "Mock 测试支持"
+    },
+    "python-dotenv": {
+      "version": "0.19.0",
+      "description": "环境变量管理"
+    }
+  },
+  "emulators": {
+    "nesticle": {
+      "version": "0.95",
+      "install_path": "/opt/retropie/emulators/nesticle",
+      "description": "Nesticle 95 NES 模拟器",
+      "config_files": [
+        "/opt/retropie/configs/nes/nesticle.cfg",
+        "/opt/retropie/emulators/nesticle/launch_nesticle.sh"
+      ]
+    },
+    "virtuanes": {
+      "version": "0.97",
+      "install_path": "/opt/retropie/emulators/virtuanes",
+      "description": "VirtuaNES 0.97 NES 模拟器",
+      "config_files": [
+        "/opt/retropie/configs/nes/virtuanes.cfg",
+        "/opt/retropie/emulators/virtuanes/launch_virtuanes.sh"
+      ]
+    }
+  },
+  "retropie_components": {
+    "emulationstation": {
+      "version": "2.11.0",
+      "check_cmd": "emulationstation --version",
+      "description": "RetroPie 前端界面"
+    },
+    "retroarch": {
+      "version": "1.9.0",
+      "check_cmd": "retroarch --version",
+      "description": "RetroArch 模拟器前端"
+    }
+  },
+  "optimization_settings": {
+    "gpu_memory_split": 128,
+    "cpu_overclock": {
+      "arm_freq": 1800,
+      "over_voltage": 6
+    },
+    "performance_tweaks": {
+      "disable_splash": true,
+      "boot_delay": 0,
+      "disable_rainbow_splash": true
+    }
+  },
+  "image_customizations": {
+    "enable_ssh": true,
+    "wifi_config": true,
+    "auto_expand_filesystem": true,
+    "install_gameplayer": true,
+    "optimize_performance": true,
+    "cleanup_unnecessary": true,
+    "default_user": "pi",
+    "default_password": "raspberry"
+  }
+}

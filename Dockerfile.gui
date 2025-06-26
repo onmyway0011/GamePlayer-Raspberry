@@ -1,0 +1,232 @@
+FROM python:3.9-slim
+
+# 设置环境变量
+ENV DEBIAN_FRONTEND=noninteractive
+ENV PYTHONUNBUFFERED=1
+ENV TEST_ENV=true
+ENV DOCKER_ENV=true
+ENV DISPLAY=:1
+ENV VNC_PORT=5901
+ENV NOVNC_PORT=6080
+
+# 安装基础依赖和图形界面组件
+RUN apt-get update && apt-get install -y \
+    # 基础工具
+    git wget curl build-essential \
+    # X11 和图形界面
+    xvfb x11vnc fluxbox \
+    # VNC 和 noVNC
+    tigervnc-standalone-server tigervnc-common \
+    # 游戏和模拟器依赖
+    libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev \
+    libgl1-mesa-dev libglu1-mesa-dev \
+    # 音频支持
+    pulseaudio alsa-utils \
+    # 字体支持
+    fonts-dejavu-core fonts-liberation \
+    # 网络工具
+    net-tools procps \
+    # 文件管理
+    mc nano vim \
+    # 浏览器 (用于测试)
+    firefox-esr \
+    && rm -rf /var/lib/apt/lists/*
+
+# 安装 noVNC (Web VNC 客户端)
+RUN cd /opt && \
+    git clone https://github.com/novnc/noVNC.git && \
+    git clone https://github.com/novnc/websockify.git && \
+    ln -s /opt/noVNC/vnc.html /opt/noVNC/index.html
+
+# 创建工作目录
+WORKDIR /app
+
+# 复制项目文件
+COPY . /app/
+
+# 升级 pip 并安装 Python 依赖
+RUN pip install --upgrade pip && \
+    pip install requests paramiko tqdm flask pytest pytest-cov pytest-asyncio pytest-mock \
+    pillow pyyaml psutil python-dotenv pygame
+
+# 创建必要的目录结构
+RUN mkdir -p \
+    /opt/retropie/emulators/nesticle \
+    /opt/retropie/configs/nes \
+    /home/pi/RetroPie/roms/nes \
+    /home/pi/RetroPie/cheats \
+    /home/pi/RetroPie/saves/nes \
+    /usr/share/applications \
+    /etc/systemd/system \
+    /root/.vnc \
+    /tmp/.X11-unix
+
+# 设置 VNC 密码
+RUN mkdir -p /root/.vnc && \
+    echo "gameplayer" | vncpasswd -f > /root/.vnc/passwd && \
+    chmod 600 /root/.vnc/passwd
+
+# 创建 VNC 启动配置
+RUN echo '#!/bin/bash\n\
+export DISPLAY=:1\n\
+Xvfb :1 -screen 0 1024x768x24 &\n\
+sleep 2\n\
+fluxbox &\n\
+x11vnc -display :1 -nopw -listen localhost -xkb -ncache 10 -ncache_cr -forever &\n\
+' > /usr/local/bin/start-vnc.sh && \
+    chmod +x /usr/local/bin/start-vnc.sh
+
+# 创建游戏启动脚本
+RUN echo '#!/bin/bash\n\
+export DISPLAY=:1\n\
+cd /app\n\
+echo "🎮 启动游戏环境..."\n\
+echo "VNC 访问: http://localhost:6080/vnc.html"\n\
+echo "直接 VNC: localhost:5901 (密码: gameplayer)"\n\
+python3 -c "\n\
+import pygame\n\
+import sys\n\
+import time\n\
+\n\
+print(\"🎮 初始化 Pygame...\")\n\
+pygame.init()\n\
+\n\
+# 创建游戏窗口\n\
+screen = pygame.display.set_mode((800, 600))\n\
+pygame.display.set_caption(\"GamePlayer-Raspberry Demo\")\n\
+\n\
+# 颜色定义\n\
+BLACK = (0, 0, 0)\n\
+WHITE = (255, 255, 255)\n\
+RED = (255, 0, 0)\n\
+GREEN = (0, 255, 0)\n\
+BLUE = (0, 0, 255)\n\
+\n\
+# 游戏循环\n\
+clock = pygame.time.Clock()\n\
+running = True\n\
+x, y = 400, 300\n\
+dx, dy = 2, 2\n\
+\n\
+print(\"🎮 游戏开始! 按 ESC 退出\")\n\
+\n\
+while running:\n\
+    for event in pygame.event.get():\n\
+        if event.type == pygame.QUIT:\n\
+            running = False\n\
+        elif event.type == pygame.KEYDOWN:\n\
+            if event.key == pygame.K_ESCAPE:\n\
+                running = False\n\
+    \n\
+    # 更新球的位置\n\
+    x += dx\n\
+    y += dy\n\
+    \n\
+    # 边界检测\n\
+    if x <= 0 or x >= 780:\n\
+        dx = -dx\n\
+    if y <= 0 or y >= 580:\n\
+        dy = -dy\n\
+    \n\
+    # 绘制\n\
+    screen.fill(BLACK)\n\
+    pygame.draw.circle(screen, RED, (int(x), int(y)), 20)\n\
+    \n\
+    # 绘制文字\n\
+    font = pygame.font.Font(None, 36)\n\
+    text = font.render(\"GamePlayer-Raspberry Demo\", True, WHITE)\n\
+    screen.blit(text, (200, 50))\n\
+    \n\
+    text2 = font.render(\"Press ESC to exit\", True, GREEN)\n\
+    screen.blit(text2, (280, 500))\n\
+    \n\
+    pygame.display.flip()\n\
+    clock.tick(60)\n\
+\n\
+pygame.quit()\n\
+print(\"🎮 游戏结束!\")\n\
+"\n\
+' > /usr/local/bin/start-game.sh && \
+    chmod +x /usr/local/bin/start-game.sh
+
+# 设置权限
+RUN chmod +x scripts/*.sh || true
+
+# 暴露端口
+EXPOSE 8080 5901 6080
+
+# 创建启动脚本
+RUN echo '#!/bin/bash\n\
+echo "🚀 启动 GamePlayer-Raspberry GUI 环境..."\n\
+\n\
+# 启动 Xvfb\n\
+echo "📺 启动虚拟显示..."\n\
+Xvfb :1 -screen 0 1024x768x24 &\n\
+sleep 2\n\
+\n\
+# 启动窗口管理器\n\
+echo "🖼️ 启动窗口管理器..."\n\
+export DISPLAY=:1\n\
+fluxbox &\n\
+sleep 1\n\
+\n\
+# 启动 VNC 服务器\n\
+echo "🔗 启动 VNC 服务器..."\n\
+x11vnc -display :1 -nopw -listen 0.0.0.0 -xkb -ncache 10 -ncache_cr -forever -rfbport 5901 &\n\
+sleep 2\n\
+\n\
+# 启动 noVNC\n\
+echo "🌐 启动 Web VNC (noVNC)..."\n\
+cd /opt/noVNC\n\
+./utils/launch.sh --vnc localhost:5901 --listen 6080 &\n\
+sleep 2\n\
+\n\
+# 启动 HTTP 服务器\n\
+echo "🌐 启动 HTTP 服务器..."\n\
+cd /app\n\
+python3 -c "\n\
+import http.server\n\
+import socketserver\n\
+import threading\n\
+import time\n\
+\n\
+PORT = 8080\n\
+Handler = http.server.SimpleHTTPRequestHandler\n\
+\n\
+def start_server():\n\
+    with socketserver.TCPServer((\"\", PORT), Handler) as httpd:\n\
+        print(f\"HTTP 服务器启动在端口 {PORT}\")\n\
+        httpd.serve_forever()\n\
+\n\
+# 在后台启动 HTTP 服务器\n\
+server_thread = threading.Thread(target=start_server, daemon=True)\n\
+server_thread.start()\n\
+\n\
+print(\"\")\n\
+print(\"🎉 GamePlayer-Raspberry GUI 环境启动完成!\")\n\
+print(\"\")\n\
+print(\"📱 访问方式:\")\n\
+print(\"  🌐 Web VNC: http://localhost:6080/vnc.html\")\n\
+print(\"  🔗 直接 VNC: localhost:5901 (密码: gameplayer)\")\n\
+print(\"  📁 文件浏览: http://localhost:8080\")\n\
+print(\"\")\n\
+print(\"🎮 游戏命令:\")\n\
+print(\"  启动演示游戏: docker exec <container> /usr/local/bin/start-game.sh\")\n\
+print(\"  运行测试: docker exec <container> python3 -m pytest tests/ -v\")\n\
+print(\"\")\n\
+print(\"⌨️ 按 Ctrl+C 停止服务\")\n\
+\n\
+try:\n\
+    while True:\n\
+        time.sleep(1)\n\
+except KeyboardInterrupt:\n\
+    print(\"\\n👋 服务停止\")\n\
+" &\n\
+\n\
+# 等待所有服务启动\n\
+wait\n\
+' > /usr/local/bin/start-all.sh && \
+    chmod +x /usr/local/bin/start-all.sh
+
+# 启动命令
+CMD ["/usr/local/bin/start-all.sh"]
