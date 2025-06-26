@@ -1,0 +1,84 @@
+{
+  "title": "GamePlayer-Raspberry ROM 目录",
+  "description": "推荐的NES ROM游戏列表",
+  "categories": {
+    "homebrew": {
+      "name": "自制游戏合集",
+      "description": "优秀的NES自制游戏",
+      "roms": {
+        "micro_mages": {
+          "name": "Micro Mages",
+          "description": "现代NES平台游戏杰作",
+          "genre": "平台动作",
+          "year": 2019,
+          "filename": "micro_mages.nes",
+          "available": false
+        },
+        "blade_buster": {
+          "name": "Blade Buster",
+          "description": "横版射击游戏",
+          "genre": "射击",
+          "year": 2020,
+          "filename": "blade_buster.nes",
+          "available": false
+        },
+        "twin_dragons": {
+          "name": "Twin Dragons",
+          "description": "双人合作动作游戏",
+          "genre": "动作",
+          "year": 2018,
+          "filename": "twin_dragons.nes",
+          "available": false
+        }
+      }
+    },
+    "public_domain": {
+      "name": "公有领域游戏",
+      "description": "无版权限制的经典游戏",
+      "roms": {
+        "tetris_clone": {
+          "name": "Tetris Clone",
+          "description": "俄罗斯方块克隆版",
+          "genre": "益智",
+          "year": 2021,
+          "filename": "tetris_clone.nes",
+          "available": false
+        },
+        "snake_game": {
+          "name": "Snake Game",
+          "description": "贪吃蛇游戏",
+          "genre": "休闲",
+          "year": 2020,
+          "filename": "snake_game.nes",
+          "available": false
+        }
+      }
+    },
+    "demo_roms": {
+      "name": "演示ROM",
+      "description": "用于测试的演示ROM文件",
+      "roms": {
+        "nestest": {
+          "name": "NESTest",
+          "description": "NES模拟器测试ROM",
+          "genre": "测试",
+          "year": 2004,
+          "filename": "nestest.nes",
+          "available": true,
+          "size_bytes": 40976,
+          "size_kb": 40
+        },
+        "color_test": {
+          "name": "Color Test",
+          "description": "颜色显示测试",
+          "genre": "测试",
+          "year": 2005,
+          "filename": "color_test.nes",
+          "available": true,
+          "size_bytes": 40976,
+          "size_kb": 40
+        }
+      }
+    }
+  }
+}

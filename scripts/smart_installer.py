@@ -355,8 +355,112 @@ class SmartInstaller:
                 logger.error(f"❌ {emulator_name} 安装失败")
                 return False
         
+        # 下载推荐ROM
+        if not self._download_recommended_roms():
+            logger.warning("⚠️ ROM下载失败，但继续安装")
+
         return True
-    
+
+    def _download_recommended_roms(self) -> bool:
+        """下载推荐的ROM文件"""
+        logger.info("📥 下载推荐ROM文件...")
+
+        try:
+            # 创建ROM目录
+            roms_dir = Path("/home/pi/RetroPie/roms/nes")
+            roms_dir.mkdir(parents=True, exist_ok=True)
+
+            # 导入ROM下载器
+            import sys
+            project_root = Path(__file__).parent.parent
+            if str(project_root) not in sys.path:
+                sys.path.insert(0, str(project_root))
+
+            # 检查是否已有ROM文件
+            existing_roms = list(roms_dir.glob("*.nes"))
+            if len(existing_roms) >= 3:
+                logger.info(f"✅ 已有 {len(existing_roms)} 个ROM文件，跳过下载")
+                return True
+
+            # 导入并使用ROM下载器
+            try:
+                from scripts.rom_downloader import ROMDownloader
+
+                downloader = ROMDownloader(str(roms_dir))
+                results = downloader.download_all()
+
+                # 创建目录和播放列表
+                downloader.create_rom_catalog()
+                downloader.create_playlist_files()
+
+                # 统计成功下载的ROM数量
+                total_success = sum(
+                    sum(category_results.values())
+                    for category_results in results.values()
+                )
+
+                if total_success > 0:
+                    logger.info(f"✅ 成功下载 {total_success} 个ROM文件")
+                    return True
+                else:
+                    logger.warning("⚠️ 没有成功下载任何ROM文件")
+                    return self._create_sample_roms(roms_dir)
+
+            except ImportError as e:
+                logger.warning(f"⚠️ 无法导入ROM下载器: {e}")
+                return self._create_sample_roms(roms_dir)
+
+        except Exception as e:
+            logger.error(f"❌ ROM下载过程失败: {e}")
+            return False
+
+    def _create_sample_roms(self, roms_dir: Path) -> bool:
+        """创建示例ROM文件"""
+        logger.info("📝 创建示例ROM文件...")
+
+        sample_roms = {
+            "demo_game.nes": "演示游戏",
+            "test_rom.nes": "测试ROM",
+            "sample_platformer.nes": "示例平台游戏"
+        }
+
+        success_count = 0
+
+        for filename, description in sample_roms.items():
+            rom_file = roms_dir / filename
+
+            if rom_file.exists():
+                logger.info(f"✅ {filename} 已存在")
+                success_count += 1
+                continue
+
+            try:
+                # 创建最小的NES ROM文件
+                header = bytearray(16)
+                header[0:4] = b'NES\x1a'  # NES文件标识
+                header[4] = 1  # PRG ROM 大小
+                header[5] = 1  # CHR ROM 大小
+
+                prg_rom = bytearray(16384)  # 16KB PRG ROM
+                chr_rom = bytearray(8192)   # 8KB CHR ROM
+
+                # 添加标题信息
+                title_bytes = description.encode('ascii')[:16]
+                prg_rom[0:len(title_bytes)] = title_bytes
+
+                rom_content = bytes(header + prg_rom + chr_rom)
+
+                with open(rom_file, 'wb') as f:
+                    f.write(rom_content)
+
+                logger.info(f"✅ 创建示例ROM: {filename}")
+                success_count += 1
+
+            except Exception as e:
+                logger.error(f"❌ 创建示例ROM失败 {filename}: {e}")
+
+        return success_count > 0
+
     def _install_nesticle(self) -> bool:
         """安装Nesticle"""
         try:

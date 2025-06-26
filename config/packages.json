@@ -156,7 +156,48 @@
     "install_gameplayer": true,
     "optimize_performance": true,
     "cleanup_unnecessary": true,
+    "download_roms": true,
     "default_user": "pi",
     "default_password": "raspberry"
+  },
+  "rom_configuration": {
+    "download_enabled": true,
+    "rom_directory": "/home/pi/RetroPie/roms/nes",
+    "backup_directory": "/home/pi/RetroPie/roms/backup",
+    "max_rom_size_mb": 10,
+    "categories": {
+      "homebrew": {
+        "enabled": true,
+        "priority": 1,
+        "description": "现代自制NES游戏"
+      },
+      "public_domain": {
+        "enabled": true,
+        "priority": 2,
+        "description": "公有领域经典游戏"
+      },
+      "demo_roms": {
+        "enabled": true,
+        "priority": 3,
+        "description": "测试和演示ROM"
+      }
+    },
+    "recommended_roms": {
+      "micro_mages": {
+        "category": "homebrew",
+        "priority": 1,
+        "description": "现代NES平台游戏杰作"
+      },
+      "nestest": {
+        "category": "demo_roms",
+        "priority": 1,
+        "description": "NES模拟器测试ROM"
+      },
+      "blade_buster": {
+        "category": "homebrew",
+        "priority": 2,
+        "description": "横版射击游戏"
+      }
+    }
   }
 }

@@ -146,6 +146,37 @@ smart_install_dependencies() {
     fi
 }
 
+# 下载推荐ROM
+download_recommended_roms() {
+    log_step "下载推荐ROM文件..."
+
+    cd "$PROJECT_ROOT"
+
+    # 检查是否已有ROM文件
+    if [ -d "roms" ] && [ $(find roms -name "*.nes" | wc -l) -gt 0 ]; then
+        log_info "ROM文件已存在，跳过下载"
+        return 0
+    fi
+
+    # 下载ROM文件
+    if python3 scripts/rom_downloader.py --output roms; then
+        log_success "✅ ROM下载完成"
+
+        # 统计下载的ROM数量
+        local rom_count=$(find roms -name "*.nes" 2>/dev/null | wc -l)
+        log_info "📊 共下载 $rom_count 个ROM文件"
+
+        # 验证ROM文件
+        log_info "🔍 验证ROM文件..."
+        python3 scripts/rom_manager.py --roms-dir roms verify
+
+        return 0
+    else
+        log_error "❌ ROM下载失败"
+        return 1
+    fi
+}
+
 # 生成树莓派镜像
 generate_raspberry_image() {
     log_step "生成树莓派镜像..."
@@ -254,6 +285,12 @@ generate_deployment_package() {
             cp "$image_file.sha256" "$package_dir/" 2>/dev/null || true
             cp "${image_file%.gz}.json" "$package_dir/" 2>/dev/null || true
         done
+    fi
+
+    # 复制ROM文件（如果存在）
+    if [ -d "roms" ]; then
+        log_info "复制ROM文件..."
+        cp -r roms/ "$package_dir/"
     fi
     
     # 生成安装脚本
@@ -547,6 +584,7 @@ main() {
     local steps=(
         "check_system_requirements:检查系统要求"
         "smart_install_dependencies:智能安装依赖"
+        "download_recommended_roms:下载推荐ROM"
         "generate_raspberry_image:生成树莓派镜像"
         "generate_deployment_package:生成部署包"
         "update_readme:更新README"

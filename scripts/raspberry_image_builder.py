@@ -310,11 +310,11 @@ network={
     def _install_gameplayer(self, mount_point: Path):
         """安装GamePlayer到镜像"""
         logger.info("🎮 安装GamePlayer...")
-        
+
         # 复制项目文件
         target_dir = mount_point / "home" / "pi" / "GamePlayer-Raspberry"
         target_dir.mkdir(parents=True, exist_ok=True)
-        
+
         # 复制核心文件
         source_files = [
             "core/",
@@ -323,7 +323,7 @@ network={
             "requirements.txt",
             "README.md"
         ]
-        
+
         for item in source_files:
             source_path = Path(item)
             if source_path.exists():
@@ -331,7 +331,10 @@ network={
                     subprocess.run(['sudo', 'cp', '-r', str(source_path), str(target_dir)], check=True)
                 else:
                     subprocess.run(['sudo', 'cp', str(source_path), str(target_dir)], check=True)
-        
+
+        # 下载推荐ROM文件
+        self._download_recommended_roms(mount_point)
+
         # 创建自启动脚本
         autostart_script = mount_point / "home" / "pi" / ".bashrc"
         startup_content = '''
@@ -341,12 +344,172 @@ if [ -d "/home/pi/GamePlayer-Raspberry" ]; then
     python3 scripts/smart_installer.py --check-only
 fi
 '''
-        
+
         with open(autostart_script, 'a') as f:
             f.write(startup_content)
-        
+
         logger.info("✅ GamePlayer安装完成")
-    
+
+    def _download_recommended_roms(self, mount_point: Path):
+        """下载推荐的ROM文件到镜像"""
+        logger.info("📥 下载推荐ROM文件...")
+
+        # 创建ROM目录
+        roms_dir = mount_point / "home" / "pi" / "RetroPie" / "roms" / "nes"
+        roms_dir.mkdir(parents=True, exist_ok=True)
+
+        try:
+            # 导入ROM下载器
+            import sys
+            sys.path.insert(0, str(Path(__file__).parent))
+            from rom_downloader import ROMDownloader
+
+            # 创建临时下载目录
+            temp_roms_dir = Path("temp_roms")
+            downloader = ROMDownloader(str(temp_roms_dir))
+
+            # 下载所有推荐ROM
+            logger.info("🎮 开始下载推荐ROM...")
+            results = downloader.download_all()
+
+            # 复制ROM文件到镜像
+            if temp_roms_dir.exists():
+                for rom_file in temp_roms_dir.glob("*.nes"):
+                    target_file = roms_dir / rom_file.name
+                    subprocess.run(['sudo', 'cp', str(rom_file), str(target_file)], check=True)
+                    logger.info(f"✅ 已复制ROM: {rom_file.name}")
+
+                # 复制目录文件
+                catalog_file = temp_roms_dir / "rom_catalog.json"
+                if catalog_file.exists():
+                    target_catalog = roms_dir / "rom_catalog.json"
+                    subprocess.run(['sudo', 'cp', str(catalog_file), str(target_catalog)], check=True)
+
+                # 复制播放列表
+                playlists_dir = temp_roms_dir / "playlists"
+                if playlists_dir.exists():
+                    target_playlists = roms_dir / "playlists"
+                    subprocess.run(['sudo', 'cp', '-r', str(playlists_dir), str(target_playlists)], check=True)
+
+                # 清理临时目录
+                import shutil
+                shutil.rmtree(temp_roms_dir, ignore_errors=True)
+
+            # 创建ROM信息文件
+            self._create_rom_info_file(roms_dir)
+
+            logger.info("✅ ROM文件下载和安装完成")
+
+        except Exception as e:
+            logger.error(f"⚠️ ROM下载失败: {e}")
+            # 创建示例ROM文件
+            self._create_sample_roms(roms_dir)
+
+    def _create_sample_roms(self, roms_dir: Path):
+        """创建示例ROM文件"""
+        logger.info("📝 创建示例ROM文件...")
+
+        sample_roms = {
+            "demo_game.nes": "演示游戏",
+            "test_rom.nes": "测试ROM",
+            "sample_platformer.nes": "示例平台游戏"
+        }
+
+        for filename, description in sample_roms.items():
+            rom_file = roms_dir / filename
+            try:
+                # 创建最小的NES ROM文件
+                header = bytearray(16)
+                header[0:4] = b'NES\x1a'  # NES文件标识
+                header[4] = 1  # PRG ROM 大小
+                header[5] = 1  # CHR ROM 大小
+
+                prg_rom = bytearray(16384)  # 16KB PRG ROM
+                chr_rom = bytearray(8192)   # 8KB CHR ROM
+
+                # 添加标题信息
+                title_bytes = description.encode('ascii')[:16]
+                prg_rom[0:len(title_bytes)] = title_bytes
+
+                rom_content = bytes(header + prg_rom + chr_rom)
+
+                with open(rom_file, 'wb') as f:
+                    f.write(rom_content)
+
+                subprocess.run(['sudo', 'chown', 'pi:pi', str(rom_file)], check=False)
+                logger.info(f"✅ 创建示例ROM: {filename}")
+
+            except Exception as e:
+                logger.error(f"❌ 创建示例ROM失败 {filename}: {e}")
+
+    def _create_rom_info_file(self, roms_dir: Path):
+        """创建ROM信息文件"""
+        info_content = """# GamePlayer-Raspberry ROM 信息
+
+## 📁 ROM 目录结构
+
+```
+/home/pi/RetroPie/roms/nes/
+├── *.nes                    # NES ROM 文件
+├── rom_catalog.json         # ROM 目录信息
+├── playlists/              # 播放列表
+│   ├── homebrew.m3u        # 自制游戏列表
+│   ├── public_domain.m3u   # 公有领域游戏
+│   └── demo_roms.m3u       # 演示ROM列表
+└── README.md               # 本文件
+```
+
+## 🎮 游戏分类
+
+### 自制游戏 (Homebrew)
+- 现代开发者制作的高质量NES游戏
+- 完全免费且开源
+
+### 公有领域游戏 (Public Domain)
+- 无版权限制的经典游戏
+- 可以自由分发和修改
+
+### 演示ROM (Demo ROMs)
+- 用于测试模拟器功能
+- 验证兼容性和性能
+
+## 🚀 使用方法
+
+1. **通过RetroPie**: 在EmulationStation中选择NES系统
+2. **通过命令行**:
+   ```bash
+   cd /opt/retropie/emulators/nesticle
+   ./nesticle /home/pi/RetroPie/roms/nes/game.nes
+   ```
+3. **通过RetroArch**: 加载NES核心并选择ROM文件
+
+## 📋 ROM 管理
+
+- 查看ROM目录: `cat /home/pi/RetroPie/roms/nes/rom_catalog.json`
+- 添加新ROM: 将.nes文件复制到此目录
+- 创建播放列表: 编辑.m3u文件
+
+## ⚖️ 法律声明
+
+所有包含的ROM文件均为：
+- 开源自制游戏
+- 公有领域作品
+- 测试用演示ROM
+
+请确保遵守当地法律法规。
+"""
+
+        readme_file = roms_dir / "README.md"
+        try:
+            with open(readme_file, 'w', encoding='utf-8') as f:
+                f.write(info_content)
+
+            subprocess.run(['sudo', 'chown', 'pi:pi', str(readme_file)], check=False)
+            logger.info("✅ ROM信息文件已创建")
+
+        except Exception as e:
+            logger.error(f"❌ 创建ROM信息文件失败: {e}")
+
     def _optimize_performance(self, mount_point: Path):
         """性能优化"""
         logger.info("⚡ 性能优化...")
