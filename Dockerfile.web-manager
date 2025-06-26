@@ -1,0 +1,272 @@
+# Web管理界面 Dockerfile
+FROM node:18-alpine
+
+# 设置工作目录
+WORKDIR /app
+
+# 安装系统依赖
+RUN apk add --no-cache \
+    python3 \
+    py3-pip \
+    curl \
+    bash
+
+# 创建Web管理界面
+RUN mkdir -p public static templates
+
+# 创建package.json
+RUN echo '{\
+  "name": "gameplayer-web-manager",\
+  "version": "1.0.0",\
+  "description": "GamePlayer-Raspberry Web管理界面",\
+  "main": "server.js",\
+  "scripts": {\
+    "start": "node server.js",\
+    "dev": "nodemon server.js"\
+  },\
+  "dependencies": {\
+    "express": "^4.18.2",\
+    "socket.io": "^4.7.2",\
+    "multer": "^1.4.5",\
+    "cors": "^2.8.5",\
+    "axios": "^1.4.0"\
+  }\
+}' > package.json
+
+# 安装Node.js依赖
+RUN npm install
+
+# 创建服务器文件
+RUN echo 'const express = require("express");\
+const http = require("http");\
+const socketIo = require("socket.io");\
+const path = require("path");\
+const fs = require("fs");\
+const multer = require("multer");\
+const cors = require("cors");\
+const axios = require("axios");\
+\
+const app = express();\
+const server = http.createServer(app);\
+const io = socketIo(server, {\
+  cors: {\
+    origin: "*",\
+    methods: ["GET", "POST"]\
+  }\
+});\
+\
+// 中间件\
+app.use(cors());\
+app.use(express.json());\
+app.use(express.static("public"));\
+\
+// 文件上传配置\
+const storage = multer.diskStorage({\
+  destination: (req, file, cb) => {\
+    cb(null, "/app/roms/");\
+  },\
+  filename: (req, file, cb) => {\
+    cb(null, file.originalname);\
+  }\
+});\
+const upload = multer({ storage });\
+\
+// 路由\
+app.get("/", (req, res) => {\
+  res.sendFile(path.join(__dirname, "public", "index.html"));\
+});\
+\
+// API路由\
+app.get("/api/roms", (req, res) => {\
+  try {\
+    const romsDir = "/app/roms";\
+    const files = fs.readdirSync(romsDir)\
+      .filter(file => file.endsWith(".nes"))\
+      .map(file => ({\
+        name: file,\
+        size: fs.statSync(path.join(romsDir, file)).size,\
+        modified: fs.statSync(path.join(romsDir, file)).mtime\
+      }));\
+    res.json(files);\
+  } catch (error) {\
+    res.status(500).json({ error: error.message });\
+  }\
+});\
+\
+app.post("/api/upload", upload.single("rom"), (req, res) => {\
+  if (!req.file) {\
+    return res.status(400).json({ error: "没有上传文件" });\
+  }\
+  res.json({ message: "ROM文件上传成功", filename: req.file.filename });\
+});\
+\
+app.delete("/api/roms/:filename", (req, res) => {\
+  try {\
+    const filename = req.params.filename;\
+    const filePath = path.join("/app/roms", filename);\
+    fs.unlinkSync(filePath);\
+    res.json({ message: "ROM文件删除成功" });\
+  } catch (error) {\
+    res.status(500).json({ error: error.message });\
+  }\
+});\
+\
+// Socket.IO连接\
+io.on("connection", (socket) => {\
+  console.log("客户端已连接");\
+  \
+  socket.on("disconnect", () => {\
+    console.log("客户端已断开");\
+  });\
+});\
+\
+const PORT = process.env.PORT || 3000;\
+server.listen(PORT, () => {\
+  console.log(`Web管理界面运行在端口 ${PORT}`);\
+});' > server.js
+
+# 创建HTML界面
+RUN echo '<!DOCTYPE html>\
+<html lang="zh-CN">\
+<head>\
+    <meta charset="UTF-8">\
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">\
+    <title>GamePlayer-Raspberry 管理界面</title>\
+    <style>\
+        * { margin: 0; padding: 0; box-sizing: border-box; }\
+        body { font-family: Arial, sans-serif; background: #f0f0f0; }\
+        .header { background: #2c3e50; color: white; padding: 1rem; text-align: center; }\
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }\
+        .card { background: white; border-radius: 8px; padding: 1.5rem; margin-bottom: 1rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }\
+        .btn { background: #3498db; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; }\
+        .btn:hover { background: #2980b9; }\
+        .btn-danger { background: #e74c3c; }\
+        .btn-danger:hover { background: #c0392b; }\
+        .rom-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; }\
+        .rom-item { border: 1px solid #ddd; border-radius: 4px; padding: 1rem; }\
+        .upload-area { border: 2px dashed #ddd; border-radius: 8px; padding: 2rem; text-align: center; cursor: pointer; }\
+        .upload-area:hover { border-color: #3498db; }\
+        .vnc-frame { width: 100%; height: 600px; border: none; border-radius: 8px; }\
+    </style>\
+</head>\
+<body>\
+    <div class="header">\
+        <h1>🎮 GamePlayer-Raspberry 管理界面</h1>\
+        <p>树莓派NES游戏模拟器管理系统</p>\
+    </div>\
+    \
+    <div class="container">\
+        <div class="card">\
+            <h2>🖥️ VNC远程桌面</h2>\
+            <p>通过VNC访问树莓派模拟环境</p>\
+            <iframe src="http://localhost:6080/vnc.html" class="vnc-frame"></iframe>\
+        </div>\
+        \
+        <div class="card">\
+            <h2>📁 ROM文件管理</h2>\
+            <div class="upload-area" onclick="document.getElementById(\"fileInput\").click()">\
+                <p>点击或拖拽上传ROM文件</p>\
+                <input type="file" id="fileInput" accept=".nes" style="display: none;" onchange="uploadRom()">\
+            </div>\
+            <div id="romList" class="rom-list"></div>\
+        </div>\
+        \
+        <div class="card">\
+            <h2>🎮 快速操作</h2>\
+            <button class="btn" onclick="downloadRoms()">下载推荐ROM</button>\
+            <button class="btn" onclick="startGame()">启动游戏选择器</button>\
+            <button class="btn" onclick="restartContainer()">重启容器</button>\
+        </div>\
+    </div>\
+    \
+    <script>\
+        // 加载ROM列表\
+        function loadRoms() {\
+            fetch("/api/roms")\
+                .then(response => response.json())\
+                .then(roms => {\
+                    const romList = document.getElementById("romList");\
+                    romList.innerHTML = "";\
+                    roms.forEach(rom => {\
+                        const romItem = document.createElement("div");\
+                        romItem.className = "rom-item";\
+                        romItem.innerHTML = `\
+                            <h3>${rom.name}</h3>\
+                            <p>大小: ${(rom.size / 1024).toFixed(1)} KB</p>\
+                            <p>修改时间: ${new Date(rom.modified).toLocaleString()}</p>\
+                            <button class="btn btn-danger" onclick="deleteRom(\"${rom.name}\")">删除</button>\
+                        `;\
+                        romList.appendChild(romItem);\
+                    });\
+                });\
+        }\
+        \
+        // 上传ROM\
+        function uploadRom() {\
+            const fileInput = document.getElementById("fileInput");\
+            const file = fileInput.files[0];\
+            if (!file) return;\
+            \
+            const formData = new FormData();\
+            formData.append("rom", file);\
+            \
+            fetch("/api/upload", {\
+                method: "POST",\
+                body: formData\
+            })\
+            .then(response => response.json())\
+            .then(result => {\
+                alert(result.message);\
+                loadRoms();\
+            })\
+            .catch(error => {\
+                alert("上传失败: " + error.message);\
+            });\
+        }\
+        \
+        // 删除ROM\
+        function deleteRom(filename) {\
+            if (!confirm("确定要删除 " + filename + " 吗？")) return;\
+            \
+            fetch("/api/roms/" + encodeURIComponent(filename), {\
+                method: "DELETE"\
+            })\
+            .then(response => response.json())\
+            .then(result => {\
+                alert(result.message);\
+                loadRoms();\
+            });\
+        }\
+        \
+        // 下载推荐ROM\
+        function downloadRoms() {\
+            alert("开始下载推荐ROM，请稍候...");\
+            // 这里可以调用后端API来触发ROM下载\
+        }\
+        \
+        // 启动游戏\
+        function startGame() {\
+            alert("启动游戏选择器...");\
+            // 这里可以调用后端API来启动游戏\
+        }\
+        \
+        // 重启容器\
+        function restartContainer() {\
+            if (!confirm("确定要重启容器吗？")) return;\
+            alert("重启容器...");\
+            // 这里可以调用后端API来重启容器\
+        }\
+        \
+        // 页面加载时初始化\
+        document.addEventListener("DOMContentLoaded", () => {\
+            loadRoms();\
+        });\
+    </script>\
+</body>\
+</html>' > public/index.html
+
+# 暴露端口
+EXPOSE 3000
+
+# 启动命令
+CMD ["npm", "start"]

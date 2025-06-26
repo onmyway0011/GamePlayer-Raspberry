@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  # 树莓派模拟环境
+  raspberry-sim:
+    build:
+      context: .
+      dockerfile: Dockerfile.raspberry-sim
+    container_name: gameplayer-raspberry-sim
+    platform: linux/arm64
+    ports:
+      - "5901:5901"   # VNC端口
+      - "6080:6080"   # noVNC Web界面
+      - "8080:8080"   # HTTP文件服务器
+    volumes:
+      - ./roms:/home/pi/RetroPie/roms/nes:rw
+      - ./saves:/home/pi/RetroPie/saves:rw
+      - ./configs:/home/pi/RetroPie/configs:rw
+    environment:
+      - DISPLAY=:1
+      - HOME=/home/pi
+      - USER=pi
+    shm_size: 1g
+    privileged: true
+    restart: unless-stopped
+    networks:
+      - gameplayer-network
+
+  # Web管理界面
+  web-manager:
+    build:
+      context: .
+      dockerfile: Dockerfile.web-manager
+    container_name: gameplayer-web-manager
+    ports:
+      - "3000:3000"   # Web管理界面
+    volumes:
+      - ./roms:/app/roms:ro
+      - ./saves:/app/saves:rw
+      - ./configs:/app/configs:rw
+    environment:
+      - NODE_ENV=production
+      - RASPBERRY_SIM_URL=http://raspberry-sim:8080
+    depends_on:
+      - raspberry-sim
+    restart: unless-stopped
+    networks:
+      - gameplayer-network
+
+networks:
+  gameplayer-network:
+    driver: bridge
+
+volumes:
+  roms:
+    driver: local
+  saves:
+    driver: local
+  configs:
+    driver: local
