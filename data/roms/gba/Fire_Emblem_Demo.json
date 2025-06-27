@@ -1,0 +1,9 @@
+{
+  "name": "Fire Emblem Demo",
+  "system": "gba",
+  "description": "Fire Emblem Demo - 演示版",
+  "size": "262144 bytes",
+  "demo": true,
+  "file_path": "data/roms/gba/Fire_Emblem_Demo.gba",
+  "checksum": "40ec790ebe21c2eff145efecff029673"
+}

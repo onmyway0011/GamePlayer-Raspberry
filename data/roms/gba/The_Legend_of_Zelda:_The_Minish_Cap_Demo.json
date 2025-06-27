@@ -1,0 +1,9 @@
+{
+  "name": "The Legend of Zelda: The Minish Cap Demo",
+  "system": "gba",
+  "description": "The Legend of Zelda: The Minish Cap Demo - 演示版",
+  "size": "262144 bytes",
+  "demo": true,
+  "file_path": "data/roms/gba/The_Legend_of_Zelda:_The_Minish_Cap_Demo.gba",
+  "checksum": "aaa583009aa95448d91ae2bbbc2570f7"
+}

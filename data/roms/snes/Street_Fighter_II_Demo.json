@@ -1,0 +1,9 @@
+{
+  "name": "Street Fighter II Demo",
+  "system": "snes",
+  "description": "Street Fighter II Demo - 演示版",
+  "size": "524288 bytes",
+  "demo": true,
+  "file_path": "data/roms/snes/Street_Fighter_II_Demo.smc",
+  "checksum": "742566290a2260f7033e2268d8d6cf86"
+}

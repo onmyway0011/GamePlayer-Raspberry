@@ -1,0 +1,9 @@
+{
+  "name": "F-Zero Demo",
+  "system": "snes",
+  "description": "F-Zero Demo - 演示版",
+  "size": "524288 bytes",
+  "demo": true,
+  "file_path": "data/roms/snes/F-Zero_Demo.smc",
+  "checksum": "91c464dac6a1c13ce0a0a7b106b73487"
+}

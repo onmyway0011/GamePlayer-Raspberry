@@ -1,0 +1,9 @@
+{
+  "name": "Super Metroid Demo",
+  "system": "snes",
+  "description": "Super Metroid Demo - 演示版",
+  "size": "524288 bytes",
+  "demo": true,
+  "file_path": "data/roms/snes/Super_Metroid_Demo.smc",
+  "checksum": "e45f58a5080a9a672652ceba4bc56611"
+}

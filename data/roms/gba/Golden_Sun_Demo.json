@@ -1,0 +1,9 @@
+{
+  "name": "Golden Sun Demo",
+  "system": "gba",
+  "description": "Golden Sun Demo - 演示版",
+  "size": "262144 bytes",
+  "demo": true,
+  "file_path": "data/roms/gba/Golden_Sun_Demo.gba",
+  "checksum": "858890124262aa07000a1804c579d965"
+}

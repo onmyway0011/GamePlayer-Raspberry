@@ -40,4 +40,4 @@ if __name__ == '__main__':
         if today in log_file:
             upload_logs_to_s3(
                 os.path.join('systems/retropie/config', 'log_upload_config.json')
-            ) 
+            )

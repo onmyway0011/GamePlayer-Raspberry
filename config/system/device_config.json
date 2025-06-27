@@ -1,0 +1,191 @@
+{
+  "device_management": {
+    "enabled": true,
+    "auto_detect": true,
+    "auto_configure": true,
+    "scan_interval": 5
+  },
+  
+  "usb_gamepad": {
+    "enabled": true,
+    "auto_connect": true,
+    "supported_controllers": [
+      {
+        "name": "Xbox Controller",
+        "vendor_id": "045e",
+        "product_id": "028e",
+        "driver": "xpad"
+      },
+      {
+        "name": "PlayStation Controller",
+        "vendor_id": "054c",
+        "product_id": "0268",
+        "driver": "sixaxis"
+      },
+      {
+        "name": "Generic USB Gamepad",
+        "vendor_id": "*",
+        "product_id": "*",
+        "driver": "usbhid"
+      }
+    ],
+    "button_mapping": {
+      "a": "button_0",
+      "b": "button_1", 
+      "x": "button_2",
+      "y": "button_3",
+      "start": "button_9",
+      "select": "button_8",
+      "up": "hat0y_up",
+      "down": "hat0y_down",
+      "left": "hat0x_left",
+      "right": "hat0x_right"
+    },
+    "deadzone": 0.1,
+    "sensitivity": 1.0
+  },
+  
+  "bluetooth_audio": {
+    "enabled": true,
+    "auto_connect": true,
+    "auto_pair": false,
+    "scan_timeout": 30,
+    "connection_timeout": 10,
+    "supported_profiles": ["A2DP", "HSP", "HFP"],
+    "codec_priority": ["aptX", "SBC", "AAC"],
+    "reconnect_attempts": 3,
+    "reconnect_interval": 5,
+    "known_devices": []
+  },
+  
+  "hdmi_video": {
+    "enabled": true,
+    "auto_detect": true,
+    "force_hdmi": true,
+    "hdmi_boost": 4,
+    "hdmi_drive": 2,
+    "supported_resolutions": [
+      "1920x1080@60",
+      "1680x1050@60", 
+      "1280x1024@60",
+      "1024x768@60",
+      "800x600@60"
+    ],
+    "default_resolution": "1920x1080@60",
+    "overscan": {
+      "enabled": false,
+      "left": 0,
+      "right": 0,
+      "top": 0,
+      "bottom": 0
+    }
+  },
+  
+  "raspberry_pi": {
+    "gpio_enabled": true,
+    "spi_enabled": false,
+    "i2c_enabled": true,
+    "uart_enabled": false,
+    "camera_enabled": false,
+    "gpu_memory": 128,
+    "cpu_governor": "ondemand",
+    "temperature_limit": 80
+  },
+  
+  "power_management": {
+    "enabled": true,
+    "auto_suspend": false,
+    "suspend_timeout": 1800,
+    "screen_saver": true,
+    "screen_saver_timeout": 600,
+    "usb_power_management": true
+  },
+  
+  "network": {
+    "wifi_enabled": true,
+    "ethernet_enabled": true,
+    "hotspot_mode": false,
+    "ssh_enabled": true,
+    "vnc_enabled": true,
+    "web_interface_enabled": true
+  },
+  
+  "storage": {
+    "auto_mount": true,
+    "usb_storage": true,
+    "network_storage": false,
+    "cloud_sync": false,
+    "backup_enabled": true,
+    "backup_interval": 86400
+  },
+  
+  "input_devices": {
+    "keyboard": {
+      "enabled": true,
+      "layout": "us",
+      "repeat_delay": 500,
+      "repeat_rate": 30
+    },
+    "mouse": {
+      "enabled": true,
+      "acceleration": 1.0,
+      "threshold": 4,
+      "left_handed": false
+    },
+    "touchscreen": {
+      "enabled": false,
+      "calibration": "auto",
+      "rotation": 0
+    }
+  },
+  
+  "system_monitoring": {
+    "enabled": true,
+    "log_level": "INFO",
+    "performance_monitoring": true,
+    "temperature_monitoring": true,
+    "disk_monitoring": true,
+    "network_monitoring": true,
+    "alerts": {
+      "high_temperature": 75,
+      "low_disk_space": 10,
+      "high_cpu_usage": 90,
+      "high_memory_usage": 90
+    }
+  },
+  
+  "device_drivers": {
+    "auto_install": true,
+    "update_check": true,
+    "custom_drivers": [],
+    "blacklisted_drivers": []
+  },
+  
+  "compatibility": {
+    "raspberry_pi_4": {
+      "usb3_enabled": true,
+      "dual_hdmi": true,
+      "wifi_ac": true,
+      "bluetooth_5": true
+    },
+    "raspberry_pi_3": {
+      "wifi_enabled": true,
+      "bluetooth_enabled": true,
+      "usb2_only": true
+    },
+    "raspberry_pi_zero": {
+      "usb_otg": true,
+      "mini_hdmi": true,
+      "low_power_mode": true
+    }
+  },
+  
+  "troubleshooting": {
+    "debug_mode": false,
+    "verbose_logging": false,
+    "device_detection_log": false,
+    "connection_log": false,
+    "auto_fix_issues": true,
+    "reset_on_failure": false
+  }
+}

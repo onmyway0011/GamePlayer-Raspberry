@@ -1,0 +1,9 @@
+{
+  "name": "Metroid Demo",
+  "system": "nes",
+  "description": "Metroid Demo - 演示版",
+  "size": "32768 bytes",
+  "demo": true,
+  "file_path": "data/roms/nes/Metroid_Demo.nes",
+  "checksum": "3a1bd1fac5ced52a22f893b3be533fab"
+}

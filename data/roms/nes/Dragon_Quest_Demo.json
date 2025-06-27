@@ -1,0 +1,9 @@
+{
+  "name": "Dragon Quest Demo",
+  "system": "nes",
+  "description": "Dragon Quest Demo - 演示版",
+  "size": "32768 bytes",
+  "demo": true,
+  "file_path": "data/roms/nes/Dragon_Quest_Demo.nes",
+  "checksum": "a9e161660160927bf826db785f305eaf"
+}

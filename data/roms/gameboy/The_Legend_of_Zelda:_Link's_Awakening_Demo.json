@@ -1,0 +1,9 @@
+{
+  "name": "The Legend of Zelda: Link's Awakening Demo",
+  "system": "gb",
+  "description": "The Legend of Zelda: Link's Awakening Demo - 演示版",
+  "size": "32768 bytes",
+  "demo": true,
+  "file_path": "data/roms/gameboy/The_Legend_of_Zelda:_Link's_Awakening_Demo.gb",
+  "checksum": "fe3c99ca4d47cd9ff92e91b540a159a0"
+}

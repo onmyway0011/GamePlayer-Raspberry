@@ -1,0 +1,9 @@
+{
+  "name": "Tetris Demo",
+  "system": "nes",
+  "description": "Tetris Demo - 演示版",
+  "size": "32768 bytes",
+  "demo": true,
+  "file_path": "data/roms/nes/Tetris_Demo.nes",
+  "checksum": "99520cd55dc0e38f4eee1fcc36d281b6"
+}

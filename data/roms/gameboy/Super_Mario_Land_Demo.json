@@ -1,0 +1,9 @@
+{
+  "name": "Super Mario Land Demo",
+  "system": "gb",
+  "description": "Super Mario Land Demo - 演示版",
+  "size": "32768 bytes",
+  "demo": true,
+  "file_path": "data/roms/gameboy/Super_Mario_Land_Demo.gb",
+  "checksum": "823f75aa3805ded82634bc98eaf6b9bc"
+}

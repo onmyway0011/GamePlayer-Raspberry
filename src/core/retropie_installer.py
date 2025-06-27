@@ -72,7 +72,7 @@ class RetroPieInstaller:
         download_dir (Path): 下载目录路径
     """
 
-    def __init__(self) -> bool:
+    def __init__(self):
         """
         初始化RetroPie安装器
 
@@ -84,7 +84,7 @@ class RetroPieInstaller:
         self.download_dir.mkdir(exist_ok=True)
         self.log_file = Path("retropie_installer.log")
 
-    def check_dependencies(self) -> bool:
+    def check_dependencies(self):
         """
         检查系统依赖是否满足
 
@@ -103,7 +103,7 @@ class RetroPieInstaller:
             logger.error(f"不支持的操作系统: {self.system}")
             return False
 
-    def _check_windows_dependencies(self) -> bool:
+    def _check_windows_dependencies(self):
         """
         检查Windows系统依赖
 
@@ -124,7 +124,7 @@ class RetroPieInstaller:
         logger.warning("未找到烧录工具，请手动安装 Win32DiskImager 或 balenaEtcher")
         return False
 
-    def _check_unix_dependencies(self) -> bool:
+    def _check_unix_dependencies(self):
         """
         检查Unix系统依赖（Linux/macOS）
 
@@ -413,7 +413,7 @@ class RetroPieInstaller:
 
         return disks
 
-    def burn_image(self, image_path: Path, target_disk: str) -> bool:
+    def burn_image(self, image_path: Path, target_disk: str):
         """
         烧录镜像到SD卡
 
@@ -434,7 +434,7 @@ class RetroPieInstaller:
             logger.error(f"不支持的操作系统: {self.system}")
             return False
 
-    def integrate_virtuanes(self, image_path: Path) -> bool:
+    def integrate_virtuanes(self, image_path: Path):
         """
         在镜像中集成 VirtuaNES 模拟器
 
@@ -445,24 +445,24 @@ class RetroPieInstaller:
             bool: 集成是否成功
         """
         logger.info("开始集成 VirtuaNES 0.97 到镜像...")
-        
+
         try:
             # 挂载镜像
             mount_point = Path("/mnt/retropie_image")
             mount_point.mkdir(exist_ok=True)
-            
+
             # 获取镜像的分区偏移
             offset = self._get_partition_offset(image_path)
             if not offset:
                 logger.error("无法获取分区偏移")
                 return False
-            
+
             # 挂载镜像
             subprocess.run([
-                "sudo", "mount", "-o", f"loop,offset={offset}", 
+                "sudo", "mount", "-o", f"loop,offset={offset}",
                 str(image_path), str(mount_point)
             ], check=True)
-            
+
             try:
                 # 复制 VirtuaNES 集成脚本到镜像
                 virtuanes_script = Path("scripts/auto_virtuanes_integration.sh")
@@ -471,34 +471,34 @@ class RetroPieInstaller:
                     shutil.copy2(virtuanes_script, target_script)
                     os.chmod(target_script, 0o755)
                     logger.info("✓ VirtuaNES 集成脚本已复制到镜像")
-                
+
                 # 复制配置文件到镜像
                 config_file = Path("config/project_config.json")
                 if config_file.exists():
                     target_config = mount_point / "home/pi/project_config.json"
                     shutil.copy2(config_file, target_config)
                     logger.info("✓ 配置文件已复制到镜像")
-                
+
                 # 创建开机自启动脚本
                 startup_script = mount_point / "etc/rc.local"
                 if startup_script.exists():
                     # 在 rc.local 中添加 VirtuaNES 安装命令
                     with open(startup_script, "r") as f:
                         content = f.read()
-                    
+
                     if "auto_virtuanes_integration.sh" not in content:
                         virtuanes_line = "\n# 自动安装 VirtuaNES 模拟器\n/home/pi/auto_virtuanes_integration.sh &\n"
                         with open(startup_script, "w") as f:
                             f.write(content + virtuanes_line)
                         logger.info("✓ 开机自启动脚本已更新")
-                
+
                 logger.info("✓ VirtuaNES 集成完成")
                 return True
-                
+
             finally:
                 # 卸载镜像
                 subprocess.run(["sudo", "umount", str(mount_point)], check=True)
-                
+
         except Exception as e:
             logger.error(f"VirtuaNES 集成失败: {e}")
             return False
@@ -518,7 +518,7 @@ class RetroPieInstaller:
             result = subprocess.run([
                 "fdisk", "-l", str(image_path)
             ], capture_output=True, text=True, check=True)
-            
+
             # 解析输出找到第一个分区的起始扇区
             for line in result.stdout.split('\n'):
                 if 'img1' in line or 'img2' in line:
@@ -526,21 +526,21 @@ class RetroPieInstaller:
                     if len(parts) >= 2:
                         start_sector = int(parts[1])
                         return start_sector * 512  # 转换为字节
-                        
+
             return None
-            
+
         except Exception as e:
             logger.error(f"获取分区偏移失败: {e}")
             return None
 
-    def _burn_windows(self, image_path: Path, target_disk: str) -> bool:
+    def _burn_windows(self, image_path: Path, target_disk: str):
         """Windows系统烧录"""
         logger.warning("Windows系统需要手动烧录")
         logger.info(f"请使用 Win32DiskImager 或 balenaEtcher 将镜像烧录到 {target_disk}")
         logger.info(f"镜像文件路径: {image_path}")
         return False
 
-    def _burn_unix(self, image_path: Path, target_disk: str) -> bool:
+    def _burn_unix(self, image_path: Path, target_disk: str):
         """Unix系统烧录"""
         logger.warning(f"即将烧录镜像到 {target_disk}")
         logger.warning("此操作将擦除目标磁盘的所有数据！")
@@ -579,33 +579,33 @@ class RetroPieInstaller:
             logger.error(f"烧录过程中出错: {e}")
             return False
 
-    def integrate_nesticle_to_image(self, image_path: str) -> bool:
+    def integrate_nesticle_to_image(self, image_path: str):
         """集成 Nesticle 到 RetroPie 镜像"""
         logger.info("集成 Nesticle 到 RetroPie 镜像...")
-        
+
         try:
             # 创建挂载点
             mount_point = "/tmp/nesticle_mount"
             subprocess.run(["sudo", "mkdir", "-p", mount_point], check=True)
-            
+
             # 挂载镜像
             loop_device = subprocess.check_output(
-                ["sudo", "losetup", "--find", "--show", image_path], 
+                ["sudo", "losetup", "--find", "--show", image_path],
                 text=True
             ).strip()
-            
+
             subprocess.run(["sudo", "mount", f"{loop_device}p2", mount_point], check=True)
-            
+
             # 复制 Nesticle 集成脚本
             target_script = f"{mount_point}/opt/retropie/emulators/nesticle/integrate_nesticle.sh"
             subprocess.run(["sudo", "mkdir", "-p", os.path.dirname(target_script)], check=True)
             subprocess.run([
-                "sudo", "cp", 
-                "scripts/auto_nesticle_integration.sh", 
+                "sudo", "cp",
+                "scripts/auto_nesticle_integration.sh",
                 target_script
             ], check=True)
             subprocess.run(["sudo", "chmod", "+x", target_script], check=True)
-            
+
             # 修改开机启动脚本
             startup_script = f"{mount_point}/etc/rc.local"
             if os.path.exists(startup_script):
@@ -618,30 +618,30 @@ fi
                 # 读取原文件
                 with open(startup_script, 'r') as f:
                     content = f.read()
-                
+
                 # 在 exit 0 之前插入内容
                 if 'exit 0' in content:
                     new_content = content.replace('exit 0', f'{startup_content}exit 0')
                 else:
                     new_content = content + f'\n{startup_content}'
-                
+
                 # 写回文件
                 with open(startup_script, 'w') as f:
                     f.write(new_content)
-            
+
             # 卸载镜像
             subprocess.run(["sudo", "umount", mount_point], check=True)
             subprocess.run(["sudo", "losetup", "-d", loop_device], check=True)
             subprocess.run(["sudo", "rmdir", mount_point], check=True)
-            
+
             logger.info("✓ Nesticle 已集成到镜像")
             return True
-            
+
         except Exception as e:
             logger.error(f"Nesticle 镜像集成失败: {e}")
             return False
 
-    def run(self) -> bool:
+    def run(self):
         """运行主程序"""
         logger.info("=== RetroPie 镜像下载和烧录工具 ===")
         logger.info(f"操作系统: {self.system}")
@@ -712,7 +712,7 @@ fi
         else:
             logger.error("烧录失败")
 
-    def _should_integrate_virtuanes(self) -> bool:
+    def _should_integrate_virtuanes(self):
         """检查是否应该集成 VirtuaNES"""
         try:
             config_file = Path("config/project_config.json")
@@ -722,10 +722,10 @@ fi
                     return config.get("emulator", {}).get("virtuanes", {}).get("enabled", False)
         except Exception as e:
             logger.warning(f"检查 VirtuaNES 配置失败: {e}")
-        
+
         return False
 
-    def _should_integrate_nesticle(self) -> bool:
+    def _should_integrate_nesticle(self):
         """检查是否应该集成 Nesticle"""
         try:
             config_file = Path("config/project_config.json")
@@ -735,11 +735,11 @@ fi
                     return config.get("emulator", {}).get("nesticle", {}).get("enabled", False)
         except Exception as e:
             logger.warning(f"检查 Nesticle 配置失败: {e}")
-        
+
         return False
 
 
-def main() -> bool:
+def main():
     """主函数"""
     parser = argparse.ArgumentParser(description="RetroPie 镜像下载和烧录工具")
     parser.add_argument("--check-only", action="store_true", help="仅检查系统依赖")
@@ -779,7 +779,6 @@ def main() -> bool:
 
     # 运行完整流程
     installer.run()
-
 
 if __name__ == "__main__":
     main()

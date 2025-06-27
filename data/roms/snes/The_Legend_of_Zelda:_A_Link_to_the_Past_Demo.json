@@ -1,0 +1,9 @@
+{
+  "name": "The Legend of Zelda: A Link to the Past Demo",
+  "system": "snes",
+  "description": "The Legend of Zelda: A Link to the Past Demo - 演示版",
+  "size": "524288 bytes",
+  "demo": true,
+  "file_path": "data/roms/snes/The_Legend_of_Zelda:_A_Link_to_the_Past_Demo.smc",
+  "checksum": "6a3e765c7cbe98420bdf7650d05d6574"
+}

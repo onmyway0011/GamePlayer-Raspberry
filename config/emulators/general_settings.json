@@ -1,0 +1,275 @@
+{
+  "display_settings": {
+    "resolution": {
+      "width": 1920,
+      "height": 1080,
+      "fullscreen": false,
+      "available_resolutions": [
+        {"width": 800, "height": 600, "name": "800x600"},
+        {"width": 1024, "height": 768, "name": "1024x768"},
+        {"width": 1280, "height": 720, "name": "1280x720"},
+        {"width": 1280, "height": 1024, "name": "1280x1024"},
+        {"width": 1680, "height": 1050, "name": "1680x1050"},
+        {"width": 1920, "height": 1080, "name": "1920x1080"}
+      ]
+    },
+    "scaling": {
+      "smooth_scaling": true,
+      "integer_scaling": false,
+      "aspect_ratio": "auto",
+      "scanlines": false,
+      "crt_filter": false,
+      "brightness": 100,
+      "contrast": 100,
+      "saturation": 100
+    },
+    "frame_settings": {
+      "vsync": true,
+      "frame_skip": 0,
+      "max_framerate": 60,
+      "show_fps": false
+    }
+  },
+  
+  "audio_settings": {
+    "master_volume": 80,
+    "sound_effects": true,
+    "background_music": true,
+    "sample_rate": 44100,
+    "buffer_size": 1024,
+    "audio_driver": "auto",
+    "channels": 2,
+    "bit_depth": 16,
+    "low_latency": false,
+    "audio_sync": true
+  },
+  
+  "input_settings": {
+    "keyboard": {
+      "enabled": true,
+      "repeat_delay": 500,
+      "repeat_rate": 30,
+      "key_mappings": {
+        "player1": {
+          "up": "ArrowUp",
+          "down": "ArrowDown", 
+          "left": "ArrowLeft",
+          "right": "ArrowRight",
+          "a": "KeyZ",
+          "b": "KeyX",
+          "start": "Enter",
+          "select": "Space"
+        },
+        "player2": {
+          "up": "KeyW",
+          "down": "KeyS",
+          "left": "KeyA", 
+          "right": "KeyD",
+          "a": "KeyJ",
+          "b": "KeyK",
+          "start": "KeyP",
+          "select": "KeyO"
+        }
+      }
+    },
+    "gamepad": {
+      "enabled": true,
+      "auto_detect": true,
+      "deadzone": 0.1,
+      "sensitivity": 1.0,
+      "vibration": true,
+      "button_mappings": {
+        "a": 0,
+        "b": 1,
+        "x": 2,
+        "y": 3,
+        "start": 9,
+        "select": 8,
+        "l1": 4,
+        "r1": 5,
+        "l2": 6,
+        "r2": 7
+      }
+    },
+    "mouse": {
+      "enabled": true,
+      "sensitivity": 1.0,
+      "acceleration": false
+    }
+  },
+  
+  "emulation_settings": {
+    "speed": {
+      "normal_speed": 100,
+      "fast_forward_speed": 300,
+      "slow_motion_speed": 50,
+      "turbo_mode": false
+    },
+    "save_states": {
+      "enabled": true,
+      "auto_save": true,
+      "auto_save_interval": 300,
+      "max_save_slots": 10,
+      "compress_saves": true
+    },
+    "rewind": {
+      "enabled": true,
+      "buffer_size": 600,
+      "granularity": 1
+    },
+    "cheats": {
+      "enabled": true,
+      "auto_apply": false,
+      "show_notifications": true
+    }
+  },
+  
+  "system_specific": {
+    "nes": {
+      "palette": "default",
+      "overscan": {
+        "top": 8,
+        "bottom": 8,
+        "left": 0,
+        "right": 0
+      },
+      "sprite_limit": true,
+      "four_score": false
+    },
+    "snes": {
+      "sound_interpolation": "gaussian",
+      "echo_buffer_hack": false,
+      "superfx_overclock": 100,
+      "sa1_overclock": 100
+    },
+    "gb": {
+      "color_palette": "green",
+      "border": true,
+      "printer_emulation": false
+    },
+    "gba": {
+      "skip_bios": false,
+      "real_time_clock": true,
+      "solar_sensor": false,
+      "gyroscope": false
+    },
+    "genesis": {
+      "region": "auto",
+      "tmss": true,
+      "lock_on": "none",
+      "ym2612_core": "mame"
+    },
+    "psx": {
+      "bios": "auto",
+      "cpu_overclock": 100,
+      "gpu_overclock": 100,
+      "memory_card_1": true,
+      "memory_card_2": false,
+      "multitap": false
+    },
+    "n64": {
+      "video_plugin": "gliden64",
+      "audio_plugin": "default",
+      "input_plugin": "default",
+      "rsp_plugin": "default",
+      "expansion_pak": true
+    },
+    "arcade": {
+      "sample_rate": 48000,
+      "use_samples": true,
+      "artwork": true,
+      "bezels": false
+    }
+  },
+  
+  "network_settings": {
+    "netplay": {
+      "enabled": false,
+      "port": 55435,
+      "delay_frames": 0,
+      "spectator_mode": false
+    },
+    "achievements": {
+      "enabled": false,
+      "hardcore_mode": false,
+      "show_notifications": true
+    }
+  },
+  
+  "interface_settings": {
+    "theme": "dark",
+    "language": "zh-CN",
+    "show_tooltips": true,
+    "confirm_quit": true,
+    "pause_on_focus_loss": true,
+    "hide_cursor": true,
+    "screensaver_inhibit": true,
+    "menu_opacity": 90
+  },
+  
+  "performance_settings": {
+    "cpu_usage": {
+      "max_cpu_usage": 90,
+      "thread_count": "auto",
+      "priority": "normal"
+    },
+    "memory": {
+      "preload_textures": true,
+      "texture_cache_size": 256,
+      "audio_buffer_size": 1024
+    },
+    "gpu": {
+      "hardware_acceleration": true,
+      "shader_compilation": "async",
+      "texture_filtering": "linear"
+    }
+  },
+  
+  "logging_settings": {
+    "log_level": "info",
+    "log_to_file": true,
+    "log_file_path": "logs/emulator.log",
+    "max_log_size": 10485760,
+    "performance_logging": false
+  },
+  
+  "advanced_settings": {
+    "developer_mode": false,
+    "debug_output": false,
+    "memory_debugging": false,
+    "cpu_debugging": false,
+    "frame_timing": false,
+    "custom_shaders": false
+  },
+  
+  "raspberry_pi_optimizations": {
+    "gpu_memory_split": 128,
+    "cpu_governor": "ondemand",
+    "overclock": {
+      "arm_freq": 1500,
+      "gpu_freq": 500,
+      "core_freq": 500,
+      "sdram_freq": 500,
+      "over_voltage": 2
+    },
+    "thermal_throttling": {
+      "enabled": true,
+      "temp_limit": 80,
+      "throttle_freq": 1000
+    },
+    "power_management": {
+      "usb_power": true,
+      "hdmi_force_hotplug": true,
+      "disable_splash": true
+    }
+  },
+  
+  "backup_settings": {
+    "auto_backup": true,
+    "backup_interval": 86400,
+    "backup_location": "backups/",
+    "max_backups": 7,
+    "backup_saves": true,
+    "backup_configs": true
+  }
+}

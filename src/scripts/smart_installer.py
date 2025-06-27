@@ -26,6 +26,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 @dataclass
+
 class PackageInfo:
     """包信息"""
     name: str
@@ -35,13 +36,15 @@ class PackageInfo:
     dependencies: List[str]
     install_date: str
 
+
 class VersionManager:
     """版本管理器"""
-    
-    def __init__(self, cache_file -> bool: str = ".version_cache.json") -> bool:
+
+    def __init__(self, cache_file: str = ".version_cache.json"):
+        """TODO: Add docstring"""
         self.cache_file = Path(cache_file)
         self.cache = self._load_cache()
-    
+
     def _load_cache(self) -> Dict:
         """加载版本缓存"""
         if self.cache_file.exists():
@@ -51,39 +54,39 @@ class VersionManager:
             except Exception as e:
                 logger.warning(f"加载版本缓存失败: {e}")
         return {}
-    
-    def _save_cache(self) -> bool:
+
+    def _save_cache(self):
         """保存版本缓存"""
         try:
             with open(self.cache_file, 'w', encoding='utf-8') as f:
                 json.dump(self.cache, f, indent=2, ensure_ascii=False)
         except Exception as e:
             logger.error(f"保存版本缓存失败: {e}")
-    
+
     def get_installed_version(self, package_name: str) -> Optional[str]:
         """获取已安装版本"""
         return self.cache.get(package_name, {}).get('version')
-    
-    def is_package_installed(self, package_name: str, required_version: str) -> bool:
+
+    def is_package_installed(self, package_name: str, required_version: str):
         """检查包是否已安装且版本匹配"""
         installed_version = self.get_installed_version(package_name)
         if not installed_version:
             return False
-        
+
         # 版本比较逻辑
         return self._compare_versions(installed_version, required_version) >= 0
-    
+
     def _compare_versions(self, version1: str, version2: str) -> int:
         """比较版本号 (-1: v1<v2, 0: v1==v2, 1: v1>v2)"""
         try:
             v1_parts = [int(x) for x in version1.split('.')]
             v2_parts = [int(x) for x in version2.split('.')]
-            
+
             # 补齐长度
             max_len = max(len(v1_parts), len(v2_parts))
             v1_parts.extend([0] * (max_len - len(v1_parts)))
             v2_parts.extend([0] * (max_len - len(v2_parts)))
-            
+
             for v1, v2 in zip(v1_parts, v2_parts):
                 if v1 < v2:
                     return -1
@@ -97,8 +100,8 @@ class VersionManager:
             elif version1 > version2:
                 return 1
             return 0
-    
-    def register_package(self, package_info -> bool: PackageInfo) -> bool:
+
+    def register_package(self, package_info: PackageInfo):
         """注册已安装的包"""
         self.cache[package_info.name] = {
             'version': package_info.version,
@@ -110,13 +113,15 @@ class VersionManager:
         self._save_cache()
         logger.info(f"✅ 已注册包: {package_info.name} v{package_info.version}")
 
+
 class SmartInstaller:
     """智能安装器"""
-    
-    def __init__(self) -> bool:
+
+    def __init__(self):
+        """TODO: Add docstring"""
         self.version_manager = VersionManager()
         self.packages_config = self._load_packages_config()
-    
+
     def _load_packages_config(self) -> Dict:
         """加载包配置"""
         config_file = Path("config/packages.json")
@@ -126,7 +131,7 @@ class SmartInstaller:
                     return json.load(f)
             except Exception as e:
                 logger.error(f"加载包配置失败: {e}")
-        
+
         # 默认配置
         return {
             "system_packages": {
@@ -152,8 +157,8 @@ class SmartInstaller:
                 "virtuanes": {"version": "0.97", "install_path": "/opt/retropie/emulators/virtuanes"}
             }
         }
-    
-    def check_system_package(self, package_name: str, package_info: Dict) -> bool:
+
+    def check_system_package(self, package_name: str, package_info: Dict):
         """检查系统包"""
         try:
             import platform
@@ -213,8 +218,8 @@ class SmartInstaller:
         except Exception as e:
             logger.error(f"检查系统包 {package_name} 失败: {e}")
             return False
-    
-    def check_python_package(self, package_name: str, package_info: Dict) -> bool:
+
+    def check_python_package(self, package_name: str, package_info: Dict):
         """检查Python包"""
         try:
             import pkg_resources
@@ -222,7 +227,7 @@ class SmartInstaller:
                 installed = pkg_resources.get_distribution(package_name)
                 installed_version = installed.version
                 required_version = package_info["version"]
-                
+
                 return self.version_manager._compare_versions(
                     installed_version, required_version
                 ) >= 0
@@ -231,7 +236,7 @@ class SmartInstaller:
         except Exception as e:
             logger.error(f"检查Python包 {package_name} 失败: {e}")
             return False
-    
+
     def _extract_version(self, version_output: str) -> Optional[str]:
         """从版本输出中提取版本号"""
         import re
@@ -242,14 +247,14 @@ class SmartInstaller:
             r'version\s+(\d+\.\d+\.\d+)',
             r'v(\d+\.\d+\.\d+)'
         ]
-        
+
         for pattern in patterns:
             match = re.search(pattern, version_output)
             if match:
                 return match.group(1)
         return None
-    
-    def install_system_packages(self) -> bool:
+
+    def install_system_packages(self):
         """安装系统包"""
         import platform
         system = platform.system()
@@ -289,25 +294,25 @@ class SmartInstaller:
         else:
             logger.info("✅ 所有系统包已满足要求")
             return True
-    
-    def install_python_packages(self) -> bool:
+
+    def install_python_packages(self):
         """安装Python包"""
         logger.info("🔍 检查Python包...")
         packages_to_install = []
-        
+
         for package_name, package_info in self.packages_config["python_packages"].items():
             if self.check_python_package(package_name, package_info):
                 logger.info(f"✅ {package_name} 已安装且版本满足要求")
             else:
                 logger.info(f"📦 需要安装: {package_name}>={package_info['version']}")
                 packages_to_install.append(f"{package_name}>={package_info['version']}")
-        
+
         if packages_to_install:
             logger.info(f"🚀 开始安装Python包: {', '.join(packages_to_install)}")
             try:
                 cmd = [sys.executable, "-m", "pip", "install"] + packages_to_install
                 subprocess.run(cmd, check=True)
-                
+
                 logger.info("✅ Python包安装完成")
                 return True
             except subprocess.CalledProcessError as e:
@@ -316,22 +321,22 @@ class SmartInstaller:
         else:
             logger.info("✅ 所有Python包已满足要求")
             return True
-    
-    def install_emulators(self) -> bool:
+
+    def install_emulators(self):
         """安装模拟器"""
         logger.info("🔍 检查模拟器...")
-        
+
         for emulator_name, emulator_info in self.packages_config["emulators"].items():
             install_path = Path(emulator_info["install_path"])
-            
+
             if install_path.exists() and self.version_manager.is_package_installed(
                 emulator_name, emulator_info["version"]
             ):
                 logger.info(f"✅ {emulator_name} 已安装且版本满足要求")
                 continue
-            
+
             logger.info(f"🚀 开始安装模拟器: {emulator_name}")
-            
+
             if emulator_name == "nesticle":
                 success = self._install_nesticle()
             elif emulator_name == "virtuanes":
@@ -339,7 +344,7 @@ class SmartInstaller:
             else:
                 logger.warning(f"⚠️ 未知的模拟器: {emulator_name}")
                 continue
-            
+
             if success:
                 # 注册安装信息
                 package_info = PackageInfo(
@@ -354,14 +359,14 @@ class SmartInstaller:
             else:
                 logger.error(f"❌ {emulator_name} 安装失败")
                 return False
-        
+
         # 下载推荐ROM
         if not self._download_recommended_roms():
             logger.warning("⚠️ ROM下载失败，但继续安装")
 
         return True
 
-    def _download_recommended_roms(self) -> bool:
+    def _download_recommended_roms(self):
         """下载推荐的ROM文件"""
         logger.info("📥 下载推荐ROM文件...")
 
@@ -414,7 +419,7 @@ class SmartInstaller:
             logger.error(f"❌ ROM下载过程失败: {e}")
             return False
 
-    def _create_sample_roms(self, roms_dir: Path) -> bool:
+    def _create_sample_roms(self, roms_dir: Path):
         """创建示例ROM文件"""
         logger.info("📝 创建示例ROM文件...")
 
@@ -461,7 +466,7 @@ class SmartInstaller:
 
         return success_count > 0
 
-    def _install_nesticle(self) -> bool:
+    def _install_nesticle(self):
         """安装Nesticle"""
         try:
             # 添加项目根目录到Python路径
@@ -487,7 +492,7 @@ class SmartInstaller:
                 logger.warning("⚠️ 跳过Nesticle安装（非Linux环境）")
                 return True
 
-    def _install_virtuanes(self) -> bool:
+    def _install_virtuanes(self):
         """安装VirtuaNES"""
         try:
             # 添加项目根目录到Python路径
@@ -512,12 +517,12 @@ class SmartInstaller:
             except Exception:
                 logger.warning("⚠️ 跳过VirtuaNES安装（非Linux环境）")
                 return True
-    
+
     def _calculate_checksum(self, path: Path) -> str:
         """计算目录或文件的校验和"""
         if not path.exists():
             return ""
-        
+
         if path.is_file():
             with open(path, 'rb') as f:
                 return hashlib.md5(f.read()).hexdigest()
@@ -532,36 +537,37 @@ class SmartInstaller:
                     except Exception:
                         pass
             return hashlib.md5(''.join(checksums).encode()).hexdigest()
-    
-    def run_full_installation(self) -> bool:
+
+    def run_full_installation(self):
         """运行完整安装"""
         logger.info("🚀 开始智能安装...")
-        
+
         steps = [
             ("系统包", self.install_system_packages),
             ("Python包", self.install_python_packages),
             ("模拟器", self.install_emulators)
         ]
-        
+
         for step_name, step_func in steps:
             logger.info(f"📋 执行步骤: {step_name}")
             if not step_func():
                 logger.error(f"❌ 步骤失败: {step_name}")
                 return False
             logger.info(f"✅ 步骤完成: {step_name}")
-        
+
         logger.info("🎉 智能安装完成!")
         return True
 
-def main() -> bool:
+
+def main():
     """主函数"""
     installer = SmartInstaller()
-    
+
     if len(sys.argv) > 1 and sys.argv[1] == "--check-only":
         logger.info("🔍 仅检查模式...")
         # 这里可以添加仅检查的逻辑
         return
-    
+
     success = installer.run_full_installation()
     sys.exit(0 if success else 1)
 

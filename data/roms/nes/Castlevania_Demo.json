@@ -1,0 +1,9 @@
+{
+  "name": "Castlevania Demo",
+  "system": "nes",
+  "description": "Castlevania Demo - 演示版",
+  "size": "32768 bytes",
+  "demo": true,
+  "file_path": "data/roms/nes/Castlevania_Demo.nes",
+  "checksum": "a7026d507d4046c770c19592652575b8"
+}

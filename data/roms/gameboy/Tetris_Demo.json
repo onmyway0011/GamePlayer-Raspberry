@@ -1,0 +1,9 @@
+{
+  "name": "Tetris Demo",
+  "system": "gb",
+  "description": "Tetris Demo - 演示版",
+  "size": "32768 bytes",
+  "demo": true,
+  "file_path": "data/roms/gameboy/Tetris_Demo.gb",
+  "checksum": "2f75549f8d74acd0634d586cf0b79b4a"
+}

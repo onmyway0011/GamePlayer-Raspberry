@@ -1,0 +1,331 @@
+{
+  "systems": {
+    "nes": {
+      "name": "Nintendo Entertainment System",
+      "short_name": "NES",
+      "icon": "🎮",
+      "description": "经典的8位任天堂游戏机",
+      "rom_count": 13,
+      "games": [
+        {
+          "name": "Micro Mages",
+          "description": "合作平台游戏演示版",
+          "size": "40KB",
+          "demo": false,
+          "file_name": "Micro_Mages.nes"
+        },
+        {
+          "name": "Pac-Man Demo",
+          "description": "Pac-Man Demo - 演示版",
+          "size": "32768 bytes",
+          "demo": true,
+          "file_name": "Pac-Man_Demo.nes"
+        },
+        {
+          "name": "Metroid Demo",
+          "description": "Metroid Demo - 演示版",
+          "size": "32768 bytes",
+          "demo": true,
+          "file_name": "Metroid_Demo.nes"
+        },
+        {
+          "name": "Contra Demo",
+          "description": "Contra Demo - 演示版",
+          "size": "32768 bytes",
+          "demo": true,
+          "file_name": "Contra_Demo.nes"
+        },
+        {
+          "name": "Super Mario Bros Demo",
+          "description": "Super Mario Bros Demo - 演示版",
+          "size": "32768 bytes",
+          "demo": true,
+          "file_name": "Super_Mario_Bros_Demo.nes"
+        },
+        {
+          "name": "Tetris Demo",
+          "description": "Tetris Demo - 演示版",
+          "size": "32768 bytes",
+          "demo": true,
+          "file_name": "Tetris_Demo.nes"
+        },
+        {
+          "name": "Dragon Quest Demo",
+          "description": "Dragon Quest Demo - 演示版",
+          "size": "32768 bytes",
+          "demo": true,
+          "file_name": "Dragon_Quest_Demo.nes"
+        },
+        {
+          "name": "Final Fantasy Demo",
+          "description": "Final Fantasy Demo - 演示版",
+          "size": "32768 bytes",
+          "demo": true,
+          "file_name": "Final_Fantasy_Demo.nes"
+        },
+        {
+          "name": "Blade Buster",
+          "description": "动作平台游戏",
+          "size": "32KB",
+          "demo": false,
+          "file_name": "Blade_Buster.nes"
+        },
+        {
+          "name": "Mega Man Demo",
+          "description": "Mega Man Demo - 演示版",
+          "size": "32768 bytes",
+          "demo": true,
+          "file_name": "Mega_Man_Demo.nes"
+        },
+        {
+          "name": "The Legend of Zelda Demo",
+          "description": "The Legend of Zelda Demo - 演示版",
+          "size": "32768 bytes",
+          "demo": true,
+          "file_name": "The_Legend_of_Zelda_Demo.nes"
+        },
+        {
+          "name": "Castlevania Demo",
+          "description": "Castlevania Demo - 演示版",
+          "size": "32768 bytes",
+          "demo": true,
+          "file_name": "Castlevania_Demo.nes"
+        },
+        {
+          "name": "Lizard",
+          "description": "冒险解谜游戏演示版",
+          "size": "256KB",
+          "demo": false,
+          "file_name": "Lizard.nes"
+        }
+      ]
+    },
+    "snes": {
+      "name": "Super Nintendo Entertainment System",
+      "short_name": "SNES",
+      "icon": "🎯",
+      "description": "16位超级任天堂游戏机",
+      "rom_count": 10,
+      "games": [
+        {
+          "name": "Final Fantasy VI Demo",
+          "description": "Final Fantasy VI Demo - 演示版",
+          "size": "524288 bytes",
+          "demo": true,
+          "file_name": "Final_Fantasy_VI_Demo.smc"
+        },
+        {
+          "name": "Street Fighter II Demo",
+          "description": "Street Fighter II Demo - 演示版",
+          "size": "524288 bytes",
+          "demo": true,
+          "file_name": "Street_Fighter_II_Demo.smc"
+        },
+        {
+          "name": "Super Mario World Demo",
+          "description": "Super Mario World Demo - 演示版",
+          "size": "524288 bytes",
+          "demo": true,
+          "file_name": "Super_Mario_World_Demo.smc"
+        },
+        {
+          "name": "Super Mario Kart Demo",
+          "description": "Super Mario Kart Demo - 演示版",
+          "size": "524288 bytes",
+          "demo": true,
+          "file_name": "Super_Mario_Kart_Demo.smc"
+        },
+        {
+          "name": "F-Zero Demo",
+          "description": "F-Zero Demo - 演示版",
+          "size": "524288 bytes",
+          "demo": true,
+          "file_name": "F-Zero_Demo.smc"
+        },
+        {
+          "name": "Chrono Trigger Demo",
+          "description": "Chrono Trigger Demo - 演示版",
+          "size": "524288 bytes",
+          "demo": true,
+          "file_name": "Chrono_Trigger_Demo.smc"
+        },
+        {
+          "name": "Secret of Mana Demo",
+          "description": "Secret of Mana Demo - 演示版",
+          "size": "524288 bytes",
+          "demo": true,
+          "file_name": "Secret_of_Mana_Demo.smc"
+        },
+        {
+          "name": "Donkey Kong Country Demo",
+          "description": "Donkey Kong Country Demo - 演示版",
+          "size": "524288 bytes",
+          "demo": true,
+          "file_name": "Donkey_Kong_Country_Demo.smc"
+        },
+        {
+          "name": "The Legend of Zelda: A Link to the Past Demo",
+          "description": "The Legend of Zelda: A Link to the Past Demo - 演示版",
+          "size": "524288 bytes",
+          "demo": true,
+          "file_name": "The_Legend_of_Zelda:_A_Link_to_the_Past_Demo.smc"
+        },
+        {
+          "name": "Super Metroid Demo",
+          "description": "Super Metroid Demo - 演示版",
+          "size": "524288 bytes",
+          "demo": true,
+          "file_name": "Super_Metroid_Demo.smc"
+        }
+      ]
+    },
+    "gb": {
+      "name": "Game Boy",
+      "short_name": "GB",
+      "icon": "📱",
+      "description": "任天堂掌上游戏机",
+      "rom_count": 7,
+      "games": [
+        {
+          "name": "Deadeus",
+          "description": "恐怖冒险游戏",
+          "size": "32KB",
+          "demo": false,
+          "file_name": "Deadeus.gb"
+        },
+        {
+          "name": "Metroid II Demo",
+          "description": "Metroid II Demo - 演示版",
+          "size": "32768 bytes",
+          "demo": true,
+          "file_name": "Metroid_II_Demo.gb"
+        },
+        {
+          "name": "Super Mario Land Demo",
+          "description": "Super Mario Land Demo - 演示版",
+          "size": "32768 bytes",
+          "demo": true,
+          "file_name": "Super_Mario_Land_Demo.gb"
+        },
+        {
+          "name": "Tobu Tobu Girl",
+          "description": "平台跳跃游戏",
+          "size": "32KB",
+          "demo": false,
+          "file_name": "Tobu_Tobu_Girl.gb"
+        },
+        {
+          "name": "The Legend of Zelda: Link's Awakening Demo",
+          "description": "The Legend of Zelda: Link's Awakening Demo - 演示版",
+          "size": "32768 bytes",
+          "demo": true,
+          "file_name": "The_Legend_of_Zelda:_Link's_Awakening_Demo.gb"
+        },
+        {
+          "name": "Pokemon Red Demo",
+          "description": "Pokemon Red Demo - 演示版",
+          "size": "32768 bytes",
+          "demo": true,
+          "file_name": "Pokemon_Red_Demo.gb"
+        },
+        {
+          "name": "Tetris Demo",
+          "description": "Tetris Demo - 演示版",
+          "size": "32768 bytes",
+          "demo": true,
+          "file_name": "Tetris_Demo.gb"
+        }
+      ]
+    },
+    "gba": {
+      "name": "Game Boy Advance",
+      "short_name": "GBA",
+      "icon": "🎲",
+      "description": "Game Boy Advance掌机",
+      "rom_count": 5,
+      "games": [
+        {
+          "name": "The Legend of Zelda: The Minish Cap Demo",
+          "description": "The Legend of Zelda: The Minish Cap Demo - 演示版",
+          "size": "262144 bytes",
+          "demo": true,
+          "file_name": "The_Legend_of_Zelda:_The_Minish_Cap_Demo.gba"
+        },
+        {
+          "name": "Golden Sun Demo",
+          "description": "Golden Sun Demo - 演示版",
+          "size": "262144 bytes",
+          "demo": true,
+          "file_name": "Golden_Sun_Demo.gba"
+        },
+        {
+          "name": "Metroid: Fusion Demo",
+          "description": "Metroid: Fusion Demo - 演示版",
+          "size": "262144 bytes",
+          "demo": true,
+          "file_name": "Metroid:_Fusion_Demo.gba"
+        },
+        {
+          "name": "Pokemon Ruby Demo",
+          "description": "Pokemon Ruby Demo - 演示版",
+          "size": "262144 bytes",
+          "demo": true,
+          "file_name": "Pokemon_Ruby_Demo.gba"
+        },
+        {
+          "name": "Fire Emblem Demo",
+          "description": "Fire Emblem Demo - 演示版",
+          "size": "262144 bytes",
+          "demo": true,
+          "file_name": "Fire_Emblem_Demo.gba"
+        }
+      ]
+    },
+    "genesis": {
+      "name": "Sega Genesis/Mega Drive",
+      "short_name": "Genesis",
+      "icon": "🔵",
+      "description": "世嘉16位游戏机",
+      "rom_count": 5,
+      "games": [
+        {
+          "name": "Golden Axe Demo",
+          "description": "Golden Axe Demo - 演示版",
+          "size": "524288 bytes",
+          "demo": true,
+          "file_name": "Golden_Axe_Demo.md"
+        },
+        {
+          "name": "Shinobi Demo",
+          "description": "Shinobi Demo - 演示版",
+          "size": "524288 bytes",
+          "demo": true,
+          "file_name": "Shinobi_Demo.md"
+        },
+        {
+          "name": "Sonic the Hedgehog Demo",
+          "description": "Sonic the Hedgehog Demo - 演示版",
+          "size": "524288 bytes",
+          "demo": true,
+          "file_name": "Sonic_the_Hedgehog_Demo.md"
+        },
+        {
+          "name": "Phantasy Star Demo",
+          "description": "Phantasy Star Demo - 演示版",
+          "size": "524288 bytes",
+          "demo": true,
+          "file_name": "Phantasy_Star_Demo.md"
+        },
+        {
+          "name": "Streets of Rage Demo",
+          "description": "Streets of Rage Demo - 演示版",
+          "size": "524288 bytes",
+          "demo": true,
+          "file_name": "Streets_of_Rage_Demo.md"
+        }
+      ]
+    }
+  },
+  "total_roms": 40,
+  "last_updated": "2025-06-27"
+}

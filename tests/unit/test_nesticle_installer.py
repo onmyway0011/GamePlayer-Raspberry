@@ -29,7 +29,7 @@ class TestNesticleInstaller(unittest.TestCase):
         # 创建临时目录
         self.temp_dir = tempfile.mkdtemp()
         self.config_file = Path(self.temp_dir) / "test_config.json"
-        
+
         # 创建测试配置
         self.test_config = {
             "emulator": {
@@ -82,11 +82,11 @@ class TestNesticleInstaller(unittest.TestCase):
                 }
             }
         }
-        
+
         # 写入测试配置文件
         with open(self.config_file, "w", encoding="utf-8") as f:
             json.dump(self.test_config, f, indent=2)
-        
+
         # 创建安装器实例
         self.installer = NesticleInstaller(str(self.config_file))
 
@@ -108,7 +108,7 @@ class TestNesticleInstaller(unittest.TestCase):
         """测试依赖检查"""
         # 模拟依赖检查成功
         mock_run.return_value.returncode = 0
-        
+
         result = self.installer.check_dependencies()
         self.assertTrue(result)
 
@@ -116,11 +116,11 @@ class TestNesticleInstaller(unittest.TestCase):
         """测试 Nesticle 配置"""
         result = self.installer.configure_nesticle()
         self.assertTrue(result)
-        
+
         # 检查配置文件是否创建
         config_path = self.installer.config_dir / "nesticle.cfg"
         self.assertTrue(config_path.exists())
-        
+
         # 检查配置文件内容
         with open(config_path, "r", encoding="utf-8") as f:
             content = f.read()
@@ -132,10 +132,10 @@ class TestNesticleInstaller(unittest.TestCase):
         """测试金手指系统设置"""
         result = self.installer.setup_cheat_system()
         self.assertTrue(result)
-        
+
         # 检查金手指目录是否创建
         self.assertTrue(self.installer.cheats_dir.exists())
-        
+
         # 检查金手指文件是否生成
         mario_cheat_file = self.installer.cheats_dir / "super_mario_bros.cht"
         self.assertTrue(mario_cheat_file.exists())
@@ -144,11 +144,11 @@ class TestNesticleInstaller(unittest.TestCase):
         """测试自动保存系统设置"""
         result = self.installer.setup_auto_save_system()
         self.assertTrue(result)
-        
+
         # 检查自动保存脚本是否创建
         auto_save_script = self.installer.install_dir / "auto_save.sh"
         self.assertTrue(auto_save_script.exists())
-        
+
         # 检查脚本权限
         self.assertTrue(os.access(auto_save_script, os.X_OK))
 
@@ -156,11 +156,11 @@ class TestNesticleInstaller(unittest.TestCase):
         """测试 RetroArch 集成"""
         result = self.installer.integrate_with_retroarch()
         self.assertTrue(result)
-        
+
         # 检查核心信息文件是否创建
         core_info_path = self.installer.core_dir / "nesticle_libretro.info"
         self.assertTrue(core_info_path.exists())
-        
+
         # 检查核心信息内容
         with open(core_info_path, "r", encoding="utf-8") as f:
             content = f.read()
@@ -172,14 +172,14 @@ class TestNesticleInstaller(unittest.TestCase):
         """测试启动脚本创建"""
         result = self.installer.create_launch_script()
         self.assertTrue(result)
-        
+
         # 检查启动脚本是否创建
         launch_script = self.installer.install_dir / "launch_nesticle.sh"
         self.assertTrue(launch_script.exists())
-        
+
         # 检查脚本权限
         self.assertTrue(os.access(launch_script, os.X_OK))
-        
+
         # 检查脚本内容
         with open(launch_script, "r") as f:
             content = f.read()
@@ -190,11 +190,11 @@ class TestNesticleInstaller(unittest.TestCase):
         """测试设置为默认模拟器"""
         result = self.installer.set_as_default_emulator()
         self.assertTrue(result)
-        
+
         # 检查默认配置是否创建
         default_config_path = self.installer.config_dir / "default_emulator.json"
         self.assertTrue(default_config_path.exists())
-        
+
         # 检查配置内容
         with open(default_config_path, "r", encoding="utf-8") as f:
             config = json.load(f)
@@ -210,7 +210,7 @@ class TestNesticleInstaller(unittest.TestCase):
         self.installer.integrate_with_retroarch()
         self.installer.create_launch_script()
         self.installer.set_as_default_emulator()
-        
+
         result = self.installer.verify_installation()
         self.assertTrue(result)
 
@@ -223,11 +223,11 @@ class TestNesticleInstaller(unittest.TestCase):
     def test_cheat_codes_generation(self):
         """测试金手指代码生成"""
         self.installer.setup_cheat_system()
-        
+
         # 检查超级马里奥金手指文件
         mario_cheat_file = self.installer.cheats_dir / "super_mario_bros.cht"
         self.assertTrue(mario_cheat_file.exists())
-        
+
         with open(mario_cheat_file, "r", encoding="utf-8") as f:
             content = f.read()
             self.assertIn("infinite_lives", content)
@@ -236,11 +236,11 @@ class TestNesticleInstaller(unittest.TestCase):
     def test_auto_save_configuration(self):
         """测试自动保存配置"""
         self.installer.setup_auto_save_system()
-        
+
         auto_save_script = self.installer.install_dir / "auto_save.sh"
         with open(auto_save_script, "r") as f:
             content = f.read()
-            
+
             # 检查配置参数
             self.assertIn("SAVE_INTERVAL=30", content)
             self.assertIn("MAX_SAVES=10", content)
@@ -249,11 +249,11 @@ class TestNesticleInstaller(unittest.TestCase):
     def test_retroarch_core_config(self):
         """测试 RetroArch 核心配置"""
         self.installer.integrate_with_retroarch()
-        
+
         core_info_path = self.installer.core_dir / "nesticle_libretro.info"
         with open(core_info_path, "r", encoding="utf-8") as f:
             content = f.read()
-            
+
             # 检查核心信息
             self.assertIn("system = nes", content)
             self.assertIn("extensions = .nes,.NES", content)
@@ -263,11 +263,11 @@ class TestNesticleInstaller(unittest.TestCase):
     def test_launch_script_environment(self):
         """测试启动脚本环境变量"""
         self.installer.create_launch_script()
-        
+
         launch_script = self.installer.install_dir / "launch_nesticle.sh"
         with open(launch_script, "r") as f:
             content = f.read()
-            
+
             # 检查环境变量设置
             self.assertIn("NESTICLE_CONFIG", content)
             self.assertIn("NESTICLE_SAVES", content)
@@ -284,7 +284,7 @@ class TestNesticleInstaller(unittest.TestCase):
         """测试测试环境检测"""
         # 确保测试环境变量已设置
         self.assertEqual(os.environ.get("TEST_ENV"), "true")
-        
+
         # 检查是否使用临时目录
         self.assertIn("nesticle_test", str(self.installer.install_dir))
 
@@ -298,7 +298,7 @@ class TestNesticleInstaller(unittest.TestCase):
     def test_feature_flags(self):
         """测试功能标志"""
         features = self.installer.nesticle_config["features"]
-        
+
         # 检查关键功能
         self.assertIn("infinite_lives", features)
         self.assertIn("auto_save", features)
@@ -314,11 +314,11 @@ class TestNesticleInstaller(unittest.TestCase):
     def test_cheat_system_configuration(self):
         """测试金手指系统配置"""
         cheats_config = self.installer.nesticle_config["cheats"]
-        
+
         self.assertTrue(cheats_config["enabled"])
         self.assertTrue(cheats_config["infinite_lives"])
         self.assertTrue(cheats_config["auto_cheat"])
-        
+
         # 检查金手指代码
         cheat_codes = cheats_config["cheat_codes"]
         self.assertIn("super_mario_bros", cheat_codes)
@@ -327,7 +327,7 @@ class TestNesticleInstaller(unittest.TestCase):
     def test_save_system_configuration(self):
         """测试保存系统配置"""
         save_config = self.installer.nesticle_config["save_states"]
-        
+
         self.assertTrue(save_config["enabled"])
         self.assertTrue(save_config["auto_save"])
         self.assertEqual(save_config["save_interval"], 30)
@@ -347,7 +347,7 @@ class TestNesticleInstaller(unittest.TestCase):
         script_path = self.installer.download_nesticle()
         self.assertIsNotNone(script_path)
         self.assertTrue(script_path.exists())
-        
+
         # 检查脚本内容
         with open(script_path, "r") as f:
             content = f.read()
@@ -366,7 +366,7 @@ class TestNesticleIntegration(unittest.TestCase):
         """测试前准备"""
         self.temp_dir = tempfile.mkdtemp()
         self.config_file = Path(self.temp_dir) / "integration_config.json"
-        
+
         # 创建集成测试配置
         self.integration_config = {
             "emulator": {
@@ -377,7 +377,7 @@ class TestNesticleIntegration(unittest.TestCase):
                 }
             }
         }
-        
+
         with open(self.config_file, "w", encoding="utf-8") as f:
             json.dump(self.integration_config, f, indent=2)
 
@@ -394,7 +394,8 @@ class TestNesticleIntegration(unittest.TestCase):
     @patch.object(NesticleInstaller, 'create_launch_script', return_value=True)
     @patch.object(NesticleInstaller, 'set_as_default_emulator', return_value=True)
     @patch.object(NesticleInstaller, 'verify_installation', return_value=True)
-    def test_integration_workflow(self, mock_verify, mock_default, mock_launch, 
+    def test_integration_workflow(self, mock_verify, mock_default, mock_launch,
+        """TODO: Add docstring"""
                                 mock_retroarch, mock_save, mock_cheat, mock_config, mock_deps):
         """测试完整集成工作流"""
         installer = NesticleInstaller(str(self.config_file))
@@ -404,7 +405,7 @@ class TestNesticleIntegration(unittest.TestCase):
     def test_integration_with_retropie(self):
         """测试与 RetroPie 的集成"""
         installer = NesticleInstaller(str(self.config_file))
-        
+
         # 测试 RetroArch 集成
         result = installer.integrate_with_retroarch()
         self.assertTrue(result)
@@ -412,17 +413,16 @@ class TestNesticleIntegration(unittest.TestCase):
     def test_default_emulator_setting(self):
         """测试默认模拟器设置"""
         installer = NesticleInstaller(str(self.config_file))
-        
+
         result = installer.set_as_default_emulator()
         self.assertTrue(result)
-        
+
         # 验证配置内容
         default_config_path = installer.config_dir / "default_emulator.json"
         if default_config_path.exists():
             with open(default_config_path, "r", encoding="utf-8") as f:
                 config = json.load(f)
                 self.assertEqual(config["nes"]["default_emulator"], "nesticle")
-
 
 if __name__ == "__main__":
     # 运行测试

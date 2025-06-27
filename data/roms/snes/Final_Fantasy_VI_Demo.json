@@ -1,0 +1,9 @@
+{
+  "name": "Final Fantasy VI Demo",
+  "system": "snes",
+  "description": "Final Fantasy VI Demo - 演示版",
+  "size": "524288 bytes",
+  "demo": true,
+  "file_path": "data/roms/snes/Final_Fantasy_VI_Demo.smc",
+  "checksum": "eace3d90046dd8135032bc68717726eb"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Super Mario Bros Demo",
+  "system": "nes",
+  "description": "Super Mario Bros Demo - 演示版",
+  "size": "32768 bytes",
+  "demo": true,
+  "file_path": "data/roms/nes/Super_Mario_Bros_Demo.nes",
+  "checksum": "42427cc6f95bb08f51d84798f370d3e8"
+}

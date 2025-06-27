@@ -1,0 +1,1823 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎮 GamePlayer-Raspberry</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            font-family: 'Courier New', monospace;
+            color: white;
+            text-align: center;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #00ff00;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            margin-bottom: 30px;
+        }
+        canvas {
+            border: 3px solid #00ff00;
+            border-radius: 10px;
+            background: #000;
+            box-shadow: 0 0 20px rgba(0,255,0,0.3);
+        }
+        .controls {
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+            border: 1px solid #00ff00;
+        }
+        .score {
+            font-size: 24px;
+            color: #ffff00;
+            margin: 10px 0;
+        }
+        .instructions {
+            margin: 20px 0;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        .key {
+            background: #333;
+            color: #00ff00;
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin: 0 5px;
+            border: 1px solid #00ff00;
+        }
+
+        /* 游戏列表样式 */
+        .game-list {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .game-item {
+            background: rgba(0,255,0,0.1);
+            border: 2px solid #00ff00;
+            border-radius: 10px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .game-item:hover {
+            background: rgba(0,255,0,0.2);
+            border-color: #00ff88;
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,255,0,0.3);
+        }
+
+        .game-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        .game-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #00ff00;
+            margin-bottom: 5px;
+        }
+
+        .game-desc {
+            font-size: 12px;
+            color: #88ff88;
+            line-height: 1.4;
+        }
+
+        /* 游戏界面样式 */
+        .game-interface {
+            text-align: center;
+        }
+
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 0 20px;
+        }
+
+        .back-btn {
+            background: rgba(255,0,0,0.2);
+            border: 1px solid #ff0000;
+            color: #ff0000;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: rgba(255,0,0,0.3);
+            border-color: #ff4444;
+        }
+
+        /* 搜索和筛选样式 */
+        .search-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        #gameSearch {
+            flex: 1;
+            min-width: 200px;
+            padding: 10px;
+            border: 2px solid #00ff00;
+            border-radius: 5px;
+            background: rgba(0,0,0,0.8);
+            color: #00ff00;
+            font-size: 16px;
+        }
+
+        #gameSearch:focus {
+            outline: none;
+            border-color: #00ff88;
+            box-shadow: 0 0 10px rgba(0,255,0,0.3);
+        }
+
+        #systemFilter {
+            padding: 10px;
+            border: 2px solid #00ff00;
+            border-radius: 5px;
+            background: rgba(0,0,0,0.8);
+            color: #00ff00;
+            font-size: 16px;
+        }
+
+        .settings-btn {
+            padding: 10px 15px;
+            border: 2px solid #ffaa00;
+            border-radius: 5px;
+            background: rgba(255,170,0,0.2);
+            color: #ffaa00;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .settings-btn:hover {
+            background: rgba(255,170,0,0.3);
+            border-color: #ffcc44;
+        }
+
+        /* 系统网格样式 */
+        .systems-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .system-item {
+            background: rgba(0,100,255,0.1);
+            border: 2px solid #0066ff;
+            border-radius: 10px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .system-item:hover {
+            background: rgba(0,100,255,0.2);
+            border-color: #0088ff;
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,100,255,0.3);
+        }
+
+        .system-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        .system-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #0088ff;
+            margin-bottom: 5px;
+        }
+
+        .system-desc {
+            font-size: 12px;
+            color: #88ccff;
+            line-height: 1.4;
+            margin-bottom: 10px;
+        }
+
+        .system-count {
+            font-size: 14px;
+            color: #00ff00;
+            font-weight: bold;
+        }
+
+        /* 游戏列表容器样式 */
+        .games-container {
+            margin-top: 20px;
+        }
+
+        .game-list-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+
+        .game-count {
+            color: #00ff00;
+            font-weight: bold;
+        }
+
+        /* 游戏类型样式 */
+        .game-type {
+            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 3px;
+            margin-top: 5px;
+            display: inline-block;
+        }
+
+        .game-type.demo {
+            background: rgba(255,170,0,0.2);
+            color: #ffaa00;
+            border: 1px solid #ffaa00;
+        }
+
+        .game-type.full {
+            background: rgba(0,255,0,0.2);
+            color: #00ff00;
+            border: 1px solid #00ff00;
+        }
+
+        .game-size {
+            font-size: 11px;
+            color: #888;
+            margin-top: 3px;
+        }
+
+        /* 设置界面样式 */
+        .settings-interface {
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .settings-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            gap: 20px;
+        }
+
+        .settings-content {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .settings-section {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid #333;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .settings-section h4 {
+            color: #00ff00;
+            margin: 0 0 15px 0;
+            font-size: 18px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+        }
+
+        .setting-item {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .setting-item label {
+            color: #ccc;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .setting-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #00ff00;
+        }
+
+        .setting-item input[type="range"] {
+            flex: 1;
+            accent-color: #00ff00;
+        }
+
+        .setting-item select {
+            padding: 5px 10px;
+            border: 1px solid #00ff00;
+            border-radius: 3px;
+            background: rgba(0,0,0,0.8);
+            color: #00ff00;
+        }
+
+        /* 金手指设置样式 */
+        .cheat-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .cheat-system-select label {
+            color: #00ff00;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .cheat-system-select select {
+            width: 100%;
+            padding: 8px;
+            border: 2px solid #00ff00;
+            border-radius: 5px;
+            background: rgba(0,0,0,0.8);
+            color: #00ff00;
+            font-size: 16px;
+        }
+
+        .cheat-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 10px;
+            border: 1px solid #333;
+            border-radius: 5px;
+            background: rgba(0,0,0,0.2);
+        }
+
+        .cheat-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border: 1px solid #444;
+            border-radius: 5px;
+            background: rgba(0,0,0,0.3);
+        }
+
+        .cheat-info {
+            flex: 1;
+        }
+
+        .cheat-name {
+            color: #00ff00;
+            font-weight: bold;
+            margin-bottom: 3px;
+        }
+
+        .cheat-desc {
+            color: #888;
+            font-size: 12px;
+        }
+
+        .cheat-code {
+            color: #ffaa00;
+            font-family: monospace;
+            font-size: 11px;
+            margin-top: 3px;
+        }
+
+        .cheat-toggle {
+            margin-left: 10px;
+        }
+
+        .cheat-toggle input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: #00ff00;
+        }
+
+        .cheat-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .action-btn {
+            padding: 8px 16px;
+            border: 2px solid;
+            border-radius: 5px;
+            background: rgba(0,0,0,0.3);
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn.enable {
+            border-color: #00ff00;
+            color: #00ff00;
+        }
+
+        .action-btn.enable:hover {
+            background: rgba(0,255,0,0.2);
+        }
+
+        .action-btn.disable {
+            border-color: #ff4444;
+            color: #ff4444;
+        }
+
+        .action-btn.disable:hover {
+            background: rgba(255,68,68,0.2);
+        }
+
+        .action-btn.reset {
+            border-color: #ffaa00;
+            color: #ffaa00;
+        }
+
+        .action-btn.reset:hover {
+            background: rgba(255,170,0,0.2);
+        }
+
+        /* 自动启用标签样式 */
+        .auto-enable-label {
+            font-size: 10px;
+            background: rgba(0,255,255,0.2);
+            color: #00ffff;
+            border: 1px solid #00ffff;
+            border-radius: 3px;
+            padding: 1px 4px;
+            margin-left: 5px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎮 GamePlayer-Raspberry</h1>
+
+        <!-- 游戏列表界面 -->
+        <div id="gameList" class="game-list">
+            <h2>🎮 选择游戏系统</h2>
+
+            <!-- 搜索和筛选 -->
+            <div class="search-controls">
+                <input type="text" id="gameSearch" placeholder="🔍 搜索游戏..." onkeyup="filterGames()">
+                <select id="systemFilter" onchange="filterBySystem()">
+                    <option value="">所有系统</option>
+                </select>
+                <button onclick="showSettings()" class="settings-btn">⚙️ 设置</button>
+            </div>
+
+            <!-- 系统选择 -->
+            <div id="systemList" class="systems-grid">
+                <!-- 系统列表将通过JavaScript动态加载 -->
+            </div>
+
+            <!-- 游戏列表 -->
+            <div id="gameListContainer" class="games-container" style="display: none;">
+                <div class="game-list-header">
+                    <button onclick="backToSystems()" class="back-btn">← 返回系统选择</button>
+                    <h3 id="currentSystemTitle">游戏列表</h3>
+                    <div class="game-count">共 <span id="gameCount">0</span> 个游戏</div>
+                </div>
+                <div id="gameGrid" class="games-grid">
+                    <!-- 游戏列表将通过JavaScript动态加载 -->
+                </div>
+            </div>
+        </div>
+
+        <!-- 游戏界面 -->
+        <div id="gameInterface" class="game-interface" style="display: none;">
+            <div class="game-header">
+                <button onclick="backToGameList()" class="back-btn">← 返回游戏列表</button>
+                <h3 id="currentGameTitle">太空射击</h3>
+                <div class="score">得分: <span id="score">0</span></div>
+            </div>
+            <canvas id="gameCanvas" width="800" height="600"></canvas>
+        </div>
+
+        <!-- 设置界面 -->
+        <div id="settingsInterface" class="settings-interface" style="display: none;">
+            <div class="settings-header">
+                <button onclick="backToGameList()" class="back-btn">← 返回</button>
+                <h3>⚙️ 游戏设置</h3>
+            </div>
+
+            <div class="settings-content">
+                <!-- 金手指设置 -->
+                <div class="settings-section">
+                    <h4>🎯 金手指设置</h4>
+                    <div class="cheat-controls">
+                        <div class="cheat-system-select">
+                            <label>选择游戏系统:</label>
+                            <select id="cheatSystemSelect" onchange="loadSystemCheats()">
+                                <option value="">请选择系统</option>
+                            </select>
+                        </div>
+
+                        <div id="cheatList" class="cheat-list">
+                            <!-- 金手指列表将通过JavaScript动态加载 -->
+                        </div>
+
+                        <div class="cheat-actions">
+                            <button onclick="enableAllCheats()" class="action-btn enable">启用所有</button>
+                            <button onclick="disableAllCheats()" class="action-btn disable">禁用所有</button>
+                            <button onclick="resetCheats()" class="action-btn reset">重置</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 通用设置 -->
+                <div class="settings-section">
+                    <h4>🎮 通用设置</h4>
+                    <div class="setting-item">
+                        <label>
+                            <input type="checkbox" id="autoSave" checked>
+                            自动保存游戏进度
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label>
+                            <input type="checkbox" id="soundEnabled" checked>
+                            启用音效
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label>
+                            <input type="range" id="volumeSlider" min="0" max="100" value="80">
+                            音量: <span id="volumeValue">80</span>%
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label>
+                            <input type="checkbox" id="fullscreenMode">
+                            全屏模式
+                        </label>
+                    </div>
+                </div>
+
+                <!-- 控制器设置 -->
+                <div class="settings-section">
+                    <h4>🎮 控制器设置</h4>
+                    <div class="setting-item">
+                        <label>
+                            <input type="checkbox" id="gamepadEnabled" checked>
+                            启用USB手柄
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label>
+                            <input type="checkbox" id="bluetoothEnabled" checked>
+                            启用蓝牙手柄
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <button onclick="calibrateGamepad()" class="action-btn">校准手柄</button>
+                    </div>
+                </div>
+
+                <!-- 显示设置 -->
+                <div class="settings-section">
+                    <h4>📺 显示设置</h4>
+                    <div class="setting-item">
+                        <label>
+                            分辨率:
+                            <select id="resolutionSelect">
+                                <option value="800x600">800x600</option>
+                                <option value="1024x768">1024x768</option>
+                                <option value="1280x720">1280x720</option>
+                                <option value="1920x1080" selected>1920x1080</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label>
+                            <input type="checkbox" id="smoothScaling" checked>
+                            平滑缩放
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label>
+                            <input type="checkbox" id="scanlines">
+                            扫描线效果
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <div class="instructions">
+                <h3>🕹️ 游戏控制</h3>
+                <p>
+                    <span class="key">W</span> <span class="key">A</span> <span class="key">S</span> <span class="key">D</span> 或 方向键 - 移动
+                </p>
+                <p>
+                    <span class="key">空格</span> - 发射子弹 | <span class="key">R</span> - 重新开始
+                </p>
+                <p>
+                    <span class="key">点击屏幕</span> - 启用音频
+                </p>
+            </div>
+
+            <div class="audio-controls" style="margin-top: 20px;">
+                <h3>🔊 音频控制</h3>
+                <div style="margin: 10px 0;">
+                    <label style="color: #00ff00;">主音量: </label>
+                    <input type="range" id="masterVolume" min="0" max="100" value="80"
+                           style="width: 150px;" onchange="updateMasterVolume(this.value)">
+                    <span id="masterVolumeValue">80%</span>
+                </div>
+                <div style="margin: 10px 0;">
+                    <label style="color: #00ff00;">音效音量: </label>
+                    <input type="range" id="sfxVolume" min="0" max="100" value="70"
+                           style="width: 150px;" onchange="updateSfxVolume(this.value)">
+                    <span id="sfxVolumeValue">70%</span>
+                </div>
+                <div style="margin: 10px 0;">
+                    <label style="color: #00ff00;">音乐音量: </label>
+                    <input type="range" id="musicVolume" min="0" max="100" value="30"
+                           style="width: 150px;" onchange="updateMusicVolume(this.value)">
+                    <span id="musicVolumeValue">30%</span>
+                </div>
+                <div style="margin: 10px 0;">
+                    <button onclick="toggleAudio()" style="
+                        background: rgba(0,255,0,0.2);
+                        border: 1px solid #00ff00;
+                        color: #00ff00;
+                        padding: 5px 15px;
+                        border-radius: 5px;
+                        cursor: pointer;
+                    ">🔊 切换音频</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="instructions">
+            <h3>🎯 游戏目标</h3>
+            <p>控制绿色飞船，射击红色敌人，避免碰撞！</p>
+            <p>这是一个经典的NES风格射击游戏</p>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const scoreElement = document.getElementById('score');
+
+        // 音频系统
+        class AudioSystem {
+            constructor() {
+                this.audioContext = null;
+                this.sounds = {};
+                this.musicGain = null;
+                this.sfxGain = null;
+                this.masterGain = null;
+                this.initialized = false;
+                this.musicVolume = 0.3;
+                this.sfxVolume = 0.7;
+                this.masterVolume = 0.8;
+            }
+
+            async initialize() {
+                try {
+                    // 创建音频上下文
+                    this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+                    // 创建音量控制节点
+                    this.masterGain = this.audioContext.createGain();
+                    this.musicGain = this.audioContext.createGain();
+                    this.sfxGain = this.audioContext.createGain();
+
+                    // 连接音频节点
+                    this.masterGain.connect(this.audioContext.destination);
+                    this.musicGain.connect(this.masterGain);
+                    this.sfxGain.connect(this.masterGain);
+
+                    // 设置初始音量
+                    this.masterGain.gain.value = this.masterVolume;
+                    this.musicGain.gain.value = this.musicVolume;
+                    this.sfxGain.gain.value = this.sfxVolume;
+
+                    // 生成音效
+                    await this.generateSounds();
+
+                    this.initialized = true;
+                    console.log('🔊 音频系统初始化成功');
+
+                } catch (error) {
+                    console.error('❌ 音频系统初始化失败:', error);
+                }
+            }
+
+            async generateSounds() {
+                // 生成各种音效
+                this.sounds.shoot = await this.createTone(800, 0.1, 'square');
+                this.sounds.hit = await this.createTone(300, 0.2, 'sawtooth');
+                this.sounds.powerup = await this.createChord([440, 554, 659], 0.3);
+                this.sounds.explosion = await this.createNoise(0.3);
+                this.sounds.gameOver = await this.createTone(200, 1.0, 'triangle');
+                this.sounds.background = await this.createBackgroundMusic();
+            }
+
+            async createTone(frequency, duration, waveType = 'sine') {
+                const sampleRate = this.audioContext.sampleRate;
+                const frameCount = sampleRate * duration;
+                const buffer = this.audioContext.createBuffer(1, frameCount, sampleRate);
+                const data = buffer.getChannelData(0);
+
+                for (let i = 0; i < frameCount; i++) {
+                    const t = i / sampleRate;
+                    let value;
+
+                    switch (waveType) {
+                        case 'square':
+                            value = Math.sin(2 * Math.PI * frequency * t) > 0 ? 0.3 : -0.3;
+                            break;
+                        case 'sawtooth':
+                            value = 0.3 * (2 * (frequency * t % 1) - 1);
+                            break;
+                        case 'triangle':
+                            value = 0.3 * (2 * Math.abs(2 * (frequency * t % 1) - 1) - 1);
+                            break;
+                        default: // sine
+                            value = 0.3 * Math.sin(2 * Math.PI * frequency * t);
+                    }
+
+                    // 添加淡出效果
+                    const fadeOut = Math.max(0, 1 - (t / duration) * 2);
+                    data[i] = value * fadeOut;
+                }
+
+                return buffer;
+            }
+
+            async createChord(frequencies, duration) {
+                const sampleRate = this.audioContext.sampleRate;
+                const frameCount = sampleRate * duration;
+                const buffer = this.audioContext.createBuffer(1, frameCount, sampleRate);
+                const data = buffer.getChannelData(0);
+
+                for (let i = 0; i < frameCount; i++) {
+                    const t = i / sampleRate;
+                    let value = 0;
+
+                    frequencies.forEach(freq => {
+                        value += 0.1 * Math.sin(2 * Math.PI * freq * t);
+                    });
+
+                    // 添加淡出效果
+                    const fadeOut = Math.max(0, 1 - (t / duration) * 1.5);
+                    data[i] = value * fadeOut;
+                }
+
+                return buffer;
+            }
+
+            async createNoise(duration) {
+                const sampleRate = this.audioContext.sampleRate;
+                const frameCount = sampleRate * duration;
+                const buffer = this.audioContext.createBuffer(1, frameCount, sampleRate);
+                const data = buffer.getChannelData(0);
+
+                for (let i = 0; i < frameCount; i++) {
+                    const t = i / sampleRate;
+                    const value = (Math.random() * 2 - 1) * 0.2;
+
+                    // 添加淡出效果
+                    const fadeOut = Math.max(0, 1 - (t / duration) * 3);
+                    data[i] = value * fadeOut;
+                }
+
+                return buffer;
+            }
+
+            async createBackgroundMusic() {
+                // 创建简单的背景音乐循环
+                const duration = 4.0; // 4秒循环
+                const sampleRate = this.audioContext.sampleRate;
+                const frameCount = sampleRate * duration;
+                const buffer = this.audioContext.createBuffer(1, frameCount, sampleRate);
+                const data = buffer.getChannelData(0);
+
+                // 简单的旋律
+                const melody = [440, 494, 523, 587, 659, 587, 523, 494]; // A, B, C, D, E, D, C, B
+                const noteDuration = duration / melody.length;
+
+                for (let i = 0; i < frameCount; i++) {
+                    const t = i / sampleRate;
+                    const noteIndex = Math.floor(t / noteDuration);
+                    const noteTime = (t % noteDuration) / noteDuration;
+                    const frequency = melody[noteIndex % melody.length];
+
+                    // 主旋律
+                    let value = 0.1 * Math.sin(2 * Math.PI * frequency * t);
+
+                    // 添加和声
+                    value += 0.05 * Math.sin(2 * Math.PI * (frequency * 0.75) * t);
+
+                    // 音符淡入淡出
+                    const envelope = Math.sin(Math.PI * noteTime);
+                    data[i] = value * envelope;
+                }
+
+                return buffer;
+            }
+
+            playSound(soundName, volume = 1.0) {
+                if (!this.initialized || !this.sounds[soundName]) {
+                    return;
+                }
+
+                try {
+                    const source = this.audioContext.createBufferSource();
+                    const gainNode = this.audioContext.createGain();
+
+                    source.buffer = this.sounds[soundName];
+                    gainNode.gain.value = volume;
+
+                    source.connect(gainNode);
+                    gainNode.connect(this.sfxGain);
+
+                    source.start();
+                } catch (error) {
+                    console.error('播放音效失败:', error);
+                }
+            }
+
+            playBackgroundMusic() {
+                if (!this.initialized || !this.sounds.background) {
+                    return;
+                }
+
+                try {
+                    // 停止当前背景音乐
+                    this.stopBackgroundMusic();
+
+                    // 创建循环播放的背景音乐
+                    this.backgroundSource = this.audioContext.createBufferSource();
+                    this.backgroundSource.buffer = this.sounds.background;
+                    this.backgroundSource.loop = true;
+                    this.backgroundSource.connect(this.musicGain);
+                    this.backgroundSource.start();
+
+                    console.log('🎵 背景音乐开始播放');
+                } catch (error) {
+                    console.error('播放背景音乐失败:', error);
+                }
+            }
+
+            stopBackgroundMusic() {
+                if (this.backgroundSource) {
+                    try {
+                        this.backgroundSource.stop();
+                        this.backgroundSource = null;
+                    } catch (error) {
+                        // 忽略已停止的音源错误
+                    }
+                }
+            }
+
+            setMasterVolume(volume) {
+                this.masterVolume = Math.max(0, Math.min(1, volume));
+                if (this.masterGain) {
+                    this.masterGain.gain.value = this.masterVolume;
+                }
+            }
+
+            setSfxVolume(volume) {
+                this.sfxVolume = Math.max(0, Math.min(1, volume));
+                if (this.sfxGain) {
+                    this.sfxGain.gain.value = this.sfxVolume;
+                }
+            }
+
+            setMusicVolume(volume) {
+                this.musicVolume = Math.max(0, Math.min(1, volume));
+                if (this.musicGain) {
+                    this.musicGain.gain.value = this.musicVolume;
+                }
+            }
+        }
+
+        // 创建音频系统实例
+        const audioSystem = new AudioSystem();
+
+        // 游戏状态
+        let score = 0;
+        let gameRunning = true;
+        let audioInitialized = false;
+        let currentGame = null;
+        let currentSystem = null;
+        let romDatabase = null;
+        let filteredGames = [];
+
+        // 内置演示游戏数据
+        const demoGames = {
+            'space-shooter': {
+                title: '太空射击',
+                icon: '🚀',
+                description: '经典的太空射击游戏',
+                gameFunction: startSpaceShooter
+            }
+        };
+        
+        // 玩家
+        const player = {
+            x: canvas.width / 2,
+            y: canvas.height - 50,
+            width: 30,
+            height: 30,
+            speed: 5,
+            color: '#00ff00'
+        };
+
+        // 子弹数组
+        const bullets = [];
+        const bulletSpeed = 7;
+
+        // 敌人数组
+        const enemies = [];
+        const enemySpeed = 2;
+
+        // 按键状态
+        const keys = {};
+
+        // 初始化音频系统
+        async function initializeAudio() {
+            if (!audioInitialized) {
+                await audioSystem.initialize();
+                audioInitialized = true;
+
+                // 开始播放背景音乐
+                audioSystem.playBackgroundMusic();
+
+                // 显示音频状态
+                console.log('🔊 音频系统已启动');
+                showAudioStatus();
+            }
+        }
+
+        function showAudioStatus() {
+            const statusDiv = document.createElement('div');
+            statusDiv.style.cssText = `
+                position: fixed;
+                top: 10px;
+                left: 10px;
+                background: rgba(0, 255, 0, 0.8);
+                color: black;
+                padding: 5px 10px;
+                border-radius: 5px;
+                font-size: 12px;
+                z-index: 1000;
+            `;
+            statusDiv.textContent = '🔊 音频已启用';
+            document.body.appendChild(statusDiv);
+
+            setTimeout(() => {
+                document.body.removeChild(statusDiv);
+            }, 2000);
+        }
+
+        // 事件监听
+        document.addEventListener('keydown', (e) => {
+            keys[e.key.toLowerCase()] = true;
+            if (e.key === ' ') {
+                e.preventDefault();
+                shootBullet();
+            }
+            if (e.key.toLowerCase() === 'r') {
+                resetGame();
+            }
+
+            // 初始化音频系统（需要用户交互）
+            if (!audioInitialized) {
+                initializeAudio();
+            }
+        });
+
+        // 点击事件也可以初始化音频
+        document.addEventListener('click', () => {
+            if (!audioInitialized) {
+                initializeAudio();
+            }
+        });
+
+        document.addEventListener('keyup', (e) => {
+            keys[e.key.toLowerCase()] = false;
+        });
+
+        // 射击子弹
+        function shootBullet() {
+            bullets.push({
+                x: player.x + player.width / 2,
+                y: player.y,
+                width: 4,
+                height: 10,
+                color: '#ffff00'
+            });
+
+            // 播放射击音效
+            audioSystem.playSound('shoot', 0.5);
+        }
+
+        // 创建敌人
+        function createEnemy() {
+            enemies.push({
+                x: Math.random() * (canvas.width - 30),
+                y: -30,
+                width: 25,
+                height: 25,
+                color: '#ff0000'
+            });
+        }
+
+        // 更新游戏
+        function update() {
+            if (!gameRunning) return;
+
+            // 移动玩家
+            if (keys['w'] || keys['arrowup']) player.y = Math.max(0, player.y - player.speed);
+            if (keys['s'] || keys['arrowdown']) player.y = Math.min(canvas.height - player.height, player.y + player.speed);
+            if (keys['a'] || keys['arrowleft']) player.x = Math.max(0, player.x - player.speed);
+            if (keys['d'] || keys['arrowright']) player.x = Math.min(canvas.width - player.width, player.x + player.speed);
+
+            // 更新子弹
+            for (let i = bullets.length - 1; i >= 0; i--) {
+                bullets[i].y -= bulletSpeed;
+                if (bullets[i].y < 0) {
+                    bullets.splice(i, 1);
+                }
+            }
+
+            // 更新敌人
+            for (let i = enemies.length - 1; i >= 0; i--) {
+                enemies[i].y += enemySpeed;
+                if (enemies[i].y > canvas.height) {
+                    enemies.splice(i, 1);
+                }
+            }
+
+            // 检查子弹与敌人碰撞
+            for (let i = bullets.length - 1; i >= 0; i--) {
+                for (let j = enemies.length - 1; j >= 0; j--) {
+                    if (bullets[i] && enemies[j] && 
+                        bullets[i].x < enemies[j].x + enemies[j].width &&
+                        bullets[i].x + bullets[i].width > enemies[j].x &&
+                        bullets[i].y < enemies[j].y + enemies[j].height &&
+                        bullets[i].y + bullets[i].height > enemies[j].y) {
+                        
+                        bullets.splice(i, 1);
+                        enemies.splice(j, 1);
+                        score += 10;
+                        scoreElement.textContent = score;
+
+                        // 播放击中音效
+                        audioSystem.playSound('hit', 0.7);
+                        break;
+                    }
+                }
+            }
+
+            // 检查玩家与敌人碰撞
+            for (let enemy of enemies) {
+                if (player.x < enemy.x + enemy.width &&
+                    player.x + player.width > enemy.x &&
+                    player.y < enemy.y + enemy.height &&
+                    player.y + player.height > enemy.y) {
+                    
+                    gameRunning = false;
+
+                    // 播放游戏结束音效
+                    audioSystem.playSound('gameOver', 1.0);
+                    audioSystem.stopBackgroundMusic();
+
+                    alert(`游戏结束！最终得分: ${score}\n按R键重新开始`);
+                }
+            }
+
+            // 随机生成敌人
+            if (Math.random() < 0.02) {
+                createEnemy();
+            }
+        }
+
+        // 绘制游戏
+        function draw() {
+            // 清空画布
+            ctx.fillStyle = '#000011';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // 绘制星空背景
+            ctx.fillStyle = '#ffffff';
+            for (let i = 0; i < 50; i++) {
+                const x = (Date.now() * 0.01 + i * 123) % canvas.width;
+                const y = (Date.now() * 0.02 + i * 456) % canvas.height;
+                ctx.fillRect(x, y, 1, 1);
+            }
+
+            // 绘制玩家
+            ctx.fillStyle = player.color;
+            ctx.fillRect(player.x, player.y, player.width, player.height);
+            
+            // 绘制玩家细节
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(player.x + 5, player.y + 5, 20, 5);
+            ctx.fillRect(player.x + 12, player.y, 6, 15);
+
+            // 绘制子弹
+            ctx.fillStyle = '#ffff00';
+            for (let bullet of bullets) {
+                ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
+            }
+
+            // 绘制敌人
+            for (let enemy of enemies) {
+                ctx.fillStyle = enemy.color;
+                ctx.fillRect(enemy.x, enemy.y, enemy.width, enemy.height);
+                
+                // 敌人细节
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(enemy.x + 5, enemy.y + 5, 15, 3);
+                ctx.fillRect(enemy.x + 10, enemy.y + 15, 5, 8);
+            }
+
+            // 绘制游戏标题
+            if (!gameRunning) {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                ctx.fillStyle = '#ff0000';
+                ctx.font = '48px Courier New';
+                ctx.textAlign = 'center';
+                ctx.fillText('游戏结束', canvas.width / 2, canvas.height / 2);
+                
+                ctx.fillStyle = '#ffffff';
+                ctx.font = '24px Courier New';
+                ctx.fillText('按 R 键重新开始', canvas.width / 2, canvas.height / 2 + 50);
+            }
+        }
+
+        // 重置游戏
+        function resetGame() {
+            score = 0;
+            scoreElement.textContent = score;
+            gameRunning = true;
+            bullets.length = 0;
+            enemies.length = 0;
+            player.x = canvas.width / 2;
+            player.y = canvas.height - 50;
+
+            // 播放开始音效并重新开始背景音乐
+            audioSystem.playSound('powerup', 0.8);
+            if (audioInitialized) {
+                audioSystem.playBackgroundMusic();
+            }
+        }
+
+        // 游戏循环
+        function gameLoop() {
+            update();
+            draw();
+            requestAnimationFrame(gameLoop);
+        }
+
+        // 音频控制函数
+        function updateMasterVolume(value) {
+            const volume = value / 100;
+            audioSystem.setMasterVolume(volume);
+            document.getElementById('masterVolumeValue').textContent = value + '%';
+        }
+
+        function updateSfxVolume(value) {
+            const volume = value / 100;
+            audioSystem.setSfxVolume(volume);
+            document.getElementById('sfxVolumeValue').textContent = value + '%';
+        }
+
+        function updateMusicVolume(value) {
+            const volume = value / 100;
+            audioSystem.setMusicVolume(volume);
+            document.getElementById('musicVolumeValue').textContent = value + '%';
+        }
+
+        function toggleAudio() {
+            if (audioInitialized) {
+                // 切换音频开关
+                if (audioSystem.masterVolume > 0) {
+                    audioSystem.setMasterVolume(0);
+                    document.getElementById('masterVolume').value = 0;
+                    document.getElementById('masterVolumeValue').textContent = '0%';
+                } else {
+                    audioSystem.setMasterVolume(0.8);
+                    document.getElementById('masterVolume').value = 80;
+                    document.getElementById('masterVolumeValue').textContent = '80%';
+                }
+            } else {
+                initializeAudio();
+            }
+        }
+
+        // ROM数据库加载
+        async function loadROMDatabase() {
+            try {
+                const response = await fetch('rom_list.json');
+                if (response.ok) {
+                    romDatabase = await response.json();
+                    console.log('📚 ROM数据库加载成功:', romDatabase);
+                    initializeGameList();
+                } else {
+                    console.warn('⚠️ ROM数据库加载失败，使用演示模式');
+                    initializeDemoMode();
+                }
+            } catch (error) {
+                console.warn('⚠️ ROM数据库加载异常，使用演示模式:', error);
+                initializeDemoMode();
+            }
+        }
+
+        // 初始化游戏列表
+        function initializeGameList() {
+            if (!romDatabase) {
+                initializeDemoMode();
+                return;
+            }
+
+            // 填充系统筛选器
+            const systemFilter = document.getElementById('systemFilter');
+            systemFilter.innerHTML = '<option value="">所有系统</option>';
+
+            for (const systemId in romDatabase.systems) {
+                const system = romDatabase.systems[systemId];
+                const option = document.createElement('option');
+                option.value = systemId;
+                option.textContent = system.name;
+                systemFilter.appendChild(option);
+            }
+
+            // 显示系统列表
+            displaySystems();
+        }
+
+        // 初始化演示模式
+        function initializeDemoMode() {
+            console.log('🎮 启动演示模式');
+            const systemList = document.getElementById('systemList');
+            systemList.innerHTML = `
+                <div class="system-item" onclick="selectDemoGame('space-shooter')">
+                    <div class="system-icon">🚀</div>
+                    <div class="system-name">演示游戏</div>
+                    <div class="system-desc">内置的演示游戏</div>
+                    <div class="system-count">1 个游戏</div>
+                </div>
+            `;
+        }
+
+        // 显示系统列表
+        function displaySystems() {
+            const systemList = document.getElementById('systemList');
+            systemList.innerHTML = '';
+
+            for (const systemId in romDatabase.systems) {
+                const system = romDatabase.systems[systemId];
+
+                const systemDiv = document.createElement('div');
+                systemDiv.className = 'system-item';
+                systemDiv.onclick = () => selectSystem(systemId);
+
+                systemDiv.innerHTML = `
+                    <div class="system-icon">${system.icon}</div>
+                    <div class="system-name">${system.name}</div>
+                    <div class="system-desc">${system.description}</div>
+                    <div class="system-count">${system.rom_count} 个游戏</div>
+                `;
+
+                systemList.appendChild(systemDiv);
+            }
+        }
+
+        // 选择游戏系统
+        function selectSystem(systemId) {
+            currentSystem = systemId;
+            const system = romDatabase.systems[systemId];
+
+            // 更新标题
+            document.getElementById('currentSystemTitle').textContent = system.name;
+            document.getElementById('gameCount').textContent = system.rom_count;
+
+            // 隐藏系统列表，显示游戏列表
+            document.getElementById('systemList').style.display = 'none';
+            document.getElementById('gameListContainer').style.display = 'block';
+
+            // 显示游戏列表
+            displayGames(system.games);
+
+            // 播放选择音效
+            audioSystem.playSound('select', 0.8);
+        }
+
+        // 显示游戏列表
+        function displayGames(games) {
+            const gameGrid = document.getElementById('gameGrid');
+            gameGrid.innerHTML = '';
+
+            filteredGames = games;
+
+            games.forEach((game, index) => {
+                const gameDiv = document.createElement('div');
+                gameDiv.className = 'game-item';
+                gameDiv.onclick = () => selectROMGame(game, index);
+
+                const gameType = game.demo ? '演示版' : '完整版';
+                const typeClass = game.demo ? 'demo' : 'full';
+
+                gameDiv.innerHTML = `
+                    <div class="game-icon">🎮</div>
+                    <div class="game-title">${game.name}</div>
+                    <div class="game-desc">${game.description}</div>
+                    <div class="game-type ${typeClass}">${gameType}</div>
+                    <div class="game-size">${game.size}</div>
+                `;
+
+                gameGrid.appendChild(gameDiv);
+            });
+        }
+
+        // 返回系统选择
+        function backToSystems() {
+            document.getElementById('systemList').style.display = 'grid';
+            document.getElementById('gameListContainer').style.display = 'none';
+            currentSystem = null;
+
+            // 播放返回音效
+            audioSystem.playSound('beep', 0.6);
+        }
+
+        // 游戏选择和切换函数
+        function selectGame(gameId) {
+            if (demoGames[gameId]) {
+                currentGame = gameId;
+
+                // 隐藏游戏列表，显示游戏界面
+                document.getElementById('gameList').style.display = 'none';
+                document.getElementById('gameInterface').style.display = 'block';
+
+                // 更新游戏标题
+                document.getElementById('currentGameTitle').textContent = demoGames[gameId].title;
+
+                // 重置得分
+                score = 0;
+                document.getElementById('score').textContent = score;
+
+                // 播放选择音效
+                audioSystem.playSound('select', 0.8);
+
+                // 启动选中的游戏
+                demoGames[gameId].gameFunction();
+
+                console.log(`🎮 启动游戏: ${demoGames[gameId].title}`);
+            }
+        }
+
+        // 选择ROM游戏
+        function selectROMGame(game, index) {
+            currentGame = `${currentSystem}_${index}`;
+
+            // 隐藏游戏列表，显示游戏界面
+            document.getElementById('gameList').style.display = 'none';
+            document.getElementById('gameInterface').style.display = 'block';
+
+            // 更新游戏标题
+            document.getElementById('currentGameTitle').textContent = game.name;
+
+            // 重置得分
+            score = 0;
+            document.getElementById('score').textContent = score;
+
+            // 播放选择音效
+            audioSystem.playSound('select', 0.8);
+
+            // 启动ROM游戏（演示模式）
+            startROMGame(game);
+
+            console.log(`🎮 启动ROM游戏: ${game.name}`);
+        }
+
+        // 选择演示游戏
+        function selectDemoGame(gameId) {
+            selectGame(gameId);
+        }
+
+        // 搜索和筛选功能
+        function filterGames() {
+            const searchTerm = document.getElementById('gameSearch').value.toLowerCase();
+
+            if (!currentSystem || !romDatabase) {
+                return;
+            }
+
+            const system = romDatabase.systems[currentSystem];
+            let filtered = system.games;
+
+            if (searchTerm) {
+                filtered = system.games.filter(game =>
+                    game.name.toLowerCase().includes(searchTerm) ||
+                    game.description.toLowerCase().includes(searchTerm)
+                );
+            }
+
+            displayGames(filtered);
+            document.getElementById('gameCount').textContent = filtered.length;
+        }
+
+        // 按系统筛选
+        function filterBySystem() {
+            const selectedSystem = document.getElementById('systemFilter').value;
+
+            if (!selectedSystem) {
+                displaySystems();
+                return;
+            }
+
+            selectSystem(selectedSystem);
+        }
+
+        // 显示设置界面
+        function showSettings() {
+            // 隐藏游戏列表，显示设置界面
+            document.getElementById('gameList').style.display = 'none';
+            document.getElementById('settingsInterface').style.display = 'block';
+
+            // 初始化设置界面
+            initializeSettings();
+
+            // 播放选择音效
+            audioSystem.playSound('select', 0.8);
+        }
+
+        // 初始化设置界面
+        function initializeSettings() {
+            // 填充金手指系统选择器
+            const cheatSystemSelect = document.getElementById('cheatSystemSelect');
+            cheatSystemSelect.innerHTML = '<option value="">请选择系统</option>';
+
+            if (romDatabase && romDatabase.systems) {
+                for (const systemId in romDatabase.systems) {
+                    const system = romDatabase.systems[systemId];
+                    const option = document.createElement('option');
+                    option.value = systemId;
+                    option.textContent = system.name;
+                    cheatSystemSelect.appendChild(option);
+                }
+            }
+
+            // 初始化音量滑块
+            const volumeSlider = document.getElementById('volumeSlider');
+            const volumeValue = document.getElementById('volumeValue');
+            volumeSlider.oninput = function() {
+                volumeValue.textContent = this.value;
+                audioSystem.setMasterVolume(this.value / 100);
+            };
+        }
+
+        // 加载系统金手指
+        function loadSystemCheats() {
+            const systemId = document.getElementById('cheatSystemSelect').value;
+            const cheatList = document.getElementById('cheatList');
+
+            if (!systemId) {
+                cheatList.innerHTML = '<div style="color: #888; text-align: center; padding: 20px;">请先选择游戏系统</div>';
+                return;
+            }
+
+            // 模拟金手指数据（实际项目中会从服务器加载）
+            const systemCheats = {
+                "nes": {
+                    "infinite_lives": {
+                        "name": "无限生命",
+                        "description": "获得无限生命数",
+                        "code": "AEAEAE",
+                        "enabled": true,
+                        "auto_enable": true
+                    },
+                    "infinite_time": {
+                        "name": "无限时间",
+                        "description": "时间不会减少",
+                        "code": "AAAAAA",
+                        "enabled": false,
+                        "auto_enable": false
+                    },
+                    "invincibility": {
+                        "name": "无敌模式",
+                        "description": "角色无敌，不会受伤",
+                        "code": "AEAEAE",
+                        "enabled": true,
+                        "auto_enable": true
+                    },
+                    "level_select": {
+                        "name": "关卡选择",
+                        "description": "可以选择任意关卡",
+                        "code": "AAAAAA",
+                        "enabled": true,
+                        "auto_enable": true
+                    },
+                    "max_power": {
+                        "name": "最大能力",
+                        "description": "所有能力值最大",
+                        "code": "AEAEAE",
+                        "enabled": true,
+                        "auto_enable": true
+                    }
+                },
+                "snes": {
+                    "infinite_lives": {
+                        "name": "无限生命",
+                        "description": "获得无限生命数",
+                        "code": "7E0DBE:63",
+                        "enabled": true,
+                        "auto_enable": true
+                    },
+                    "infinite_health": {
+                        "name": "无限血量",
+                        "description": "血量不会减少",
+                        "code": "7E0DBF:FF",
+                        "enabled": true,
+                        "auto_enable": true
+                    },
+                    "invincibility": {
+                        "name": "无敌模式",
+                        "description": "角色无敌，不会受伤",
+                        "code": "7E0DC0:01",
+                        "enabled": true,
+                        "auto_enable": true
+                    },
+                    "max_power": {
+                        "name": "最大能力",
+                        "description": "所有能力值最大",
+                        "code": "7E0DC0:FF",
+                        "enabled": true,
+                        "auto_enable": true
+                    },
+                    "level_select": {
+                        "name": "关卡选择",
+                        "description": "可以选择任意关卡",
+                        "code": "7E0DC1:FF",
+                        "enabled": true,
+                        "auto_enable": true
+                    }
+                }
+            };
+
+            const cheats = systemCheats[systemId] || {};
+
+            if (Object.keys(cheats).length === 0) {
+                cheatList.innerHTML = '<div style="color: #888; text-align: center; padding: 20px;">该系统暂无可用金手指</div>';
+                return;
+            }
+
+            cheatList.innerHTML = '';
+
+            for (const cheatId in cheats) {
+                const cheat = cheats[cheatId];
+
+                const cheatDiv = document.createElement('div');
+                cheatDiv.className = 'cheat-item';
+
+                // 添加自动启用标识
+                const autoEnableLabel = cheat.auto_enable ? '<span class="auto-enable-label">🔄 自动启用</span>' : '';
+
+                cheatDiv.innerHTML = `
+                    <div class="cheat-info">
+                        <div class="cheat-name">${cheat.name} ${autoEnableLabel}</div>
+                        <div class="cheat-desc">${cheat.description}</div>
+                        <div class="cheat-code">代码: ${cheat.code}</div>
+                    </div>
+                    <div class="cheat-toggle">
+                        <input type="checkbox" id="cheat_${systemId}_${cheatId}"
+                               ${cheat.enabled ? 'checked' : ''}
+                               onchange="toggleCheat('${systemId}', '${cheatId}', this.checked)">
+                    </div>
+                `;
+
+                cheatList.appendChild(cheatDiv);
+            }
+        }
+
+        // 切换金手指状态
+        function toggleCheat(systemId, cheatId, enabled) {
+            console.log(`🎯 ${enabled ? '启用' : '禁用'}金手指: ${systemId} - ${cheatId}`);
+
+            // 播放音效
+            audioSystem.playSound(enabled ? 'powerup' : 'beep', 0.6);
+
+            // 这里应该调用后端API来实际启用/禁用金手指
+            // 目前只是演示功能
+        }
+
+        // 启用所有金手指
+        function enableAllCheats() {
+            const systemId = document.getElementById('cheatSystemSelect').value;
+            if (!systemId) {
+                alert('请先选择游戏系统');
+                return;
+            }
+
+            const checkboxes = document.querySelectorAll('#cheatList input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = true;
+                checkbox.onchange();
+            });
+
+            console.log('🎯 已启用所有金手指');
+            audioSystem.playSound('powerup', 0.8);
+        }
+
+        // 禁用所有金手指
+        function disableAllCheats() {
+            const checkboxes = document.querySelectorAll('#cheatList input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = false;
+                checkbox.onchange();
+            });
+
+            console.log('🚫 已禁用所有金手指');
+            audioSystem.playSound('beep', 0.6);
+        }
+
+        // 重置金手指设置
+        function resetCheats() {
+            if (confirm('确定要重置所有金手指设置吗？')) {
+                disableAllCheats();
+                console.log('🔄 金手指设置已重置');
+                audioSystem.playSound('beep', 0.8);
+            }
+        }
+
+        // 校准手柄
+        function calibrateGamepad() {
+            alert('🎮 手柄校准功能\n\n1. 确保手柄已连接\n2. 按住所有按键5秒\n3. 松开所有按键\n4. 校准完成');
+        }
+
+        // 启动ROM游戏（演示）
+        function startROMGame(game) {
+            // 显示游戏信息
+            const canvas = document.getElementById('gameCanvas');
+            const ctx = canvas.getContext('2d');
+
+            // 清空画布
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // 显示游戏信息
+            ctx.fillStyle = '#00ff00';
+            ctx.font = '24px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText(`🎮 ${game.name}`, canvas.width/2, 80);
+
+            ctx.font = '16px Arial';
+            ctx.fillText(`系统: ${romDatabase.systems[currentSystem].name}`, canvas.width/2, 120);
+            ctx.fillText(`描述: ${game.description}`, canvas.width/2, 150);
+            ctx.fillText(`大小: ${game.size}`, canvas.width/2, 180);
+            ctx.fillText(`类型: ${game.demo ? '演示版' : '完整版'}`, canvas.width/2, 210);
+
+            // 显示自动启用的金手指
+            ctx.fillStyle = '#ffaa00';
+            ctx.font = '18px Arial';
+            ctx.fillText('🎯 自动启用金手指:', canvas.width/2, 260);
+
+            ctx.fillStyle = '#00ff88';
+            ctx.font = '14px Arial';
+            const autoEnabledCheats = [
+                '✅ 无限生命 - 永不死亡',
+                '✅ 无敌模式 - 免疫伤害',
+                '✅ 最大能力 - 能力值最大',
+                '✅ 关卡选择 - 任意关卡'
+            ];
+
+            autoEnabledCheats.forEach((cheat, index) => {
+                ctx.fillText(cheat, canvas.width/2, 290 + index * 25);
+            });
+
+            ctx.fillStyle = '#ffaa00';
+            ctx.font = '16px Arial';
+            ctx.fillText('🚧 模拟器功能开发中...', canvas.width/2, 420);
+
+            ctx.fillStyle = '#88ff88';
+            ctx.font = '14px Arial';
+            ctx.fillText('按 ESC 键返回游戏列表', canvas.width/2, 450);
+
+            // 模拟游戏运行
+            gameRunning = true;
+
+            // 播放启动音效
+            audioSystem.playSound('powerup', 0.8);
+
+            // 添加键盘监听
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && currentGame && currentGame.includes('_')) {
+                    backToGameList();
+                }
+            });
+        }
+
+        function backToGameList() {
+            // 停止当前游戏
+            gameRunning = false;
+
+            // 显示游戏列表，隐藏其他界面
+            document.getElementById('gameList').style.display = 'block';
+            document.getElementById('gameInterface').style.display = 'none';
+            document.getElementById('settingsInterface').style.display = 'none';
+
+            // 播放返回音效
+            audioSystem.playSound('beep', 0.6);
+
+            currentGame = null;
+            console.log('🔙 返回游戏列表');
+        }
+
+        // 游戏实现函数
+        function startSpaceShooter() {
+            // 当前的太空射击游戏逻辑
+            gameRunning = true;
+            gameLoop();
+        }
+
+        function startTetris() {
+            // 俄罗斯方块游戏逻辑（简化版）
+            gameRunning = true;
+            alert('🧩 俄罗斯方块游戏即将推出！');
+            backToGameList();
+        }
+
+        function startSnake() {
+            // 贪吃蛇游戏逻辑（简化版）
+            gameRunning = true;
+            alert('🐍 贪吃蛇游戏即将推出！');
+            backToGameList();
+        }
+
+        function startMario() {
+            // 超级马里奥游戏逻辑（简化版）
+            gameRunning = true;
+            alert('🍄 超级马里奥游戏即将推出！');
+            backToGameList();
+        }
+
+        function startPacman() {
+            // 吃豆人游戏逻辑（简化版）
+            gameRunning = true;
+            alert('👻 吃豆人游戏即将推出！');
+            backToGameList();
+        }
+
+        function startContra() {
+            // 魂斗罗游戏逻辑（简化版）
+            gameRunning = true;
+            alert('🔫 魂斗罗游戏即将推出！');
+            backToGameList();
+        }
+
+        // 启动游戏系统
+        console.log('🎮 GamePlayer-Raspberry 浏览器游戏启动!');
+
+        // 加载ROM数据库
+        loadROMDatabase();
+
+        // 显示游戏列表（默认界面）
+        document.getElementById('gameList').style.display = 'block';
+        document.getElementById('gameInterface').style.display = 'none';
+    </script>
+</body>
+</html>

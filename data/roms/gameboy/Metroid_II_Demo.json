@@ -1,0 +1,9 @@
+{
+  "name": "Metroid II Demo",
+  "system": "gb",
+  "description": "Metroid II Demo - 演示版",
+  "size": "32768 bytes",
+  "demo": true,
+  "file_path": "data/roms/gameboy/Metroid_II_Demo.gb",
+  "checksum": "0bb4f1ac80676268b5e9b4dbf5887fec"
+}

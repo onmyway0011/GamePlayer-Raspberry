@@ -1,0 +1,251 @@
+{
+  "nes": {
+    "system_name": "Nintendo Entertainment System",
+    "common_cheats": {
+      "infinite_lives": {
+        "name": "无限生命",
+        "description": "获得无限生命数",
+        "code": "AEAEAE",
+        "type": "game_genie",
+        "enabled": false,
+        "auto_enable": true
+      },
+      "infinite_time": {
+        "name": "无限时间",
+        "description": "时间不会减少",
+        "code": "AAAAAA",
+        "type": "game_genie",
+        "enabled": false,
+        "auto_enable": true
+      },
+      "invincibility": {
+        "name": "无敌模式",
+        "description": "角色无敌，不会受伤",
+        "code": "AEAEAE",
+        "type": "game_genie",
+        "enabled": false,
+        "auto_enable": true
+      },
+      "level_select": {
+        "name": "关卡选择",
+        "description": "可以选择任意关卡",
+        "code": "AAAAAA",
+        "type": "game_genie",
+        "enabled": false,
+        "auto_enable": true
+      },
+      "max_power": {
+        "name": "最大能力",
+        "description": "所有能力值最大",
+        "code": "AEAEAE",
+        "type": "game_genie",
+        "enabled": false,
+        "auto_enable": true
+      }
+    },
+    "games": {
+      "Super Mario Bros": {
+        "infinite_lives": "SXIOPO",
+        "big_mario": "AAAAAA",
+        "fire_mario": "AEAEAE",
+        "level_select": "AEAEAE"
+      },
+      "Contra": {
+        "30_lives": "SXIOPO",
+        "infinite_lives": "AAAAAA",
+        "spread_gun": "AEAEAE",
+        "rapid_fire": "AEAEAE"
+      },
+      "Mega Man": {
+        "infinite_lives": "SXIOPO",
+        "infinite_energy": "AAAAAA",
+        "all_weapons": "AEAEAE",
+        "stage_select": "AEAEAE"
+      }
+    }
+  },
+  "snes": {
+    "system_name": "Super Nintendo Entertainment System",
+    "common_cheats": {
+      "infinite_lives": {
+        "name": "无限生命",
+        "description": "获得无限生命数",
+        "code": "7E0DBE:63",
+        "type": "pro_action_replay",
+        "enabled": false,
+        "auto_enable": true
+      },
+      "infinite_health": {
+        "name": "无限血量",
+        "description": "血量不会减少",
+        "code": "7E0DBF:FF",
+        "type": "pro_action_replay",
+        "enabled": false,
+        "auto_enable": true
+      },
+      "invincibility": {
+        "name": "无敌模式",
+        "description": "角色无敌，不会受伤",
+        "code": "7E0DC0:01",
+        "type": "pro_action_replay",
+        "enabled": false,
+        "auto_enable": true
+      },
+      "max_power": {
+        "name": "最大能力",
+        "description": "所有能力值最大",
+        "code": "7E0DC0:FF",
+        "type": "pro_action_replay",
+        "enabled": false,
+        "auto_enable": true
+      },
+      "level_select": {
+        "name": "关卡选择",
+        "description": "可以选择任意关卡",
+        "code": "7E0DC1:FF",
+        "type": "pro_action_replay",
+        "enabled": false,
+        "auto_enable": true
+      }
+    },
+    "games": {}
+  },
+  "gb": {
+    "system_name": "Game Boy",
+    "common_cheats": {
+      "infinite_lives": {
+        "name": "无限生命",
+        "description": "获得无限生命数",
+        "code": "01FF63C1",
+        "type": "gameshark",
+        "enabled": false,
+        "auto_enable": true
+      },
+      "infinite_health": {
+        "name": "无限血量",
+        "description": "血量不会减少",
+        "code": "01FF64C1",
+        "type": "gameshark",
+        "enabled": false,
+        "auto_enable": true
+      },
+      "invincibility": {
+        "name": "无敌模式",
+        "description": "角色无敌，不会受伤",
+        "code": "01FF65C1",
+        "type": "gameshark",
+        "enabled": false,
+        "auto_enable": true
+      },
+      "max_power": {
+        "name": "最大能力",
+        "description": "所有能力值最大",
+        "code": "01FF66C1",
+        "type": "gameshark",
+        "enabled": false,
+        "auto_enable": true
+      },
+      "level_select": {
+        "name": "关卡选择",
+        "description": "可以选择任意关卡",
+        "code": "01FF67C1",
+        "type": "gameshark",
+        "enabled": false,
+        "auto_enable": true
+      }
+    },
+    "games": {}
+  },
+  "gba": {
+    "system_name": "Game Boy Advance",
+    "common_cheats": {
+      "infinite_lives": {
+        "name": "无限生命",
+        "description": "获得无限生命数",
+        "code": "82003228:0063",
+        "type": "codebreaker",
+        "enabled": false,
+        "auto_enable": true
+      },
+      "infinite_health": {
+        "name": "无限血量",
+        "description": "血量不会减少",
+        "code": "82003229:00FF",
+        "type": "codebreaker",
+        "enabled": false,
+        "auto_enable": true
+      },
+      "invincibility": {
+        "name": "无敌模式",
+        "description": "角色无敌，不会受伤",
+        "code": "8200322A:0001",
+        "type": "codebreaker",
+        "enabled": false,
+        "auto_enable": true
+      },
+      "max_power": {
+        "name": "最大能力",
+        "description": "所有能力值最大",
+        "code": "8200322B:00FF",
+        "type": "codebreaker",
+        "enabled": false,
+        "auto_enable": true
+      },
+      "level_select": {
+        "name": "关卡选择",
+        "description": "可以选择任意关卡",
+        "code": "8200322C:00FF",
+        "type": "codebreaker",
+        "enabled": false,
+        "auto_enable": true
+      }
+    },
+    "games": {}
+  },
+  "genesis": {
+    "system_name": "Sega Genesis/Mega Drive",
+    "common_cheats": {
+      "infinite_lives": {
+        "name": "无限生命",
+        "description": "获得无限生命数",
+        "code": "FFFF01:0063",
+        "type": "action_replay",
+        "enabled": false,
+        "auto_enable": true
+      },
+      "infinite_health": {
+        "name": "无限血量",
+        "description": "血量不会减少",
+        "code": "FFFF02:00FF",
+        "type": "action_replay",
+        "enabled": false,
+        "auto_enable": true
+      },
+      "invincibility": {
+        "name": "无敌模式",
+        "description": "角色无敌，不会受伤",
+        "code": "FFFF03:0001",
+        "type": "action_replay",
+        "enabled": false,
+        "auto_enable": true
+      },
+      "max_power": {
+        "name": "最大能力",
+        "description": "所有能力值最大",
+        "code": "FFFF04:00FF",
+        "type": "action_replay",
+        "enabled": false,
+        "auto_enable": true
+      },
+      "level_select": {
+        "name": "关卡选择",
+        "description": "可以选择任意关卡",
+        "code": "FFFF05:00FF",
+        "type": "action_replay",
+        "enabled": false,
+        "auto_enable": true
+      }
+    },
+    "games": {}
+  }
+}

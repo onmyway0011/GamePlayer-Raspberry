@@ -1,0 +1,9 @@
+{
+  "name": "Pac-Man Demo",
+  "system": "nes",
+  "description": "Pac-Man Demo - 演示版",
+  "size": "32768 bytes",
+  "demo": true,
+  "file_path": "data/roms/nes/Pac-Man_Demo.nes",
+  "checksum": "0216608c3210f316c02ff75fb1320af8"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Final Fantasy Demo",
+  "system": "nes",
+  "description": "Final Fantasy Demo - 演示版",
+  "size": "32768 bytes",
+  "demo": true,
+  "file_path": "data/roms/nes/Final_Fantasy_Demo.nes",
+  "checksum": "d28e6460beb80332400cf5443f8b7a64"
+}

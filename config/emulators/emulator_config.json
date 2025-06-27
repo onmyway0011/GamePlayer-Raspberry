@@ -1,0 +1,141 @@
+{
+  "supported_emulators": {
+    "nes": {
+      "name": "Nintendo Entertainment System",
+      "short_name": "NES",
+      "emulator": "fceux",
+      "file_extensions": [".nes", ".fds"],
+      "bios_required": false,
+      "icon": "🎮",
+      "description": "经典的8位任天堂游戏机",
+      "rom_directory": "data/roms/nes",
+      "save_directory": "data/saves/nes",
+      "config_file": "config/emulators/nes.conf"
+    },
+    "snes": {
+      "name": "Super Nintendo Entertainment System",
+      "short_name": "SNES",
+      "emulator": "snes9x",
+      "file_extensions": [".smc", ".sfc", ".fig"],
+      "bios_required": false,
+      "icon": "🎯",
+      "description": "16位超级任天堂游戏机",
+      "rom_directory": "data/roms/snes",
+      "save_directory": "data/saves/snes",
+      "config_file": "config/emulators/snes.conf"
+    },
+    "gb": {
+      "name": "Game Boy",
+      "short_name": "GB",
+      "emulator": "visualboyadvance",
+      "file_extensions": [".gb", ".gbc"],
+      "bios_required": false,
+      "icon": "📱",
+      "description": "任天堂掌上游戏机",
+      "rom_directory": "data/roms/gameboy",
+      "save_directory": "data/saves/gameboy",
+      "config_file": "config/emulators/gameboy.conf"
+    },
+    "gba": {
+      "name": "Game Boy Advance",
+      "short_name": "GBA",
+      "emulator": "visualboyadvance",
+      "file_extensions": [".gba"],
+      "bios_required": false,
+      "icon": "🎲",
+      "description": "Game Boy Advance掌机",
+      "rom_directory": "data/roms/gba",
+      "save_directory": "data/saves/gba",
+      "config_file": "config/emulators/gba.conf"
+    },
+    "genesis": {
+      "name": "Sega Genesis/Mega Drive",
+      "short_name": "Genesis",
+      "emulator": "gens",
+      "file_extensions": [".md", ".gen", ".smd"],
+      "bios_required": false,
+      "icon": "🔵",
+      "description": "世嘉16位游戏机",
+      "rom_directory": "data/roms/genesis",
+      "save_directory": "data/saves/genesis",
+      "config_file": "config/emulators/genesis.conf"
+    },
+    "psx": {
+      "name": "Sony PlayStation",
+      "short_name": "PSX",
+      "emulator": "pcsx",
+      "file_extensions": [".bin", ".cue", ".img", ".iso"],
+      "bios_required": true,
+      "bios_files": ["scph1001.bin", "scph5501.bin", "scph7001.bin"],
+      "icon": "🎪",
+      "description": "索尼PlayStation游戏机",
+      "rom_directory": "data/roms/psx",
+      "save_directory": "data/saves/psx",
+      "config_file": "config/emulators/psx.conf"
+    },
+    "n64": {
+      "name": "Nintendo 64",
+      "short_name": "N64",
+      "emulator": "mupen64plus",
+      "file_extensions": [".n64", ".v64", ".z64"],
+      "bios_required": false,
+      "icon": "🎭",
+      "description": "任天堂64位游戏机",
+      "rom_directory": "data/roms/n64",
+      "save_directory": "data/saves/n64",
+      "config_file": "config/emulators/n64.conf"
+    },
+    "arcade": {
+      "name": "Arcade",
+      "short_name": "Arcade",
+      "emulator": "mame",
+      "file_extensions": [".zip"],
+      "bios_required": true,
+      "icon": "🕹️",
+      "description": "街机游戏",
+      "rom_directory": "data/roms/arcade",
+      "save_directory": "data/saves/arcade",
+      "config_file": "config/emulators/arcade.conf"
+    }
+  },
+  
+  "rom_sources": {
+    "homebrew_roms": {
+      "enabled": true,
+      "description": "免费的自制游戏ROM",
+      "base_url": "https://github.com/homebrew-roms",
+      "safe": true
+    },
+    "demo_roms": {
+      "enabled": true,
+      "description": "演示版游戏ROM",
+      "safe": true
+    },
+    "public_domain": {
+      "enabled": true,
+      "description": "公共领域游戏",
+      "safe": true
+    }
+  },
+  
+  "download_settings": {
+    "max_roms_per_system": 20,
+    "total_rom_limit": 100,
+    "download_timeout": 30,
+    "retry_attempts": 3,
+    "verify_checksums": true,
+    "auto_extract": true,
+    "cleanup_archives": true
+  },
+  
+  "emulator_settings": {
+    "default_video_mode": "fullscreen",
+    "default_audio_rate": 44100,
+    "default_frameskip": 0,
+    "save_states": true,
+    "auto_save": true,
+    "rewind_support": true,
+    "fast_forward": true,
+    "screenshot_support": true
+  }
+}

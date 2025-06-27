@@ -1,0 +1,86 @@
+# Docker忽略文件
+# 排除大文件和不必要的文件以减少镜像大小
+
+# 下载文件
+data/downloads/
+*.img
+*.iso
+*.zip
+*.tar.gz
+*.7z
+
+# 日志文件
+logs/
+*.log
+
+# 缓存文件
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+
+# 虚拟环境
+venv/
+env/
+.venv/
+.env/
+
+# IDE文件
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# Git文件
+.git/
+.gitignore
+
+# 测试文件
+.pytest_cache/
+.coverage
+htmlcov/
+
+# 文档
+docs/
+*.md
+README*
+
+# 备份文件
+backup_old_structure/
+*.bak
+*.backup
+
+# 临时文件
+tmp/
+temp/
+*.tmp
+
+# 大型数据文件
+*.db
+*.sqlite
+*.sqlite3
+
+# 媒体文件
+*.mp4
+*.avi
+*.mov
+*.mp3
+*.wav
+*.ogg
+
+# 开发工具
+tools/
+scripts/dev/
+.pre-commit-config.yaml
+
+# 配置文件（保留必要的）
+!config/emulators/
+!config/system/
+!requirements.txt

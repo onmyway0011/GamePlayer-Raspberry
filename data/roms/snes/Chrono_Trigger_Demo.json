@@ -1,0 +1,9 @@
+{
+  "name": "Chrono Trigger Demo",
+  "system": "snes",
+  "description": "Chrono Trigger Demo - 演示版",
+  "size": "524288 bytes",
+  "demo": true,
+  "file_path": "data/roms/snes/Chrono_Trigger_Demo.smc",
+  "checksum": "f5c2b1528e56559cdf36a3bba30b98b6"
+}

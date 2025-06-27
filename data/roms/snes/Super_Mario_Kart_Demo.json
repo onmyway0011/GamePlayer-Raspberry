@@ -1,0 +1,9 @@
+{
+  "name": "Super Mario Kart Demo",
+  "system": "snes",
+  "description": "Super Mario Kart Demo - 演示版",
+  "size": "524288 bytes",
+  "demo": true,
+  "file_path": "data/roms/snes/Super_Mario_Kart_Demo.smc",
+  "checksum": "736bbb354a862038a6d3a56124eb4e47"
+}

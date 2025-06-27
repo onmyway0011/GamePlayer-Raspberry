@@ -1,0 +1,102 @@
+{
+  "super_mario_bros": {
+    "name": "超级马里奥兄弟",
+    "cheats": {
+      "infinite_lives": {
+        "name": "无限条命",
+        "memory_addresses": [
+          {
+            "address": 1882,
+            "value": 99
+          }
+        ]
+      },
+      "invincible": {
+        "name": "无敌状态",
+        "memory_addresses": [
+          {
+            "address": 1950,
+            "value": 1
+          }
+        ]
+      },
+      "big_mario": {
+        "name": "大马里奥",
+        "memory_addresses": [
+          {
+            "address": 1878,
+            "value": 1
+          }
+        ]
+      }
+    }
+  },
+  "contra": {
+    "name": "魂斗罗",
+    "cheats": {
+      "infinite_lives": {
+        "name": "无限条命",
+        "memory_addresses": [
+          {
+            "address": 50,
+            "value": 99
+          }
+        ]
+      },
+      "infinite_ammo": {
+        "name": "无限弹药",
+        "memory_addresses": [
+          {
+            "address": 51,
+            "value": 99
+          }
+        ]
+      },
+      "spread_gun": {
+        "name": "散弹枪",
+        "memory_addresses": [
+          {
+            "address": 52,
+            "value": 1
+          }
+        ]
+      }
+    }
+  },
+  "megaman": {
+    "name": "洛克人",
+    "cheats": {
+      "infinite_lives": {
+        "name": "无限条命",
+        "memory_addresses": [
+          {
+            "address": 168,
+            "value": 99
+          }
+        ]
+      },
+      "infinite_energy": {
+        "name": "无限能量",
+        "memory_addresses": [
+          {
+            "address": 1728,
+            "value": 28
+          }
+        ]
+      },
+      "all_weapons": {
+        "name": "所有武器",
+        "memory_addresses": [
+          {
+            "address": 187,
+            "value": 255
+          },
+          {
+            "address": 188,
+            "value": 255
+          }
+        ]
+      }
+    }
+  }
+}

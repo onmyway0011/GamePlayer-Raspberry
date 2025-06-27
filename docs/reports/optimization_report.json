@@ -1,0 +1,809 @@
+{
+  "optimization_summary": {
+    "total_files": 59,
+    "total_issues_fixed": 26,
+    "total_improvements": 215
+  },
+  "file_results": [
+    {
+      "file_path": "setup.py",
+      "original_lines": 47,
+      "optimized_lines": 47,
+      "issues_fixed": [],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "分析类型提示需求"
+      ]
+    },
+    {
+      "file_path": "tools/__init__.py",
+      "original_lines": 0,
+      "optimized_lines": 0,
+      "issues_fixed": [],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "分析类型提示需求"
+      ]
+    },
+    {
+      "file_path": "tools/dev/auto_optimizer.py",
+      "original_lines": 452,
+      "optimized_lines": 455,
+      "issues_fixed": [
+        "修复类型注解语法错误"
+      ],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "优化代码格式和空行",
+        "分析类型提示需求",
+        "添加缺失的docstring"
+      ]
+    },
+    {
+      "file_path": "tools/dev/fix_imports.py",
+      "original_lines": 142,
+      "optimized_lines": 145,
+      "issues_fixed": [
+        "修复类型注解语法错误"
+      ],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "优化代码格式和空行",
+        "分析类型提示需求",
+        "添加缺失的docstring"
+      ]
+    },
+    {
+      "file_path": "tools/dev/__init__.py",
+      "original_lines": 0,
+      "optimized_lines": 0,
+      "issues_fixed": [],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "分析类型提示需求"
+      ]
+    },
+    {
+      "file_path": "tools/dev/restructure_project.py",
+      "original_lines": 461,
+      "optimized_lines": 465,
+      "issues_fixed": [],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "优化代码格式和空行",
+        "分析类型提示需求",
+        "添加缺失的docstring",
+        "添加缺失的docstring"
+      ]
+    },
+    {
+      "file_path": "tools/dev/code_analyzer.py",
+      "original_lines": 360,
+      "optimized_lines": 363,
+      "issues_fixed": [
+        "修复类型注解语法错误"
+      ],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "优化代码格式和空行",
+        "分析类型提示需求",
+        "添加缺失的docstring"
+      ]
+    },
+    {
+      "file_path": "tools/dev/code_optimizer.py",
+      "original_lines": 434,
+      "optimized_lines": 438,
+      "issues_fixed": [],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "优化代码格式和空行",
+        "分析类型提示需求",
+        "添加缺失的docstring"
+      ]
+    },
+    {
+      "file_path": "backup_old_structure/setup.py",
+      "original_lines": 47,
+      "optimized_lines": 47,
+      "issues_fixed": [],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "分析类型提示需求"
+      ]
+    },
+    {
+      "file_path": "tests/__init__.py",
+      "original_lines": 0,
+      "optimized_lines": 0,
+      "issues_fixed": [],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "分析类型提示需求"
+      ]
+    },
+    {
+      "file_path": "tests/unit/test_rom_integration.py",
+      "original_lines": 266,
+      "optimized_lines": 268,
+      "issues_fixed": [],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "优化代码格式和空行",
+        "分析类型提示需求"
+      ]
+    },
+    {
+      "file_path": "tests/unit/test_installer.py",
+      "original_lines": 135,
+      "optimized_lines": 133,
+      "issues_fixed": [],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "优化代码格式和空行",
+        "分析类型提示需求"
+      ]
+    },
+    {
+      "file_path": "tests/unit/test_rom_downloader.py",
+      "original_lines": 200,
+      "optimized_lines": 198,
+      "issues_fixed": [],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "优化代码格式和空行",
+        "分析类型提示需求"
+      ]
+    },
+    {
+      "file_path": "tests/unit/__init__.py",
+      "original_lines": 0,
+      "optimized_lines": 0,
+      "issues_fixed": [],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "分析类型提示需求"
+      ]
+    },
+    {
+      "file_path": "tests/unit/test_virtuanes_installer.py",
+      "original_lines": 279,
+      "optimized_lines": 277,
+      "issues_fixed": [],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "优化代码格式和空行",
+        "分析类型提示需求"
+      ]
+    },
+    {
+      "file_path": "tests/unit/test_nesticle_installer.py",
+      "original_lines": 429,
+      "optimized_lines": 429,
+      "issues_fixed": [],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "优化代码格式和空行",
+        "分析类型提示需求",
+        "添加缺失的docstring"
+      ]
+    },
+    {
+      "file_path": "tests/fixtures/__init__.py",
+      "original_lines": 0,
+      "optimized_lines": 0,
+      "issues_fixed": [],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "分析类型提示需求"
+      ]
+    },
+    {
+      "file_path": "data/downloads/downloads/nesticle/RetroPie-Setup-master/scriptmodules/admin/joy2key/joy2key.py",
+      "original_lines": 297,
+      "optimized_lines": 317,
+      "issues_fixed": [
+        "修复类型注解语法错误"
+      ],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "优化代码格式和空行",
+        "分析类型提示需求",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring"
+      ]
+    },
+    {
+      "file_path": "data/downloads/downloads/nesticle/RetroPie-Setup-master/scriptmodules/admin/joy2key/osk.py",
+      "original_lines": 632,
+      "optimized_lines": 646,
+      "issues_fixed": [
+        "修复类型注解语法错误"
+      ],
+      "performance_improvements": [
+        "优化性能相关代码"
+      ],
+      "code_quality_improvements": [
+        "优化代码格式和空行",
+        "分析类型提示需求",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring"
+      ]
+    },
+    {
+      "file_path": "data/downloads/downloads/nesticle/RetroPie-Setup-master/scriptmodules/admin/joy2key/joy2key_sdl.py",
+      "original_lines": 608,
+      "optimized_lines": 623,
+      "issues_fixed": [
+        "修复类型注解语法错误"
+      ],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "优化代码格式和空行",
+        "分析类型提示需求",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring"
+      ]
+    },
+    {
+      "file_path": "data/downloads/downloads/nesticle/RetroPie-Setup-master/scriptmodules/supplementary/bluetooth/bluezutils.py",
+      "original_lines": 47,
+      "optimized_lines": 57,
+      "issues_fixed": [],
+      "performance_improvements": [
+        "优化性能相关代码"
+      ],
+      "code_quality_improvements": [
+        "优化导入语句顺序",
+        "优化代码格式和空行",
+        "分析类型提示需求",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring"
+      ]
+    },
+    {
+      "file_path": "src/__init__.py",
+      "original_lines": 0,
+      "optimized_lines": 0,
+      "issues_fixed": [],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "分析类型提示需求"
+      ]
+    },
+    {
+      "file_path": "src/core/nes_emulator.py",
+      "original_lines": 660,
+      "optimized_lines": 663,
+      "issues_fixed": [
+        "修复类型注解语法错误"
+      ],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "优化代码格式和空行",
+        "分析类型提示需求",
+        "添加缺失的docstring"
+      ]
+    },
+    {
+      "file_path": "src/core/cheat_manager.py",
+      "original_lines": 396,
+      "optimized_lines": 398,
+      "issues_fixed": [
+        "修复类型注解语法错误"
+      ],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "优化代码格式和空行",
+        "分析类型提示需求",
+        "添加缺失的docstring"
+      ]
+    },
+    {
+      "file_path": "src/core/virtuanes_installer.py",
+      "original_lines": 420,
+      "optimized_lines": 419,
+      "issues_fixed": [
+        "修复类型注解语法错误"
+      ],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "优化代码格式和空行",
+        "分析类型提示需求"
+      ]
+    },
+    {
+      "file_path": "src/core/config_manager.py",
+      "original_lines": 251,
+      "optimized_lines": 253,
+      "issues_fixed": [
+        "修复类型注解语法错误"
+      ],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "优化代码格式和空行",
+        "分析类型提示需求",
+        "添加缺失的docstring"
+      ]
+    },
+    {
+      "file_path": "src/core/hdmi_config.py",
+      "original_lines": 374,
+      "optimized_lines": 373,
+      "issues_fixed": [
+        "修复类型注解语法错误"
+      ],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "优化代码格式和空行",
+        "分析类型提示需求"
+      ]
+    },
+    {
+      "file_path": "src/core/nesticle_installer.py",
+      "original_lines": 661,
+      "optimized_lines": 658,
+      "issues_fixed": [
+        "修复类型注解语法错误"
+      ],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "优化代码格式和空行",
+        "分析类型提示需求"
+      ]
+    },
+    {
+      "file_path": "src/core/save_manager.py",
+      "original_lines": 328,
+      "optimized_lines": 330,
+      "issues_fixed": [
+        "修复类型注解语法错误"
+      ],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "优化代码格式和空行",
+        "分析类型提示需求",
+        "添加缺失的docstring"
+      ]
+    },
+    {
+      "file_path": "src/core/__init__.py",
+      "original_lines": 0,
+      "optimized_lines": 0,
+      "issues_fixed": [],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "分析类型提示需求"
+      ]
+    },
+    {
+      "file_path": "src/core/audio_manager.py",
+      "original_lines": 440,
+      "optimized_lines": 444,
+      "issues_fixed": [
+        "修复类型注解语法错误"
+      ],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "优化代码格式和空行",
+        "分析类型提示需求",
+        "添加缺失的docstring"
+      ]
+    },
+    {
+      "file_path": "src/core/base_installer.py",
+      "original_lines": 85,
+      "optimized_lines": 87,
+      "issues_fixed": [
+        "修复类型注解语法错误"
+      ],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "优化导入语句顺序",
+        "优化代码格式和空行",
+        "分析类型提示需求",
+        "添加缺失的docstring"
+      ]
+    },
+    {
+      "file_path": "src/core/rom_downloader.py",
+      "original_lines": 545,
+      "optimized_lines": 544,
+      "issues_fixed": [
+        "修复类型注解语法错误"
+      ],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "优化代码格式和空行",
+        "分析类型提示需求"
+      ]
+    },
+    {
+      "file_path": "src/core/device_manager.py",
+      "original_lines": 425,
+      "optimized_lines": 427,
+      "issues_fixed": [
+        "修复类型注解语法错误"
+      ],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "优化代码格式和空行",
+        "分析类型提示需求",
+        "添加缺失的docstring"
+      ]
+    },
+    {
+      "file_path": "src/core/retropie_installer.py",
+      "original_lines": 785,
+      "optimized_lines": 784,
+      "issues_fixed": [
+        "修复类型注解语法错误"
+      ],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "优化代码格式和空行",
+        "分析类型提示需求"
+      ]
+    },
+    {
+      "file_path": "src/web/web_config.py",
+      "original_lines": 92,
+      "optimized_lines": 90,
+      "issues_fixed": [],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "优化导入语句顺序",
+        "优化代码格式和空行",
+        "分析类型提示需求"
+      ]
+    },
+    {
+      "file_path": "src/web/__init__.py",
+      "original_lines": 0,
+      "optimized_lines": 0,
+      "issues_fixed": [],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "分析类型提示需求"
+      ]
+    },
+    {
+      "file_path": "src/scripts/auto_save_sync.py",
+      "original_lines": 199,
+      "optimized_lines": 207,
+      "issues_fixed": [
+        "修复类型注解语法错误"
+      ],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "优化代码格式和空行",
+        "分析类型提示需求",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring"
+      ]
+    },
+    {
+      "file_path": "src/scripts/demo_game.py",
+      "original_lines": 293,
+      "optimized_lines": 295,
+      "issues_fixed": [],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "优化代码格式和空行",
+        "分析类型提示需求"
+      ]
+    },
+    {
+      "file_path": "src/scripts/smart_installer.py",
+      "original_lines": 569,
+      "optimized_lines": 575,
+      "issues_fixed": [
+        "修复类型注解语法错误"
+      ],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "优化代码格式和空行",
+        "分析类型提示需求",
+        "添加缺失的docstring",
+        "添加缺失的docstring"
+      ]
+    },
+    {
+      "file_path": "src/scripts/rom_manager.py",
+      "original_lines": 341,
+      "optimized_lines": 344,
+      "issues_fixed": [],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "优化代码格式和空行",
+        "类型提示分析失败: invalid syntax (<unknown>, line 27)",
+        "添加缺失的docstring"
+      ]
+    },
+    {
+      "file_path": "src/scripts/image_integration_checker.py",
+      "original_lines": 428,
+      "optimized_lines": 431,
+      "issues_fixed": [],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "优化代码格式和空行",
+        "分析类型提示需求",
+        "添加缺失的docstring"
+      ]
+    },
+    {
+      "file_path": "src/scripts/__init__.py",
+      "original_lines": 0,
+      "optimized_lines": 0,
+      "issues_fixed": [],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "分析类型提示需求"
+      ]
+    },
+    {
+      "file_path": "src/scripts/nes_game_launcher.py",
+      "original_lines": 550,
+      "optimized_lines": 553,
+      "issues_fixed": [],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "优化代码格式和空行",
+        "分析类型提示需求",
+        "添加缺失的docstring"
+      ]
+    },
+    {
+      "file_path": "src/scripts/rom_downloader.py",
+      "original_lines": 834,
+      "optimized_lines": 837,
+      "issues_fixed": [
+        "修复类型注解语法错误"
+      ],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "优化代码格式和空行",
+        "分析类型提示需求",
+        "添加缺失的docstring"
+      ]
+    },
+    {
+      "file_path": "src/scripts/enhanced_game_launcher.py",
+      "original_lines": 447,
+      "optimized_lines": 467,
+      "issues_fixed": [
+        "修复类型注解语法错误"
+      ],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "优化代码格式和空行",
+        "分析类型提示需求",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring"
+      ]
+    },
+    {
+      "file_path": "src/scripts/simple_nes_player.py",
+      "original_lines": 290,
+      "optimized_lines": 293,
+      "issues_fixed": [],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "优化代码格式和空行",
+        "分析类型提示需求",
+        "添加缺失的docstring"
+      ]
+    },
+    {
+      "file_path": "src/scripts/run_nes_game.py",
+      "original_lines": 280,
+      "optimized_lines": 284,
+      "issues_fixed": [
+        "修复类型注解语法错误"
+      ],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "优化代码格式和空行",
+        "分析类型提示需求",
+        "添加缺失的docstring",
+        "添加缺失的docstring"
+      ]
+    },
+    {
+      "file_path": "src/systems/__init__.py",
+      "original_lines": 0,
+      "optimized_lines": 0,
+      "issues_fixed": [],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "分析类型提示需求"
+      ]
+    },
+    {
+      "file_path": "src/systems/systems/__init__.py",
+      "original_lines": 0,
+      "optimized_lines": 0,
+      "issues_fixed": [],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "分析类型提示需求"
+      ]
+    },
+    {
+      "file_path": "src/systems/systems/retropie/core/log_analyzer.py",
+      "original_lines": 206,
+      "optimized_lines": 218,
+      "issues_fixed": [],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "优化代码格式和空行",
+        "分析类型提示需求",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring",
+        "添加缺失的docstring"
+      ]
+    },
+    {
+      "file_path": "src/systems/systems/retropie/core/logger_config.py",
+      "original_lines": 47,
+      "optimized_lines": 48,
+      "issues_fixed": [],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "优化代码格式和空行",
+        "分析类型提示需求",
+        "添加缺失的docstring"
+      ]
+    },
+    {
+      "file_path": "src/systems/systems/retropie/core/log_uploader.py",
+      "original_lines": 43,
+      "optimized_lines": 43,
+      "issues_fixed": [],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "优化代码格式和空行",
+        "分析类型提示需求"
+      ]
+    },
+    {
+      "file_path": "src/systems/systems/retropie/core/retropie_installer.py",
+      "original_lines": 575,
+      "optimized_lines": 575,
+      "issues_fixed": [
+        "修复类型注解语法错误"
+      ],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "优化代码格式和空行",
+        "分析类型提示需求",
+        "添加缺失的docstring"
+      ]
+    },
+    {
+      "file_path": "src/systems/systems/retropie/roms/rom_downloader.py",
+      "original_lines": 558,
+      "optimized_lines": 557,
+      "issues_fixed": [
+        "修复类型注解语法错误"
+      ],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "优化代码格式和空行",
+        "分析类型提示需求"
+      ]
+    },
+    {
+      "file_path": "src/systems/systems/retropie/tests/tests/conftest.py",
+      "original_lines": 5,
+      "optimized_lines": 7,
+      "issues_fixed": [],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "优化导入语句顺序",
+        "优化代码格式和空行",
+        "分析类型提示需求",
+        "添加缺失的docstring"
+      ]
+    },
+    {
+      "file_path": "src/systems/systems/retropie/tests/tests/run_all_tests.py",
+      "original_lines": 10,
+      "optimized_lines": 10,
+      "issues_fixed": [],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "优化导入语句顺序",
+        "优化代码格式和空行",
+        "分析类型提示需求"
+      ]
+    },
+    {
+      "file_path": "src/systems/systems/hdmi/core/hdmi_config.py",
+      "original_lines": 355,
+      "optimized_lines": 354,
+      "issues_fixed": [
+        "修复类型注解语法错误"
+      ],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "优化代码格式和空行",
+        "分析类型提示需求"
+      ]
+    },
+    {
+      "file_path": "src/systems/systems/hdmi/tests/test_hdmi_config.py",
+      "original_lines": 220,
+      "optimized_lines": 229,
+      "issues_fixed": [],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "优化代码格式和空行",
+        "分析类型提示需求",
+        "添加缺失的docstring"
+      ]
+    }
+  ]
+}

@@ -16,7 +16,6 @@ RetroPie安装器功能测试脚本
 用于验证基本功能是否正常工作
 """
 
-
 # 添加当前目录到Python路径
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
@@ -129,7 +128,6 @@ def main():
     print("1. 运行: python retropie_installer.py --list-disks")
     print("2. 运行: python retropie_installer.py --download")
     print("3. 运行: python retropie_installer.py --burn /dev/sdX")
-
 
 if __name__ == "__main__":
     main()

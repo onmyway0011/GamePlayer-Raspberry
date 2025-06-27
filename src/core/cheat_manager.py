@@ -1,396 +1,517 @@
 #!/usr/bin/env python3
 """
-金手指管理器
-自动开启无限条命等作弊功能
+金手指（作弊码）管理器
+负责管理和应用游戏作弊码
 """
 
 import json
-import time
-import threading
+import logging
 from pathlib import Path
-from typing import Dict, List, Optional, Any
+from typing import Dict, List, Optional, Tuple
+
+logger = logging.getLogger(__name__)
 
 class CheatManager:
     """金手指管理器"""
-    
-    def __init__(self, cheats_dir -> bool: str = "cheats") -> bool:
-        self.cheats_dir = Path(cheats_dir)
-        self.cheats_dir.mkdir(parents=True, exist_ok=True)
-        
-        # 作弊码状态
+
+    def __init__(self, config_dir: str = "config/cheats"):
+        """初始化金手指管理器"""
+        self.config_dir = Path(config_dir)
+        self.config_dir.mkdir(parents=True, exist_ok=True)
+
+        self.cheat_database = {}
         self.active_cheats = {}
-        self.cheat_thread = None
-        self.cheat_enabled = True
-        
-        # 内置通用作弊码
-        self.universal_cheats = {
-            "infinite_lives": {
-                "name": "无限条命",
-                "description": "永远不会死亡",
-                "enabled": True,
-                "auto_enable": True,
-                "memory_addresses": [
-                    {"address": 0x075A, "value": 99},  # 通用生命值地址
-                    {"address": 0x07A0, "value": 99},  # 备用生命值地址
-                ]
-            },
-            "infinite_health": {
-                "name": "无限血量",
-                "description": "血量永远满格",
-                "enabled": True,
-                "auto_enable": True,
-                "memory_addresses": [
-                    {"address": 0x0770, "value": 255},  # 通用血量地址
-                    {"address": 0x0790, "value": 255},  # 备用血量地址
-                ]
-            },
-            "infinite_ammo": {
-                "name": "无限弹药",
-                "description": "弹药永远不会用完",
-                "enabled": True,
-                "auto_enable": True,
-                "memory_addresses": [
-                    {"address": 0x0780, "value": 99},  # 通用弹药地址
-                ]
-            },
-            "invincibility": {
-                "name": "无敌模式",
-                "description": "免疫所有伤害",
-                "enabled": True,
-                "auto_enable": True,
-                "memory_addresses": [
-                    {"address": 0x0760, "value": 1},   # 无敌标志
-                ]
-            },
-            "max_power": {
-                "name": "最大能力",
-                "description": "所有能力值最大",
-                "enabled": True,
-                "auto_enable": True,
-                "memory_addresses": [
-                    {"address": 0x0750, "value": 255}, # 力量值
-                    {"address": 0x0751, "value": 255}, # 速度值
-                    {"address": 0x0752, "value": 255}, # 跳跃值
-                ]
-            }
-        }
-        
-        # 游戏特定作弊码
-        self.game_specific_cheats = self.load_game_cheats()
-        
-        print(f"🎯 金手指管理器初始化完成")
-        print(f"📁 作弊码目录: {self.cheats_dir}")
-        print(f"🔧 通用作弊码: {len(self.universal_cheats)} 个")
-    
-    def load_game_cheats(self) -> Dict:
-        """加载游戏特定作弊码"""
-        cheats_file = self.cheats_dir / "game_cheats.json"
-        
-        if cheats_file.exists():
-            try:
-                with open(cheats_file, 'r', encoding='utf-8') as f:
-                    return json.load(f)
-            except Exception as e:
-                print(f"⚠️ 加载作弊码文件失败: {e}")
-        
-        # 返回默认游戏作弊码
-        default_cheats = {
-            "super_mario_bros": {
-                "name": "超级马里奥兄弟",
-                "cheats": {
+        self.cheat_history = []
+
+        # 加载金手指数据库
+        self.load_cheat_database()
+
+    def load_cheat_database(self):
+        """加载金手指数据库"""
+        try:
+            # 加载通用金手指配置
+            general_config = self.config_dir / "general_cheats.json"
+            if general_config.exists():
+                with open(general_config, 'r', encoding='utf-8') as f:
+                    self.cheat_database = json.load(f)
+            else:
+                # 创建默认金手指数据库
+                self.create_default_cheat_database()
+
+            logger.info(f"✅ 金手指数据库加载完成，支持 {len(self.cheat_database)} 个系统")
+
+        except Exception as e:
+            logger.error(f"❌ 金手指数据库加载失败: {e}")
+            self.create_default_cheat_database()
+
+    def create_default_cheat_database(self):
+        """创建默认金手指数据库"""
+        self.cheat_database = {
+            "nes": {
+                "system_name": "Nintendo Entertainment System",
+                "common_cheats": {
                     "infinite_lives": {
-                        "name": "无限条命",
-                        "memory_addresses": [{"address": 0x075A, "value": 99}]
+                        "name": "无限生命",
+                        "description": "获得无限生命数",
+                        "code": "AEAEAE",
+                        "type": "game_genie",
+                        "enabled": True,
+                        "auto_enable": True
                     },
-                    "invincible": {
-                        "name": "无敌状态",
-                        "memory_addresses": [{"address": 0x079E, "value": 1}]
+                    "infinite_time": {
+                        "name": "无限时间",
+                        "description": "时间不会减少",
+                        "code": "AAAAAA",
+                        "type": "game_genie",
+                        "enabled": False,
+                        "auto_enable": False
                     },
-                    "big_mario": {
-                        "name": "大马里奥",
-                        "memory_addresses": [{"address": 0x0756, "value": 1}]
+                    "invincibility": {
+                        "name": "无敌模式",
+                        "description": "角色无敌，不会受伤",
+                        "code": "AEAEAE",
+                        "type": "game_genie",
+                        "enabled": True,
+                        "auto_enable": True
+                    },
+                    "level_select": {
+                        "name": "关卡选择",
+                        "description": "可以选择任意关卡",
+                        "code": "AAAAAA",
+                        "type": "game_genie",
+                        "enabled": True,
+                        "auto_enable": True
+                    },
+                    "max_power": {
+                        "name": "最大能力",
+                        "description": "所有能力值最大",
+                        "code": "AEAEAE",
+                        "type": "game_genie",
+                        "enabled": True,
+                        "auto_enable": True
+                    }
+                },
+                "games": {
+                    "Super Mario Bros": {
+                        "infinite_lives": "SXIOPO",
+                        "big_mario": "AAAAAA",
+                        "fire_mario": "AEAEAE",
+                        "level_select": "AEAEAE"
+                    },
+                    "Contra": {
+                        "30_lives": "SXIOPO",
+                        "infinite_lives": "AAAAAA",
+                        "spread_gun": "AEAEAE",
+                        "rapid_fire": "AEAEAE"
+                    },
+                    "Mega Man": {
+                        "infinite_lives": "SXIOPO",
+                        "infinite_energy": "AAAAAA",
+                        "all_weapons": "AEAEAE",
+                        "stage_select": "AEAEAE"
                     }
                 }
             },
-            "contra": {
-                "name": "魂斗罗",
-                "cheats": {
+            "snes": {
+                "system_name": "Super Nintendo Entertainment System",
+                "common_cheats": {
                     "infinite_lives": {
-                        "name": "无限条命",
-                        "memory_addresses": [{"address": 0x0032, "value": 99}]
+                        "name": "无限生命",
+                        "description": "获得无限生命数",
+                        "code": "7E0DBE:63",
+                        "type": "pro_action_replay",
+                        "enabled": True,
+                        "auto_enable": True
                     },
-                    "infinite_ammo": {
-                        "name": "无限弹药",
-                        "memory_addresses": [{"address": 0x0033, "value": 99}]
+                    "infinite_health": {
+                        "name": "无限血量",
+                        "description": "血量不会减少",
+                        "code": "7E0DBF:FF",
+                        "type": "pro_action_replay",
+                        "enabled": True,
+                        "auto_enable": True
                     },
-                    "spread_gun": {
-                        "name": "散弹枪",
-                        "memory_addresses": [{"address": 0x0034, "value": 1}]
+                    "invincibility": {
+                        "name": "无敌模式",
+                        "description": "角色无敌，不会受伤",
+                        "code": "7E0DC0:01",
+                        "type": "pro_action_replay",
+                        "enabled": True,
+                        "auto_enable": True
+                    },
+                    "max_power": {
+                        "name": "最大能力",
+                        "description": "所有能力值最大",
+                        "code": "7E0DC0:FF",
+                        "type": "pro_action_replay",
+                        "enabled": True,
+                        "auto_enable": True
+                    },
+                    "level_select": {
+                        "name": "关卡选择",
+                        "description": "可以选择任意关卡",
+                        "code": "7E0DC1:FF",
+                        "type": "pro_action_replay",
+                        "enabled": True,
+                        "auto_enable": True
                     }
-                }
+                },
+                "games": {}
             },
-            "megaman": {
-                "name": "洛克人",
-                "cheats": {
+            "gb": {
+                "system_name": "Game Boy",
+                "common_cheats": {
                     "infinite_lives": {
-                        "name": "无限条命",
-                        "memory_addresses": [{"address": 0x00A8, "value": 99}]
+                        "name": "无限生命",
+                        "description": "获得无限生命数",
+                        "code": "01FF63C1",
+                        "type": "gameshark",
+                        "enabled": True,
+                        "auto_enable": True
                     },
-                    "infinite_energy": {
-                        "name": "无限能量",
-                        "memory_addresses": [{"address": 0x06C0, "value": 28}]
+                    "infinite_health": {
+                        "name": "无限血量",
+                        "description": "血量不会减少",
+                        "code": "01FF64C1",
+                        "type": "gameshark",
+                        "enabled": True,
+                        "auto_enable": True
                     },
-                    "all_weapons": {
-                        "name": "所有武器",
-                        "memory_addresses": [
-                            {"address": 0x00BB, "value": 255},
-                            {"address": 0x00BC, "value": 255}
-                        ]
+                    "invincibility": {
+                        "name": "无敌模式",
+                        "description": "角色无敌，不会受伤",
+                        "code": "01FF65C1",
+                        "type": "gameshark",
+                        "enabled": True,
+                        "auto_enable": True
+                    },
+                    "max_power": {
+                        "name": "最大能力",
+                        "description": "所有能力值最大",
+                        "code": "01FF66C1",
+                        "type": "gameshark",
+                        "enabled": True,
+                        "auto_enable": True
+                    },
+                    "level_select": {
+                        "name": "关卡选择",
+                        "description": "可以选择任意关卡",
+                        "code": "01FF67C1",
+                        "type": "gameshark",
+                        "enabled": True,
+                        "auto_enable": True
                     }
-                }
+                },
+                "games": {}
+            },
+            "gba": {
+                "system_name": "Game Boy Advance",
+                "common_cheats": {
+                    "infinite_lives": {
+                        "name": "无限生命",
+                        "description": "获得无限生命数",
+                        "code": "82003228:0063",
+                        "type": "codebreaker",
+                        "enabled": True,
+                        "auto_enable": True
+                    },
+                    "infinite_health": {
+                        "name": "无限血量",
+                        "description": "血量不会减少",
+                        "code": "82003229:00FF",
+                        "type": "codebreaker",
+                        "enabled": True,
+                        "auto_enable": True
+                    },
+                    "invincibility": {
+                        "name": "无敌模式",
+                        "description": "角色无敌，不会受伤",
+                        "code": "8200322A:0001",
+                        "type": "codebreaker",
+                        "enabled": True,
+                        "auto_enable": True
+                    },
+                    "max_power": {
+                        "name": "最大能力",
+                        "description": "所有能力值最大",
+                        "code": "8200322B:00FF",
+                        "type": "codebreaker",
+                        "enabled": True,
+                        "auto_enable": True
+                    },
+                    "level_select": {
+                        "name": "关卡选择",
+                        "description": "可以选择任意关卡",
+                        "code": "8200322C:00FF",
+                        "type": "codebreaker",
+                        "enabled": True,
+                        "auto_enable": True
+                    }
+                },
+                "games": {}
+            },
+            "genesis": {
+                "system_name": "Sega Genesis/Mega Drive",
+                "common_cheats": {
+                    "infinite_lives": {
+                        "name": "无限生命",
+                        "description": "获得无限生命数",
+                        "code": "FFFF01:0063",
+                        "type": "action_replay",
+                        "enabled": True,
+                        "auto_enable": True
+                    },
+                    "infinite_health": {
+                        "name": "无限血量",
+                        "description": "血量不会减少",
+                        "code": "FFFF02:00FF",
+                        "type": "action_replay",
+                        "enabled": True,
+                        "auto_enable": True
+                    },
+                    "invincibility": {
+                        "name": "无敌模式",
+                        "description": "角色无敌，不会受伤",
+                        "code": "FFFF03:0001",
+                        "type": "action_replay",
+                        "enabled": True,
+                        "auto_enable": True
+                    },
+                    "max_power": {
+                        "name": "最大能力",
+                        "description": "所有能力值最大",
+                        "code": "FFFF04:00FF",
+                        "type": "action_replay",
+                        "enabled": True,
+                        "auto_enable": True
+                    },
+                    "level_select": {
+                        "name": "关卡选择",
+                        "description": "可以选择任意关卡",
+                        "code": "FFFF05:00FF",
+                        "type": "action_replay",
+                        "enabled": True,
+                        "auto_enable": True
+                    }
+                },
+                "games": {}
             }
         }
-        
-        # 保存默认作弊码
+
+        # 保存默认配置
+        self.save_cheat_database()
+        logger.info("📝 创建默认金手指数据库")
+
+    def save_cheat_database(self):
+        """保存金手指数据库"""
         try:
-            with open(cheats_file, 'w', encoding='utf-8') as f:
-                json.dump(default_cheats, f, indent=2, ensure_ascii=False)
-        except Exception as e:
-            print(f"⚠️ 保存默认作弊码失败: {e}")
-        
-        return default_cheats
-    
-    def get_game_id_from_rom(self, rom_path: str) -> str:
-        """从ROM路径获取游戏ID"""
-        rom_name = Path(rom_path).stem.lower()
-        
-        # 游戏名称映射
-        game_mappings = {
-            "super_mario": "super_mario_bros",
-            "mario": "super_mario_bros",
-            "contra": "contra",
-            "megaman": "megaman",
-            "rockman": "megaman",
-            "castlevania": "castlevania",
-            "zelda": "zelda",
-            "metroid": "metroid"
-        }
-        
-        for keyword, game_id in game_mappings.items():
-            if keyword in rom_name:
-                return game_id
-        
-        return "unknown"
-    
-    def get_available_cheats(self, rom_path: str) -> Dict:
-        """获取可用的作弊码"""
-        game_id = self.get_game_id_from_rom(rom_path)
-        
-        available_cheats = {}
-        
-        # 添加通用作弊码
-        for cheat_id, cheat_data in self.universal_cheats.items():
-            available_cheats[f"universal_{cheat_id}"] = cheat_data
-        
-        # 添加游戏特定作弊码
-        if game_id in self.game_specific_cheats:
-            game_cheats = self.game_specific_cheats[game_id].get("cheats", {})
-            for cheat_id, cheat_data in game_cheats.items():
-                available_cheats[f"game_{cheat_id}"] = cheat_data
-        
-        return available_cheats
-    
-    def enable_cheat(self, cheat_id: str, cheat_data: Dict) -> bool:
-        """启用作弊码"""
-        try:
-            self.active_cheats[cheat_id] = {
-                "data": cheat_data,
-                "enabled": True,
-                "last_applied": 0
-            }
-            
-            print(f"🎯 作弊码已启用: {cheat_data.get('name', cheat_id)}")
-            return True
-            
-        except Exception as e:
-            print(f"❌ 启用作弊码失败: {e}")
-            return False
-    
-    def disable_cheat(self, cheat_id: str) -> bool:
-        """禁用作弊码"""
-        try:
-            if cheat_id in self.active_cheats:
-                self.active_cheats[cheat_id]["enabled"] = False
-                print(f"🚫 作弊码已禁用: {cheat_id}")
-                return True
-            return False
-            
-        except Exception as e:
-            print(f"❌ 禁用作弊码失败: {e}")
-            return False
-    
-    def auto_enable_cheats(self, rom_path: str) -> int:
-        """自动启用作弊码"""
-        available_cheats = self.get_available_cheats(rom_path)
-        enabled_count = 0
-        
-        for cheat_id, cheat_data in available_cheats.items():
-            if cheat_data.get("auto_enable", False):
-                if self.enable_cheat(cheat_id, cheat_data):
-                    enabled_count += 1
-        
-        print(f"🎯 自动启用了 {enabled_count} 个作弊码")
-        return enabled_count
-    
-    def apply_cheats(self, memory_manager) -> int:
-        """应用作弊码到游戏内存"""
-        applied_count = 0
-        current_time = time.time()
-        
-        for cheat_id, cheat_info in self.active_cheats.items():
-            if not cheat_info.get("enabled", False):
-                continue
-            
-            # 限制应用频率（每秒最多一次）
-            if current_time - cheat_info.get("last_applied", 0) < 1.0:
-                continue
-            
-            cheat_data = cheat_info["data"]
-            memory_addresses = cheat_data.get("memory_addresses", [])
-            
-            for addr_info in memory_addresses:
-                address = addr_info.get("address")
-                value = addr_info.get("value")
-                
-                if address is not None and value is not None:
-                    try:
-                        # 应用内存修改
-                        if hasattr(memory_manager, 'write_memory'):
-                            memory_manager.write_memory(address, value)
-                        elif hasattr(memory_manager, 'set_memory'):
-                            memory_manager.set_memory(address, value)
-                        else:
-                            # 模拟内存修改
-                            print(f"🎯 模拟内存修改: 0x{address:04X} = {value}")
-                        
-                        applied_count += 1
-                    except Exception as e:
-                        print(f"⚠️ 应用作弊码失败 {cheat_id}: {e}")
-            
-            cheat_info["last_applied"] = current_time
-        
-        return applied_count
-    
-    def start_cheat_monitor(self, memory_manager) -> bool:
-        """启动作弊码监控线程"""
-        if self.cheat_thread and self.cheat_thread.is_alive():
-            self.cheat_enabled = False
-            self.cheat_thread.join()
-        
-        self.cheat_enabled = True
-        self.cheat_thread = threading.Thread(
-            target=self._cheat_monitor_worker,
-            args=(memory_manager,)
-        )
-        self.cheat_thread.daemon = True
-        self.cheat_thread.start()
-        
-        print(f"🎯 作弊码监控已启动")
-    
-    def stop_cheat_monitor(self) -> bool:
-        """停止作弊码监控"""
-        self.cheat_enabled = False
-        if self.cheat_thread and self.cheat_thread.is_alive():
-            self.cheat_thread.join()
-        print(f"🛑 作弊码监控已停止")
-    
-    def _cheat_monitor_worker(self, memory_manager) -> bool:
-        """作弊码监控工作线程"""
-        while self.cheat_enabled:
-            try:
-                if self.active_cheats:
-                    applied = self.apply_cheats(memory_manager)
-                    if applied > 0:
-                        print(f"🎯 应用了 {applied} 个作弊码修改")
-                
-                time.sleep(1.0)  # 每秒检查一次
-                
-            except Exception as e:
-                print(f"⚠️ 作弊码监控出错: {e}")
-                time.sleep(5.0)  # 出错后等待5秒
-    
-    def get_cheat_status(self) -> Dict:
-        """获取作弊码状态"""
-        status = {
-            "total_cheats": len(self.active_cheats),
-            "enabled_cheats": 0,
-            "active_cheats": []
-        }
-        
-        for cheat_id, cheat_info in self.active_cheats.items():
-            if cheat_info.get("enabled", False):
-                status["enabled_cheats"] += 1
-                status["active_cheats"].append({
-                    "id": cheat_id,
-                    "name": cheat_info["data"].get("name", cheat_id),
-                    "description": cheat_info["data"].get("description", ""),
-                    "last_applied": cheat_info.get("last_applied", 0)
-                })
-        
-        return status
-    
-    def save_cheat_config(self, rom_path: str) -> bool:
-        """保存作弊码配置"""
-        try:
-            game_id = self.get_game_id_from_rom(rom_path)
-            config_file = self.cheats_dir / f"{game_id}_config.json"
-            
-            config = {
-                "game_id": game_id,
-                "rom_path": rom_path,
-                "active_cheats": {},
-                "timestamp": time.time()
-            }
-            
-            for cheat_id, cheat_info in self.active_cheats.items():
-                config["active_cheats"][cheat_id] = {
-                    "enabled": cheat_info.get("enabled", False),
-                    "data": cheat_info["data"]
-                }
-            
+            config_file = self.config_dir / "general_cheats.json"
             with open(config_file, 'w', encoding='utf-8') as f:
-                json.dump(config, f, indent=2, ensure_ascii=False)
-            
-            print(f"💾 作弊码配置已保存")
-            return True
-            
+                json.dump(self.cheat_database, f, indent=2, ensure_ascii=False)
+            logger.info("💾 金手指数据库已保存")
         except Exception as e:
-            print(f"❌ 保存作弊码配置失败: {e}")
-            return False
-    
-    def load_cheat_config(self, rom_path: str) -> bool:
-        """加载作弊码配置"""
+            logger.error(f"❌ 金手指数据库保存失败: {e}")
+
+    def get_system_cheats(self, system: str) -> Optional[Dict]:
+        """获取指定系统的金手指"""
+        return self.cheat_database.get(system)
+
+    def get_game_cheats(self, system: str, game: str) -> Optional[Dict]:
+        """获取指定游戏的金手指"""
+        system_data = self.cheat_database.get(system)
+        if system_data and "games" in system_data:
+            return system_data["games"].get(game)
+        return None
+
+    def enable_cheat(self, system: str, cheat_type: str, cheat_name: str) -> bool:
+        """启用金手指"""
         try:
-            game_id = self.get_game_id_from_rom(rom_path)
-            config_file = self.cheats_dir / f"{game_id}_config.json"
-            
-            if not config_file.exists():
-                return False
-            
-            with open(config_file, 'r', encoding='utf-8') as f:
-                config = json.load(f)
-            
-            self.active_cheats = {}
-            for cheat_id, cheat_config in config.get("active_cheats", {}).items():
-                self.active_cheats[cheat_id] = {
-                    "data": cheat_config["data"],
-                    "enabled": cheat_config.get("enabled", False),
-                    "last_applied": 0
-                }
-            
-            print(f"📂 作弊码配置已加载")
-            return True
-            
+            if system in self.cheat_database:
+                if cheat_type == "common":
+                    if cheat_name in self.cheat_database[system]["common_cheats"]:
+                        self.cheat_database[system]["common_cheats"][cheat_name]["enabled"] = True
+                        self.active_cheats[f"{system}_{cheat_type}_{cheat_name}"] = True
+                        logger.info(f"✅ 启用金手指: {system} - {cheat_name}")
+                        return True
+            return False
         except Exception as e:
-            print(f"❌ 加载作弊码配置失败: {e}")
+            logger.error(f"❌ 启用金手指失败: {e}")
+            return False
+
+
+    def disable_cheat(self, system: str, cheat_type: str, cheat_name: str) -> bool:
+        """禁用金手指"""
+        try:
+            if system in self.cheat_database:
+                if cheat_type == "common":
+                    if cheat_name in self.cheat_database[system]["common_cheats"]:
+                        self.cheat_database[system]["common_cheats"][cheat_name]["enabled"] = False
+                        cheat_key = f"{system}_{cheat_type}_{cheat_name}"
+                        if cheat_key in self.active_cheats:
+                            del self.active_cheats[cheat_key]
+                        logger.info(f"❌ 禁用金手指: {system} - {cheat_name}")
+                        return True
+            return False
+        except Exception as e:
+            logger.error(f"❌ 禁用金手指失败: {e}")
+            return False
+
+    def toggle_cheat(self, system: str, cheat_type: str, cheat_name: str) -> bool:
+        """切换金手指状态"""
+        if system in self.cheat_database:
+            if cheat_type == "common":
+                cheat_data = self.cheat_database[system]["common_cheats"].get(cheat_name)
+                if cheat_data:
+                    if cheat_data["enabled"]:
+                        return self.disable_cheat(system, cheat_type, cheat_name)
+                    else:
+                        return self.enable_cheat(system, cheat_type, cheat_name)
+        return False
+
+    def get_active_cheats(self) -> Dict:
+        """获取当前激活的金手指"""
+        return self.active_cheats.copy()
+
+    def clear_all_cheats(self):
+        """清除所有激活的金手指"""
+        self.active_cheats.clear()
+
+        # 重置数据库中的启用状态
+        for system in self.cheat_database:
+            if "common_cheats" in self.cheat_database[system]:
+                for cheat_name in self.cheat_database[system]["common_cheats"]:
+                    self.cheat_database[system]["common_cheats"][cheat_name]["enabled"] = False
+
+        logger.info("🧹 已清除所有金手指")
+
+
+    def export_cheat_config(self, file_path: str) -> bool:
+        """导出金手指配置"""
+        try:
+            export_data = {
+                "cheat_database": self.cheat_database,
+                "active_cheats": self.active_cheats,
+                "export_time": "2025-06-27"
+            }
+
+            with open(file_path, 'w', encoding='utf-8') as f:
+                json.dump(export_data, f, indent=2, ensure_ascii=False)
+
+            logger.info(f"📤 金手指配置已导出到: {file_path}")
+            return True
+        except Exception as e:
+            logger.error(f"❌ 金手指配置导出失败: {e}")
+            return False
+
+    def import_cheat_config(self, file_path: str) -> bool:
+        """导入金手指配置"""
+        try:
+            with open(file_path, 'r', encoding='utf-8') as f:
+                import_data = json.load(f)
+
+            if "cheat_database" in import_data:
+                self.cheat_database = import_data["cheat_database"]
+
+            if "active_cheats" in import_data:
+                self.active_cheats = import_data["active_cheats"]
+
+            self.save_cheat_database()
+            logger.info(f"📥 金手指配置已导入: {file_path}")
+            return True
+        except Exception as e:
+            logger.error(f"❌ 金手指配置导入失败: {e}")
+            return False
+
+    def auto_enable_cheats_for_game(self, system: str, game_name: str = None) -> int:
+        """游戏启动时自动启用金手指"""
+        try:
+            enabled_count = 0
+
+            if system not in self.cheat_database:
+                logger.warning(f"⚠️ 不支持的游戏系统: {system}")
+                return 0
+
+            system_data = self.cheat_database[system]
+            logger.info(f"🎯 为 {system_data['system_name']} 自动启用金手指...")
+
+            # 启用通用金手指
+            common_cheats = system_data.get("common_cheats", {})
+            for cheat_name, cheat_data in common_cheats.items():
+                if cheat_data.get("auto_enable", False):
+                    success = self.enable_cheat(system, "common", cheat_name)
+                    if success:
+                        enabled_count += 1
+                        logger.info(f"  ✅ 已启用: {cheat_data['name']}")
+
+            # 启用游戏特定金手指（如果指定了游戏）
+            if game_name:
+                games = system_data.get("games", {})
+                if game_name in games:
+                    game_cheats = games[game_name]
+                    for cheat_name, cheat_code in game_cheats.items():
+                        # 这里可以添加游戏特定金手指的启用逻辑
+                        logger.info(f"  🎮 游戏特定金手指: {cheat_name} = {cheat_code}")
+
+            if enabled_count > 0:
+                logger.info(f"🎉 成功自动启用 {enabled_count} 个金手指")
+
+                # 显示启用的金手指列表
+                self._show_enabled_cheats_summary(system)
+            else:
+                logger.info("ℹ️ 没有需要自动启用的金手指")
+
+            return enabled_count
+
+        except Exception as e:
+            logger.error(f"❌ 自动启用金手指失败: {e}")
+            return 0
+
+    def _show_enabled_cheats_summary(self, system: str):
+        """显示已启用的金手指摘要"""
+        try:
+            enabled_cheats = []
+
+            if system in self.cheat_database:
+                common_cheats = self.cheat_database[system].get("common_cheats", {})
+                for cheat_name, cheat_data in common_cheats.items():
+                    if cheat_data.get("enabled", False):
+                        enabled_cheats.append(cheat_data["name"])
+
+            if enabled_cheats:
+                logger.info("📋 当前启用的金手指:")
+                for i, cheat_name in enumerate(enabled_cheats, 1):
+                    logger.info(f"  {i}. {cheat_name}")
+
+        except Exception as e:
+            logger.error(f"❌ 显示金手指摘要失败: {e}")
+
+    def get_auto_enable_cheats(self, system: str) -> List[str]:
+        """获取自动启用的金手指列表"""
+        auto_cheats = []
+
+        if system in self.cheat_database:
+            common_cheats = self.cheat_database[system].get("common_cheats", {})
+            for cheat_name, cheat_data in common_cheats.items():
+                if cheat_data.get("auto_enable", False):
+                    auto_cheats.append(cheat_data["name"])
+
+        return auto_cheats
+
+    def set_auto_enable_cheat(self, system: str, cheat_name: str, auto_enable: bool) -> bool:
+        """设置金手指是否自动启用"""
+        try:
+            if system in self.cheat_database:
+                common_cheats = self.cheat_database[system].get("common_cheats", {})
+                if cheat_name in common_cheats:
+                    common_cheats[cheat_name]["auto_enable"] = auto_enable
+                    self.save_cheat_database()
+
+                    status = "启用" if auto_enable else "禁用"
+                    logger.info(f"⚙️ 已设置 {cheat_name} 自动{status}")
+                    return True
+
+            return False
+
+        except Exception as e:
+            logger.error(f"❌ 设置自动启用失败: {e}")
             return False

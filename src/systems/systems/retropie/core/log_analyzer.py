@@ -12,6 +12,7 @@ LOG_DIR = 'logs'
 REPORT_DIR = 'log_reports'
 os.makedirs(REPORT_DIR, exist_ok=True)
 
+
 def parse_log_line(line) -> None:
     """解析单行日志"""
     m = re.match(r'\[(.*?)\]\[(.*?)\]\[(.*?)\] (.*)', line)
@@ -23,6 +24,7 @@ def parse_log_line(line) -> None:
             'msg': m.group(4)
         }
     return None
+
 
 def analyze_logs(keyword=None, anomaly_patterns=None) -> None:
     """分析日志，支持关键字和异常模式检索"""
@@ -57,6 +59,7 @@ def analyze_logs(keyword=None, anomaly_patterns=None) -> None:
                             anomaly_hits.append(entry)
     return stats, errors, warnings, all_times, keyword_hits, anomaly_hits
 
+
 def plot_trend(all_times) -> None:
     """生成日志活跃趋势图"""
     if not all_times:
@@ -75,6 +78,7 @@ def plot_trend(all_times) -> None:
     plt.savefig(img_path)
     plt.close()
     return img_path
+
 
 def generate_report(stats, errors, warnings, trend_img, keyword_hits, anomaly_hits, keyword=None, anomaly_patterns=None) -> None:
     """生成Markdown格式的日志分析报告"""
@@ -105,6 +109,7 @@ def generate_report(stats, errors, warnings, trend_img, keyword_hits, anomaly_hi
                 f.write(f'  - [{hit["time"]}] {hit["module"]}: {hit["msg"]}\n')
     return report_path
 
+
 def send_alert(errors, warnings, anomaly_hits) -> None:
     """通过Webhook发送日志告警"""
     webhook = os.environ.get('LOG_ALERT_WEBHOOK')
@@ -119,6 +124,7 @@ def send_alert(errors, warnings, anomaly_hits) -> None:
     except requests.RequestException as exc:
         print(f'告警发送失败: {exc}')
 
+
 def start_web_dashboard() -> None:
     """启动Flask Web服务，提供日志可视化接口"""
     from flask import Flask, jsonify, request, send_from_directory
@@ -126,6 +132,7 @@ def start_web_dashboard() -> None:
 
     @app.route('/logs')
     def logs() -> None:
+        """TODO: Add docstring"""
         keyword = request.args.get('keyword')
         anomaly = request.args.get('anomaly')
         anomaly_patterns = [anomaly] if anomaly else None
@@ -137,12 +144,14 @@ def start_web_dashboard() -> None:
 
     @app.route('/trend')
     def trend() -> None:
+        """TODO: Add docstring"""
         _, _, _, all_times, _, _ = analyze_logs()
         img_path = plot_trend(all_times)
         return send_from_directory(REPORT_DIR, os.path.basename(img_path))
 
     @app.route('/report')
     def report() -> None:
+        """TODO: Add docstring"""
         files = sorted([f for f in os.listdir(REPORT_DIR) if f.endswith('.md')], reverse=True)
         if not files:
             return 'No report', 404
@@ -150,6 +159,7 @@ def start_web_dashboard() -> None:
             return f.read(), 200, {'Content-Type': 'text/markdown; charset=utf-8'}
 
     app.run(port=5001)
+
 
 def export_to_json() -> None:
     """导出所有日志为ELK/Graylog可用的JSON"""
@@ -167,9 +177,11 @@ def export_to_json() -> None:
         json.dump(all_entries, f, ensure_ascii=False, indent=2)
     print(f'ELK/Graylog导出文件: {out_path}')
 
+
 def schedule_auto_analyze(interval_min=10) -> None:
     """定时自动分析日志"""
     def loop() -> None:
+        """TODO: Add docstring"""
         while True:
             print(f"[AutoAnalyze] {datetime.now()} 自动分析...")
             stats, errors, warnings, all_times, keyword_hits, anomaly_hits = analyze_logs()
@@ -203,4 +215,4 @@ if __name__ == '__main__':
         if args.auto:
             schedule_auto_analyze()
             while True:
-                time.sleep(3600) 
+                time.sleep(3600)

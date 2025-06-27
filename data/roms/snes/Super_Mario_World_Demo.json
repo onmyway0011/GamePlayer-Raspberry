@@ -1,0 +1,9 @@
+{
+  "name": "Super Mario World Demo",
+  "system": "snes",
+  "description": "Super Mario World Demo - 演示版",
+  "size": "524288 bytes",
+  "demo": true,
+  "file_path": "data/roms/snes/Super_Mario_World_Demo.smc",
+  "checksum": "936c9ae97cc539e23e32916b73a56499"
+}

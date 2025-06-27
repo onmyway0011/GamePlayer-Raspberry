@@ -1,0 +1,9 @@
+{
+  "name": "Mega Man Demo",
+  "system": "nes",
+  "description": "Mega Man Demo - 演示版",
+  "size": "32768 bytes",
+  "demo": true,
+  "file_path": "data/roms/nes/Mega_Man_Demo.nes",
+  "checksum": "f11f4a3cffec7021e36a240b5f63d1a8"
+}

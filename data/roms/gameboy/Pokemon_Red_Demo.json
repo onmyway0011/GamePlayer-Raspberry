@@ -1,0 +1,9 @@
+{
+  "name": "Pokemon Red Demo",
+  "system": "gb",
+  "description": "Pokemon Red Demo - 演示版",
+  "size": "32768 bytes",
+  "demo": true,
+  "file_path": "data/roms/gameboy/Pokemon_Red_Demo.gb",
+  "checksum": "c55e0b1502a20393e69761149247173f"
+}

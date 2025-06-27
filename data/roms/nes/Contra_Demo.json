@@ -1,0 +1,9 @@
+{
+  "name": "Contra Demo",
+  "system": "nes",
+  "description": "Contra Demo - 演示版",
+  "size": "32768 bytes",
+  "demo": true,
+  "file_path": "data/roms/nes/Contra_Demo.nes",
+  "checksum": "6fc2d0eab64af2e99fdecbcd4c7f4acb"
+}

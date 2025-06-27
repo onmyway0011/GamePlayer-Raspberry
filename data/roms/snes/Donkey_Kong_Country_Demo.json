@@ -1,0 +1,9 @@
+{
+  "name": "Donkey Kong Country Demo",
+  "system": "snes",
+  "description": "Donkey Kong Country Demo - 演示版",
+  "size": "524288 bytes",
+  "demo": true,
+  "file_path": "data/roms/snes/Donkey_Kong_Country_Demo.smc",
+  "checksum": "898fceaec386b2b5cd32d978dde77d5c"
+}

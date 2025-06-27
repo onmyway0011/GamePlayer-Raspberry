@@ -1,0 +1,9 @@
+{
+  "name": "Metroid: Fusion Demo",
+  "system": "gba",
+  "description": "Metroid: Fusion Demo - 演示版",
+  "size": "262144 bytes",
+  "demo": true,
+  "file_path": "data/roms/gba/Metroid:_Fusion_Demo.gba",
+  "checksum": "239633ba5196fb6bd0d39a82e21e4c4d"
+}

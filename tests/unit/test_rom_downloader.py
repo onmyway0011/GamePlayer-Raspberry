@@ -16,7 +16,6 @@ ROM下载器功能测试脚本
 用于验证基本功能是否正常工作
 """
 
-
 # 添加当前目录到Python路径
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
@@ -194,7 +193,6 @@ def main():
     print("1. 编辑 rom_config.json 配置树莓派连接信息")
     print("2. 运行: python rom_downloader.py --setup-config")
     print("3. 运行: python rom_downloader.py")
-
 
 if __name__ == "__main__":
     main()

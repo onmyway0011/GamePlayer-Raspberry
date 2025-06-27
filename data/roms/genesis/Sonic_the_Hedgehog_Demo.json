@@ -1,0 +1,9 @@
+{
+  "name": "Sonic the Hedgehog Demo",
+  "system": "genesis",
+  "description": "Sonic the Hedgehog Demo - 演示版",
+  "size": "524288 bytes",
+  "demo": true,
+  "file_path": "data/roms/genesis/Sonic_the_Hedgehog_Demo.md",
+  "checksum": "407d8176bd0a1056229321069f5554c0"
+}

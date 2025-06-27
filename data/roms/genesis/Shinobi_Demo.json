@@ -1,0 +1,9 @@
+{
+  "name": "Shinobi Demo",
+  "system": "genesis",
+  "description": "Shinobi Demo - 演示版",
+  "size": "524288 bytes",
+  "demo": true,
+  "file_path": "data/roms/genesis/Shinobi_Demo.md",
+  "checksum": "afafef632295cc4410208daef61cc110"
+}

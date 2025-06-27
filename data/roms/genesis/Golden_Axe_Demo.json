@@ -1,0 +1,9 @@
+{
+  "name": "Golden Axe Demo",
+  "system": "genesis",
+  "description": "Golden Axe Demo - 演示版",
+  "size": "524288 bytes",
+  "demo": true,
+  "file_path": "data/roms/genesis/Golden_Axe_Demo.md",
+  "checksum": "dee231bdb82194a31d35c688c448ad2f"
+}

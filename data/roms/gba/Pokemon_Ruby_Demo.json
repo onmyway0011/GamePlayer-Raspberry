@@ -1,0 +1,9 @@
+{
+  "name": "Pokemon Ruby Demo",
+  "system": "gba",
+  "description": "Pokemon Ruby Demo - 演示版",
+  "size": "262144 bytes",
+  "demo": true,
+  "file_path": "data/roms/gba/Pokemon_Ruby_Demo.gba",
+  "checksum": "baed3aa0610daebc2d521c544a8ab61c"
+}

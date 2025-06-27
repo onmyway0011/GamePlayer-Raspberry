@@ -1,0 +1,9 @@
+{
+  "name": "Lizard",
+  "system": "nes",
+  "description": "冒险解谜游戏演示版",
+  "size": "256KB",
+  "downloaded": true,
+  "file_path": "data/roms/nes/Lizard.nes",
+  "checksum": "c78f93a3198d8c3bd16675777feb7015"
+}

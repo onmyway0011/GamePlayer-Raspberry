@@ -25,10 +25,12 @@ except ImportError:
     from cheat_manager import CheatManager
     from device_manager import DeviceManager
 
+
 class NESEmulator:
     """简单的NES模拟器"""
-    
-    def __init__(self) -> bool:
+
+    def __init__(self):
+        """TODO: Add docstring"""
         # 初始化Pygame
         pygame.init()
 
@@ -51,7 +53,7 @@ class NESEmulator:
 
         # 当前ROM路径
         self.current_rom_path = None
-        
+
         # 颜色定义
         self.BLACK = (0, 0, 0)
         self.WHITE = (255, 255, 255)
@@ -59,7 +61,7 @@ class NESEmulator:
         self.GREEN = (0, 255, 0)
         self.BLUE = (0, 0, 255)
         self.YELLOW = (255, 255, 0)
-        
+
         # NES调色板（简化版）
         self.nes_palette = [
             (84, 84, 84), (0, 30, 116), (8, 16, 144), (48, 0, 136),
@@ -71,14 +73,14 @@ class NESEmulator:
             (84, 90, 0), (40, 114, 0), (8, 124, 0), (0, 118, 40),
             (0, 102, 120), (0, 0, 0), (0, 0, 0), (0, 0, 0)
         ]
-        
+
         # 游戏状态
         self.running = False
         self.paused = False
         self.rom_loaded = False
         self.rom_data = None
         self.rom_info = {}
-        
+
         # 模拟的游戏对象
         self.player_x = 50
         self.player_y = 200
@@ -87,15 +89,15 @@ class NESEmulator:
         self.score = 0
         self.lives = 3
         self.level = 1
-        
+
         # 时钟
         self.clock = pygame.time.Clock()
         self.frame_count = 0
-        
+
         # 字体
         self.font = pygame.font.Font(None, 24)
         self.small_font = pygame.font.Font(None, 16)
-        
+
         # 控制器状态
         self.controller = {
             'up': False,
@@ -111,28 +113,28 @@ class NESEmulator:
         # 使用外部控制器
         self.use_external_controller = True
         self.controller_deadzone = 0.3
-    
-    def load_rom(self, rom_path: str) -> bool:
+
+    def load_rom(self, rom_path: str):
         """加载ROM文件"""
         try:
             rom_file = Path(rom_path)
             if not rom_file.exists():
                 print(f"ROM文件不存在: {rom_path}")
                 return False
-            
+
             with open(rom_file, 'rb') as f:
                 self.rom_data = f.read()
-            
+
             # 解析ROM头部
             if len(self.rom_data) < 16:
                 print("ROM文件太小")
                 return False
-            
+
             header = self.rom_data[:16]
             if header[:4] != b'NES\x1a':
                 print("不是有效的NES ROM文件")
                 return False
-            
+
             # 解析ROM信息
             self.rom_info = {
                 'name': rom_file.stem,
@@ -143,7 +145,7 @@ class NESEmulator:
                 'mapper': ((header[7] & 0xF0) | (header[6] >> 4)),
                 'mirroring': 'vertical' if (header[6] & 1) else 'horizontal'
             }
-            
+
             self.rom_loaded = True
             self.current_rom_path = rom_path
             print(f"ROM加载成功: {self.rom_info['name']}")
@@ -169,12 +171,12 @@ class NESEmulator:
             self.save_manager.start_auto_save(rom_path, self.get_game_state)
 
             return True
-            
+
         except Exception as e:
             print(f"ROM加载失败: {e}")
             return False
-    
-    def init_game_state(self) -> bool:
+
+    def init_game_state(self):
         """初始化游戏状态"""
         # 重置游戏对象
         self.player_x = 50
@@ -184,7 +186,7 @@ class NESEmulator:
         self.score = 0
         self.lives = 3
         self.level = 1
-        
+
         # 生成初始敌人
         for i in range(5):
             self.enemies.append({
@@ -194,8 +196,8 @@ class NESEmulator:
                 'dy': 0,
                 'type': i % 3
             })
-    
-    def update_controller(self) -> bool:
+
+    def update_controller(self):
         """更新控制器状态"""
         # 键盘输入
         keys = pygame.key.get_pressed()
@@ -219,12 +221,12 @@ class NESEmulator:
         # 合并输入（键盘或控制器任一输入都有效）
         for key in self.controller:
             self.controller[key] = keyboard_input.get(key, False) or controller_input.get(key, False)
-    
-    def update_game_logic(self) -> bool:
+
+    def update_game_logic(self):
         """更新游戏逻辑"""
         if not self.rom_loaded or self.paused:
             return
-        
+
         # 玩家移动
         if self.controller['left']:
             self.player_x = max(10, self.player_x - 3)
@@ -234,7 +236,7 @@ class NESEmulator:
             self.player_y = max(10, self.player_y - 3)
         if self.controller['down']:
             self.player_y = min(self.NES_HEIGHT - 30, self.player_y + 3)
-        
+
         # 射击
         if self.controller['a'] and self.frame_count % 10 == 0:
             self.bullets.append({
@@ -243,36 +245,36 @@ class NESEmulator:
                 'dx': 5,
                 'dy': 0
             })
-        
+
         # 更新子弹
         for bullet in self.bullets[:]:
             bullet['x'] += bullet['dx']
             bullet['y'] += bullet['dy']
-            
+
             if bullet['x'] > self.NES_WIDTH or bullet['x'] < 0:
                 self.bullets.remove(bullet)
-        
+
         # 更新敌人
         for enemy in self.enemies:
             enemy['x'] += enemy['dx']
             enemy['y'] += enemy['dy']
-            
+
             # 边界检测
             if enemy['x'] <= 10 or enemy['x'] >= self.NES_WIDTH - 20:
                 enemy['dx'] = -enemy['dx']
             if enemy['y'] <= 10 or enemy['y'] >= self.NES_HEIGHT - 20:
                 enemy['dy'] = -enemy['dy']
-        
+
         # 碰撞检测
         for bullet in self.bullets[:]:
             for enemy in self.enemies[:]:
-                if (abs(bullet['x'] - enemy['x']) < 15 and 
+                if (abs(bullet['x'] - enemy['x']) < 15 and
                     abs(bullet['y'] - enemy['y']) < 15):
                     self.bullets.remove(bullet)
                     self.enemies.remove(enemy)
                     self.score += 10
                     break
-        
+
         # 重新生成敌人
         if len(self.enemies) < 3:
             self.enemies.append({
@@ -282,16 +284,16 @@ class NESEmulator:
                 'dy': 0,
                 'type': len(self.enemies) % 3
             })
-        
+
         # 升级
         if self.score > 0 and self.score % 100 == 0 and self.frame_count % 60 == 0:
             self.level = self.score // 100 + 1
-    
-    def render_game(self) -> bool:
+
+    def render_game(self):
         """渲染游戏画面"""
         # 清空屏幕
         self.nes_screen.fill(self.BLACK)
-        
+
         if not self.rom_loaded:
             # 显示"请加载ROM"信息
             text = self.font.render("Please load a ROM file", True, self.WHITE)
@@ -301,62 +303,62 @@ class NESEmulator:
             # 绘制游戏内容
             self.render_game_objects()
             self.render_ui()
-        
+
         # 缩放到屏幕
-        scaled_surface = pygame.transform.scale(self.nes_screen, 
+        scaled_surface = pygame.transform.scale(self.nes_screen,
                                               (self.NES_WIDTH * self.SCALE, self.NES_HEIGHT * self.SCALE))
         self.screen.blit(scaled_surface, (0, 0))
-        
+
         pygame.display.flip()
-    
-    def render_game_objects(self) -> bool:
+
+    def render_game_objects(self):
         """渲染游戏对象"""
         # 绘制背景网格
         for x in range(0, self.NES_WIDTH, 32):
             for y in range(0, self.NES_HEIGHT, 32):
                 if (x + y) % 64 == 0:
                     pygame.draw.rect(self.nes_screen, (20, 20, 20), (x, y, 32, 32))
-        
+
         # 绘制玩家
         player_color = self.GREEN if not self.paused else self.YELLOW
         pygame.draw.rect(self.nes_screen, player_color, (self.player_x, self.player_y, 20, 20))
         pygame.draw.rect(self.nes_screen, self.WHITE, (self.player_x + 5, self.player_y + 5, 10, 10))
-        
+
         # 绘制敌人
         for enemy in self.enemies:
             enemy_colors = [self.RED, (255, 128, 0), (255, 0, 255)]
             color = enemy_colors[enemy['type']]
             pygame.draw.rect(self.nes_screen, color, (enemy['x'], enemy['y'], 15, 15))
-        
+
         # 绘制子弹
         for bullet in self.bullets:
             pygame.draw.rect(self.nes_screen, self.YELLOW, (bullet['x'], bullet['y'], 5, 5))
-    
-    def render_ui(self) -> bool:
+
+    def render_ui(self):
         """渲染用户界面"""
         # 分数
         score_text = self.small_font.render(f"SCORE: {self.score}", True, self.WHITE)
         self.nes_screen.blit(score_text, (10, 10))
-        
+
         # 生命
         lives_text = self.small_font.render(f"LIVES: {self.lives}", True, self.WHITE)
         self.nes_screen.blit(lives_text, (10, 25))
-        
+
         # 等级
         level_text = self.small_font.render(f"LEVEL: {self.level}", True, self.WHITE)
         self.nes_screen.blit(level_text, (10, 40))
-        
+
         # ROM信息
         if self.rom_info:
             rom_text = self.small_font.render(f"ROM: {self.rom_info['name']}", True, self.WHITE)
             self.nes_screen.blit(rom_text, (10, self.NES_HEIGHT - 20))
-        
+
         # 暂停提示
         if self.paused:
             pause_text = self.font.render("PAUSED", True, self.YELLOW)
             pause_rect = pause_text.get_rect(center=(self.NES_WIDTH//2, self.NES_HEIGHT//2))
             self.nes_screen.blit(pause_text, pause_rect)
-        
+
         # 控制提示
         if self.frame_count < 300:  # 显示5秒
             controls = [
@@ -398,8 +400,8 @@ class NESEmulator:
                     save_text = "Auto Saved"
                     text = self.small_font.render(save_text, True, self.GREEN)
                     self.nes_screen.blit(text, (self.NES_WIDTH - 80, status_y))
-    
-    def handle_events(self) -> bool:
+
+    def handle_events(self):
         """处理事件"""
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -436,35 +438,35 @@ class NESEmulator:
                         self.manual_load(slot=2)
                     elif event.key == pygame.K_3:
                         self.manual_load(slot=3)
-    
-    def run(self, rom_path: Optional[str] = None) -> bool:
+
+    def run(self, rom_path: Optional[str] = None):
         """运行模拟器"""
         print("🎮 启动NES模拟器...")
-        
+
         if rom_path:
             if not self.load_rom(rom_path):
                 print("ROM加载失败")
                 return False
-        
+
         self.running = True
-        
+
         try:
             while self.running:
                 self.handle_events()
                 self.update_controller()
                 self.update_game_logic()
                 self.render_game()
-                
+
                 self.clock.tick(60)  # 60 FPS
                 self.frame_count += 1
-        
+
         except KeyboardInterrupt:
             print("\n用户中断")
-        
+
         except Exception as e:
             print(f"模拟器运行错误: {e}")
             return False
-        
+
         finally:
             # 清理资源
             self.cleanup()
@@ -541,7 +543,7 @@ class NESEmulator:
             "timestamp": time.time()
         }
 
-    def set_game_state(self, game_state -> bool: Dict) -> bool:
+    def set_game_state(self, game_state: Dict):
         """设置游戏状态（用于读档）"""
         try:
             self.player_x = game_state.get("player_x", 50)
@@ -559,7 +561,7 @@ class NESEmulator:
         except Exception as e:
             print(f"❌ 恢复游戏状态失败: {e}")
 
-    def auto_load_save(self) -> bool:
+    def auto_load_save(self):
         """自动加载存档"""
         if not self.current_rom_path:
             return
@@ -576,7 +578,7 @@ class NESEmulator:
         except Exception as e:
             print(f"⚠️ 自动加载存档失败: {e}")
 
-    def manual_save(self, slot -> bool: int = 1) -> bool:
+    def manual_save(self, slot: int = 1):
         """手动保存游戏"""
         if not self.current_rom_path:
             return False
@@ -592,7 +594,7 @@ class NESEmulator:
             print(f"❌ 手动保存失败: {e}")
             return False
 
-    def manual_load(self, slot -> bool: int = 1) -> bool:
+    def manual_load(self, slot: int = 1):
         """手动加载游戏"""
         if not self.current_rom_path:
             return False
@@ -611,13 +613,13 @@ class NESEmulator:
             print(f"❌ 手动加载失败: {e}")
             return False
 
-    def write_memory(self, address -> bool: int, value -> bool: int) -> bool:
+    def write_memory(self, address: int, value: int):
         """写入内存（用于作弊码）"""
         # 这是一个模拟的内存写入函数
         # 在真实的NES模拟器中，这里会修改实际的内存
         pass
 
-    def cleanup(self) -> bool:
+    def cleanup(self):
         """清理资源"""
         try:
             # 停止自动保存
@@ -638,21 +640,22 @@ class NESEmulator:
         except Exception as e:
             print(f"⚠️ 资源清理出错: {e}")
 
-def main() -> bool:
+
+def main():
     """主函数"""
     import argparse
-    
+
     parser = argparse.ArgumentParser(description="简单NES模拟器")
     parser.add_argument("rom", nargs="?", help="ROM文件路径")
     parser.add_argument("--fullscreen", action="store_true", help="全屏模式")
-    
+
     args = parser.parse_args()
-    
+
     emulator = NESEmulator()
-    
+
     if args.fullscreen:
         pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-    
+
     success = emulator.run(args.rom)
     sys.exit(0 if success else 1)
 

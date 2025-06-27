@@ -66,7 +66,7 @@ class HDMIConfigurator(BaseInstaller):
         hdmi_configs (Dict): HDMI配置项字典
     """
 
-    def __init__(self, config_path -> bool: str = "/boot/config.txt") -> bool:
+    def __init__(self, config_path: str = "/boot/config.txt"):
         """
         初始化HDMI配置器
 
@@ -98,7 +98,7 @@ class HDMIConfigurator(BaseInstaller):
         """返回所需依赖包列表"""
         return []  # HDMI配置不需要额外的包
 
-    def check_dependencies(self) -> bool:
+    def check_dependencies(self):
         """检查HDMI配置所需的依赖"""
         required_commands = ["vcgencmd", "tvservice"]
         for cmd in required_commands:
@@ -106,12 +106,12 @@ class HDMIConfigurator(BaseInstaller):
                 raise RuntimeError(f"缺少依赖命令: {cmd}")
         return True
 
-    def install(self) -> bool:
+    def install(self):
         """应用HDMI配置"""
         self.backup_config()
         self.apply_hdmi_configs()
 
-    def check_permissions(self) -> bool:
+    def check_permissions(self):
         """检查文件权限"""
         if not self.config_path.exists():
             logger.error(f"配置文件不存在: {self.config_path}")
@@ -124,7 +124,7 @@ class HDMIConfigurator(BaseInstaller):
 
         return True
 
-    def backup_config(self) -> bool:
+    def backup_config(self):
         """备份原始配置文件"""
         try:
             if not self.backup_path.exists():
@@ -146,7 +146,7 @@ class HDMIConfigurator(BaseInstaller):
             logger.error(f"读取配置文件失败: {e}")
             return []
 
-    def write_config(self, lines: List[str]) -> bool:
+    def write_config(self, lines: List[str]):
         """写入配置文件"""
         try:
             with open(self.config_path, "w", encoding="utf-8") as f:
@@ -195,7 +195,7 @@ class HDMIConfigurator(BaseInstaller):
 
         return lines
 
-    def apply_hdmi_configs(self) -> bool:
+    def apply_hdmi_configs(self):
         """应用HDMI配置"""
         logger.info("开始应用HDMI配置...")
 
@@ -211,7 +211,7 @@ class HDMIConfigurator(BaseInstaller):
         # 写入配置文件
         return self.write_config(lines)
 
-    def restore_backup(self) -> bool:
+    def restore_backup(self):
         """恢复备份配置"""
         if not self.backup_path.exists():
             logger.error("备份文件不存在")
@@ -257,7 +257,7 @@ class HDMIConfigurator(BaseInstaller):
         print("  hdmi_ignore_cec=1: 忽略CEC")
         print("  config_hdmi_boost=4: HDMI信号增强")
 
-    def validate_config(self) -> bool:
+    def validate_config(self):
         """验证配置是否有效"""
         logger.info("验证HDMI配置...")
 
@@ -281,20 +281,20 @@ class HDMIConfigurator(BaseInstaller):
         logger.info("配置验证完成")
         return True
 
-    def dry_run(self) -> bool:
+    def dry_run(self):
         """模拟运行，显示将要应用的更改"""
         logger.info("模拟运行模式 - 显示将要应用的更改")
-        
+
         # 显示当前配置
         self.show_current_config()
-        
+
         # 显示将要应用的更改
         self.show_changes()
-        
+
         logger.info("模拟运行完成 - 未实际修改配置文件")
         return True
 
-    def run(self, dry_run: bool = False, restore: bool = False) -> bool:
+    def run(self, dry_run: bool = False, restore: bool = False):
         """运行配置程序"""
         logger.info("=== 树莓派HDMI配置优化工具 ===")
 
@@ -340,7 +340,7 @@ class HDMIConfigurator(BaseInstaller):
         return True
 
 
-def main() -> bool:
+def main():
     """主函数"""
     parser = argparse.ArgumentParser(description="树莓派HDMI配置优化工具")
     parser.add_argument("--config", default="/boot/config.txt", help="配置文件路径")
@@ -368,7 +368,6 @@ def main() -> bool:
             print("请重启树莓派以应用新配置")
     else:
         print("\n❌ 配置失败，请查看日志文件")
-
 
 if __name__ == "__main__":
     main()

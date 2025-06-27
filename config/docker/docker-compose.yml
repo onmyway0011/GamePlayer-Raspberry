@@ -1,0 +1,152 @@
+version: '3.8'
+
+services:
+  # 树莓派模拟环境
+  raspberry-sim:
+    build:
+      context: ../../
+      dockerfile: build/docker/Dockerfile.raspberry-sim
+    container_name: gameplayer-raspberry-sim
+    ports:
+      - "5901:5901"   # VNC
+      - "6080:6080"   # Web VNC
+      - "8080:8080"   # HTTP服务
+    volumes:
+      - ../../data/roms:/home/pi/RetroPie/roms/nes:rw
+      - ../../data/saves:/home/pi/RetroPie/saves:rw
+      - ../../data/cheats:/home/pi/RetroPie/cheats:rw
+      - ../../config:/home/pi/GamePlayer-Raspberry/config:rw
+      - ../../data/logs:/home/pi/GamePlayer-Raspberry/logs:rw
+    environment:
+      - DISPLAY=:1
+      - VNC_PASSWORD=raspberry
+      - AUTO_START_GAMES=true
+      - ENABLE_CHEATS=true
+      - ENABLE_AUTO_SAVE=true
+    networks:
+      - gameplayer-network
+    restart: unless-stopped
+    privileged: true
+    shm_size: 1g
+
+  # GUI环境
+  gui-interface:
+    build:
+      context: ../../
+      dockerfile: build/docker/Dockerfile.gui
+    container_name: gameplayer-gui
+    ports:
+      - "5902:5901"   # VNC
+      - "6081:6080"   # Web VNC
+      - "8081:8080"   # HTTP服务
+    volumes:
+      - ../../data:/app/data:rw
+      - ../../src:/app/src:ro
+      - ../../config:/app/config:rw
+    environment:
+      - DISPLAY=:1
+      - VNC_PASSWORD=raspberry
+    networks:
+      - gameplayer-network
+    restart: unless-stopped
+    depends_on:
+      - raspberry-sim
+
+  # Web管理界面
+  web-manager:
+    build:
+      context: ../../
+      dockerfile: build/docker/Dockerfile.web-manager
+    container_name: gameplayer-web-manager
+    ports:
+      - "3000:3000"   # Web管理界面
+      - "3001:3001"   # API服务
+    volumes:
+      - ../../data:/app/data:rw
+      - ../../config:/app/config:rw
+      - ../../src:/app/src:ro
+    environment:
+      - NODE_ENV=production
+      - API_PORT=3001
+      - WEB_PORT=3000
+    networks:
+      - gameplayer-network
+    restart: unless-stopped
+    depends_on:
+      - raspberry-sim
+
+  # 游戏服务器
+  game-server:
+    image: nginx:alpine
+    container_name: gameplayer-game-server
+    ports:
+      - "8082:80"     # 游戏Web界面
+    volumes:
+      - ../../data/web:/usr/share/nginx/html:ro
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    networks:
+      - gameplayer-network
+    restart: unless-stopped
+
+  # 文件服务器
+  file-server:
+    image: python:3.9-alpine
+    container_name: gameplayer-file-server
+    ports:
+      - "8083:8000"   # 文件浏览
+    volumes:
+      - ../../data:/app/data:ro
+      - ../../build/output:/app/output:ro
+    working_dir: /app
+    command: python -m http.server 8000
+    networks:
+      - gameplayer-network
+    restart: unless-stopped
+
+  # 数据库（用于存储游戏进度和配置）
+  database:
+    image: sqlite:latest
+    container_name: gameplayer-database
+    volumes:
+      - ../../data/database:/var/lib/sqlite:rw
+    environment:
+      - SQLITE_DATABASE=gameplayer.db
+    networks:
+      - gameplayer-network
+    restart: unless-stopped
+
+networks:
+  gameplayer-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+
+volumes:
+  roms-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ../../data/roms
+  
+  saves-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ../../data/saves
+  
+  config-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ../../config
+
+# 健康检查配置
+x-healthcheck: &default-healthcheck
+  interval: 30s
+  timeout: 10s
+  retries: 3
+  start_period: 40s

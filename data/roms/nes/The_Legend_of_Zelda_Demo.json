@@ -1,0 +1,9 @@
+{
+  "name": "The Legend of Zelda Demo",
+  "system": "nes",
+  "description": "The Legend of Zelda Demo - 演示版",
+  "size": "32768 bytes",
+  "demo": true,
+  "file_path": "data/roms/nes/The_Legend_of_Zelda_Demo.nes",
+  "checksum": "96e3ad2e43dc3dbbeea944661422cfd5"
+}

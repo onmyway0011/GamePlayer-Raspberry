@@ -71,7 +71,7 @@ class RetroPieInstaller:
         download_dir (Path): 下载目录路径
     """
 
-    def __init__(self) -> bool:
+    def __init__(self):
         """
         初始化RetroPie安装器
 
@@ -82,7 +82,7 @@ class RetroPieInstaller:
         self.download_dir = Path("downloads")
         self.download_dir.mkdir(exist_ok=True)
 
-    def check_dependencies(self) -> bool:
+    def check_dependencies(self):
         """
         检查系统依赖是否满足
 
@@ -101,7 +101,7 @@ class RetroPieInstaller:
             logger.error(f"不支持的操作系统: {self.system}")
             return False
 
-    def _check_windows_dependencies(self) -> bool:
+    def _check_windows_dependencies(self):
         """
         检查Windows系统依赖
 
@@ -125,7 +125,7 @@ class RetroPieInstaller:
         logger.warning("未找到烧录工具，请手动安装 Win32DiskImager 或 balenaEtcher")
         return False
 
-    def _check_unix_dependencies(self) -> bool:
+    def _check_unix_dependencies(self):
         """
         检查Unix系统依赖（Linux/macOS）
 
@@ -159,6 +159,7 @@ class RetroPieInstaller:
         return None
 
     def _run_command(self, cmd: List[str],
+        """TODO: Add docstring"""
                      check: bool = True) -> Tuple[int, str, str]:
         """
         运行命令并返回结果
@@ -411,7 +412,7 @@ class RetroPieInstaller:
 
         return disks
 
-    def burn_image(self, image_path: Path, target_disk: str) -> bool:
+    def burn_image(self, image_path: Path, target_disk: str):
         """烧录镜像到指定磁盘"""
         logger.info(f"开始烧录镜像到 {target_disk}")
 
@@ -422,14 +423,14 @@ class RetroPieInstaller:
 
         return False
 
-    def _burn_windows(self, image_path: Path, target_disk: str) -> bool:
+    def _burn_windows(self, image_path: Path, target_disk: str):
         """Windows系统烧录"""
         logger.warning("Windows系统需要手动烧录")
         logger.info(f"请使用 Win32DiskImager 或 balenaEtcher 将镜像烧录到 {target_disk}")
         logger.info(f"镜像文件路径: {image_path}")
         return False
 
-    def _burn_unix(self, image_path: Path, target_disk: str) -> bool:
+    def _burn_unix(self, image_path: Path, target_disk: str):
         """Unix系统烧录"""
         logger.warning(f"即将烧录镜像到 {target_disk}")
         logger.warning("此操作将擦除目标磁盘的所有数据！")
@@ -473,7 +474,7 @@ class RetroPieInstaller:
             logger.error(f"烧录过程中出错: {e}")
             return False
 
-    def run(self) -> bool:
+    def run(self):
         """运行主程序"""
         logger.info("=== RetroPie 镜像下载和烧录工具 ===")
         logger.info(f"操作系统: {self.system}")
@@ -529,7 +530,7 @@ class RetroPieInstaller:
             logger.error("烧录失败")
 
 
-def main() -> bool:
+def main():
     """主函数"""
     parser = argparse.ArgumentParser(description="RetroPie 镜像下载和烧录工具")
     parser.add_argument("--check-only", action="store_true", help="仅检查系统依赖")
@@ -569,7 +570,6 @@ def main() -> bool:
 
     # 运行完整流程
     installer.run()
-
 
 if __name__ == "__main__":
     main()

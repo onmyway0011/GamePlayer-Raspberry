@@ -1,0 +1,152 @@
+{
+  "duplicate_files": 13,
+  "empty_files": 17,
+  "large_files": 4,
+  "unused_files": 35,
+  "duplicate_file_details": [
+    {
+      "hash": "e4003a6c615c1727413e48dee8354aeb",
+      "files": [
+        "/Users/ON-MY-WAY/快手/AICODE/GamePlayer-Raspberry/requirements.txt",
+        "/Users/ON-MY-WAY/快手/AICODE/GamePlayer-Raspberry/backup_old_structure/requirements.txt"
+      ],
+      "count": 2
+    },
+    {
+      "hash": "d41d8cd98f00b204e9800998ecf8427e",
+      "files": [
+        "/Users/ON-MY-WAY/快手/AICODE/GamePlayer-Raspberry/Dockerfile.raspberry",
+        "/Users/ON-MY-WAY/快手/AICODE/GamePlayer-Raspberry/tools/__init__.py",
+        "/Users/ON-MY-WAY/快手/AICODE/GamePlayer-Raspberry/tools/dev/__init__.py",
+        "/Users/ON-MY-WAY/快手/AICODE/GamePlayer-Raspberry/tests/__init__.py",
+        "/Users/ON-MY-WAY/快手/AICODE/GamePlayer-Raspberry/tests/unit/__init__.py",
+        "/Users/ON-MY-WAY/快手/AICODE/GamePlayer-Raspberry/tests/fixtures/__init__.py",
+        "/Users/ON-MY-WAY/快手/AICODE/GamePlayer-Raspberry/tests/fixtures/logs/gameplayer_20250624.log",
+        "/Users/ON-MY-WAY/快手/AICODE/GamePlayer-Raspberry/data/logs/rom_downloader.log",
+        "/Users/ON-MY-WAY/快手/AICODE/GamePlayer-Raspberry/data/logs/hdmi_config.log",
+        "/Users/ON-MY-WAY/快手/AICODE/GamePlayer-Raspberry/data/logs/virtuanes_installer.log",
+        "/Users/ON-MY-WAY/快手/AICODE/GamePlayer-Raspberry/data/logs/logs/gameplayer_20250625.log",
+        "/Users/ON-MY-WAY/快手/AICODE/GamePlayer-Raspberry/src/__init__.py",
+        "/Users/ON-MY-WAY/快手/AICODE/GamePlayer-Raspberry/src/core/__init__.py",
+        "/Users/ON-MY-WAY/快手/AICODE/GamePlayer-Raspberry/src/web/__init__.py",
+        "/Users/ON-MY-WAY/快手/AICODE/GamePlayer-Raspberry/src/scripts/__init__.py",
+        "/Users/ON-MY-WAY/快手/AICODE/GamePlayer-Raspberry/src/systems/__init__.py",
+        "/Users/ON-MY-WAY/快手/AICODE/GamePlayer-Raspberry/src/systems/systems/__init__.py"
+      ],
+      "count": 17
+    },
+    {
+      "hash": "1dca2edb09fcf1abff6d26a639a559d1",
+      "files": [
+        "/Users/ON-MY-WAY/快手/AICODE/GamePlayer-Raspberry/README.md",
+        "/Users/ON-MY-WAY/快手/AICODE/GamePlayer-Raspberry/docs/templates/README_template.md"
+      ],
+      "count": 2
+    },
+    {
+      "hash": "a1cc40a33b39ea012ed3641a2db8a253",
+      "files": [
+        "/Users/ON-MY-WAY/快手/AICODE/GamePlayer-Raspberry/setup.py",
+        "/Users/ON-MY-WAY/快手/AICODE/GamePlayer-Raspberry/backup_old_structure/setup.py"
+      ],
+      "count": 2
+    },
+    {
+      "hash": "3787094ba2fed4223a430810b858e1bb",
+      "files": [
+        "/Users/ON-MY-WAY/快手/AICODE/GamePlayer-Raspberry/backup_old_structure/README.md",
+        "/Users/ON-MY-WAY/快手/AICODE/GamePlayer-Raspberry/docs/guides/README.md"
+      ],
+      "count": 2
+    },
+    {
+      "hash": "30213f17e63b010936efa2370210d23b",
+      "files": [
+        "/Users/ON-MY-WAY/快手/AICODE/GamePlayer-Raspberry/config/system/install.sh",
+        "/Users/ON-MY-WAY/快手/AICODE/GamePlayer-Raspberry/src/systems/systems/retropie/scripts/install.sh"
+      ],
+      "count": 2
+    },
+    {
+      "hash": "7a2cb4abdf08bb722546041087355918",
+      "files": [
+        "/Users/ON-MY-WAY/快手/AICODE/GamePlayer-Raspberry/config/system/install.bat",
+        "/Users/ON-MY-WAY/快手/AICODE/GamePlayer-Raspberry/src/systems/systems/retropie/scripts/install.bat"
+      ],
+      "count": 2
+    },
+    {
+      "hash": "15fbaa7c0a06c86cd59e272067dabea0",
+      "files": [
+        "/Users/ON-MY-WAY/快手/AICODE/GamePlayer-Raspberry/docs/LICENSE",
+        "/Users/ON-MY-WAY/快手/AICODE/GamePlayer-Raspberry/src/systems/systems/retropie/docs/LICENSE"
+      ],
+      "count": 2
+    },
+    {
+      "hash": "049b87dd4db72b23b42d20077429d011",
+      "files": [
+        "/Users/ON-MY-WAY/快手/AICODE/GamePlayer-Raspberry/docs/guides/README_HDMI.md",
+        "/Users/ON-MY-WAY/快手/AICODE/GamePlayer-Raspberry/src/systems/systems/hdmi/docs/README_HDMI.md"
+      ],
+      "count": 2
+    },
+    {
+      "hash": "b795df7d468348e658a1a52d98c3dfc6",
+      "files": [
+        "/Users/ON-MY-WAY/快手/AICODE/GamePlayer-Raspberry/data/downloads/downloads/retropie-buster-4.8-rpi4_400.img",
+        "/Users/ON-MY-WAY/快手/AICODE/GamePlayer-Raspberry/data/downloads/downloads/downloads/retropie-buster-4.8-rpi4_400.img"
+      ],
+      "count": 2
+    },
+    {
+      "hash": "b5daa6e7660a99c246966f3f09b4014b",
+      "files": [
+        "/Users/ON-MY-WAY/快手/AICODE/GamePlayer-Raspberry/data/downloads/downloads/retropie-buster-4.8-rpi4_400.img.gz",
+        "/Users/ON-MY-WAY/快手/AICODE/GamePlayer-Raspberry/data/downloads/downloads/downloads/retropie-buster-4.8-rpi4_400.img.gz"
+      ],
+      "count": 2
+    },
+    {
+      "hash": "719343b6dbef2953aa434f4a27a05a3b",
+      "files": [
+        "/Users/ON-MY-WAY/快手/AICODE/GamePlayer-Raspberry/src/scripts/retropie_ecosystem_auto.sh",
+        "/Users/ON-MY-WAY/快手/AICODE/GamePlayer-Raspberry/src/systems/systems/ecosystem/scripts/retropie_ecosystem_auto.sh"
+      ],
+      "count": 2
+    },
+    {
+      "hash": "c0d2dc431131098157db2e09c57cb77b",
+      "files": [
+        "/Users/ON-MY-WAY/快手/AICODE/GamePlayer-Raspberry/src/scripts/immersive_hardware_auto.sh",
+        "/Users/ON-MY-WAY/快手/AICODE/GamePlayer-Raspberry/src/systems/systems/immersive/scripts/immersive_hardware_auto.sh"
+      ],
+      "count": 2
+    }
+  ],
+  "large_file_details": [
+    {
+      "file": "/Users/ON-MY-WAY/快手/AICODE/GamePlayer-Raspberry/data/downloads/downloads/retropie-buster-4.8-rpi4_400.img",
+      "size_mb": 3003.0
+    },
+    {
+      "file": "/Users/ON-MY-WAY/快手/AICODE/GamePlayer-Raspberry/data/downloads/downloads/downloads/retropie-buster-4.8-rpi4_400.img",
+      "size_mb": 3003.0
+    },
+    {
+      "file": "/Users/ON-MY-WAY/快手/AICODE/GamePlayer-Raspberry/data/downloads/downloads/retropie-buster-4.8-rpi4_400.img.gz",
+      "size_mb": 859.0
+    },
+    {
+      "file": "/Users/ON-MY-WAY/快手/AICODE/GamePlayer-Raspberry/data/downloads/downloads/downloads/retropie-buster-4.8-rpi4_400.img.gz",
+      "size_mb": 859.0
+    }
+  ],
+  "removed_files": 58,
+  "removed_directories": 16,
+  "optimizations": {
+    "moved_files": [],
+    "created_directories": [],
+    "updated_imports": []
+  }
+}

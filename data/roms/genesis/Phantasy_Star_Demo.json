@@ -1,0 +1,9 @@
+{
+  "name": "Phantasy Star Demo",
+  "system": "genesis",
+  "description": "Phantasy Star Demo - 演示版",
+  "size": "524288 bytes",
+  "demo": true,
+  "file_path": "data/roms/genesis/Phantasy_Star_Demo.md",
+  "checksum": "3dd34d75b2ebe2ed486c27ce33637b25"
+}

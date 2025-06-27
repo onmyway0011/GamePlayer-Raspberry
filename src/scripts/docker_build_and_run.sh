@@ -35,7 +35,7 @@ PORT=8080
 fix_dockerfile_deps() {
   log_warning "自动修复Dockerfile依赖安装部分..."
   # 备份原始Dockerfile
-  cp Dockerfile.raspberry Dockerfile.raspberry.bak 2>/dev/null || true
+  cp build/docker/Dockerfile.raspberry build/docker/Dockerfile.raspberry.bak 2>/dev/null || true
   # 用分步安装和国内源替换依赖安装部分
   awk '
     /RUN pip3 install -r requirements.txt/ {
@@ -48,7 +48,7 @@ fix_dockerfile_deps() {
       next
     }
     {print}
-  ' Dockerfile.raspberry.bak > Dockerfile.raspberry
+  ' build/docker/Dockerfile.raspberry.bak > build/docker/Dockerfile.raspberry
 }
 
 build_success=false
@@ -66,7 +66,7 @@ docker rm $CONTAINER_NAME 2>/dev/null || true
 # 2. 自动修复与重试构建
 while [[ $retry_count -lt $max_retry ]]; do
   log_info "2. 构建 Docker 镜像 (第$((retry_count+1))次尝试)..."
-  if docker build -f Dockerfile.raspberry -t $IMAGE_NAME .; then
+  if docker build -f build/docker/Dockerfile.raspberry -t $IMAGE_NAME .; then
     log_success "Docker 镜像构建成功"
     build_success=true
     break

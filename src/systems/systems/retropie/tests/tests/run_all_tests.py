@@ -7,4 +7,4 @@ if __name__ == '__main__':
         '--disable-warnings',
         '--tb=short',
         '--junitxml=report.xml'
-    ])) 
+    ]))

@@ -1,0 +1,165 @@
+{
+  "audio_system": {
+    "enabled": true,
+    "sample_rate": 44100,
+    "buffer_size": 1024,
+    "channels": 2,
+    "bit_depth": 16
+  },
+  
+  "volume_settings": {
+    "master_volume": 0.8,
+    "sfx_volume": 0.7,
+    "music_volume": 0.3,
+    "voice_volume": 0.9
+  },
+  
+  "output_devices": {
+    "default_output": "auto",
+    "preferred_devices": [
+      "HDMI",
+      "Headphones", 
+      "Bluetooth",
+      "USB Audio"
+    ],
+    "auto_switch": true
+  },
+  
+  "web_audio": {
+    "enabled": true,
+    "auto_initialize": false,
+    "require_user_interaction": true,
+    "fallback_to_html5": true
+  },
+  
+  "raspberry_pi": {
+    "force_hdmi_audio": true,
+    "disable_onboard_audio": false,
+    "audio_output": "auto",
+    "hdmi_drive": 2,
+    "config_audio_boost": 4
+  },
+  
+  "alsa_settings": {
+    "card": 0,
+    "device": 0,
+    "pcm_name": "default",
+    "mixer_name": "PCM"
+  },
+  
+  "pulseaudio": {
+    "enabled": true,
+    "auto_spawn": true,
+    "default_sink": "auto",
+    "module_bluetooth_discover": true
+  },
+  
+  "bluetooth_audio": {
+    "enabled": true,
+    "auto_connect": true,
+    "codec_priority": ["aptX", "SBC", "AAC"],
+    "reconnect_attempts": 3,
+    "supported_profiles": ["A2DP", "HSP", "HFP"]
+  },
+  
+  "sound_effects": {
+    "enabled": true,
+    "preload": true,
+    "cache_size": 50,
+    "formats": ["wav", "ogg", "mp3"],
+    "default_sounds": {
+      "beep": {
+        "frequency": 800,
+        "duration": 0.1,
+        "wave_type": "sine"
+      },
+      "select": {
+        "frequency": 1000,
+        "duration": 0.05,
+        "wave_type": "square"
+      },
+      "start": {
+        "frequency": 600,
+        "duration": 0.2,
+        "wave_type": "sine"
+      },
+      "error": {
+        "frequency": 200,
+        "duration": 0.3,
+        "wave_type": "sawtooth"
+      },
+      "success": {
+        "frequency": 1200,
+        "duration": 0.15,
+        "wave_type": "sine"
+      },
+      "shoot": {
+        "frequency": 800,
+        "duration": 0.1,
+        "wave_type": "square"
+      },
+      "hit": {
+        "frequency": 300,
+        "duration": 0.2,
+        "wave_type": "sawtooth"
+      },
+      "powerup": {
+        "frequencies": [440, 554, 659],
+        "duration": 0.3,
+        "wave_type": "sine"
+      },
+      "explosion": {
+        "type": "noise",
+        "duration": 0.3,
+        "filter": "lowpass"
+      },
+      "game_over": {
+        "frequency": 200,
+        "duration": 1.0,
+        "wave_type": "triangle"
+      }
+    }
+  },
+  
+  "background_music": {
+    "enabled": true,
+    "loop": true,
+    "fade_in_duration": 2.0,
+    "fade_out_duration": 1.0,
+    "crossfade": true,
+    "formats": ["ogg", "mp3", "wav"]
+  },
+  
+  "emulator_audio": {
+    "nes_audio": {
+      "enabled": true,
+      "sample_rate": 44100,
+      "channels": 1,
+      "low_pass_filter": true,
+      "high_pass_filter": false
+    },
+    "retroarch_audio": {
+      "driver": "alsa",
+      "device": "default",
+      "rate": 44100,
+      "latency": 64,
+      "sync": true
+    }
+  },
+  
+  "troubleshooting": {
+    "debug_mode": false,
+    "log_audio_events": false,
+    "test_audio_on_startup": true,
+    "fallback_to_software": true,
+    "disable_audio_on_error": false
+  },
+  
+  "optimization": {
+    "use_hardware_acceleration": true,
+    "buffer_count": 4,
+    "thread_priority": "high",
+    "cpu_affinity": "auto",
+    "memory_pool_size": "16MB"
+  }
+}
