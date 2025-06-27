@@ -1,0 +1,226 @@
+{
+  "description": "游戏封面图片源配置",
+  "version": "2.0.0",
+  "last_updated": "2025-06-27",
+  
+  "image_sources": {
+    "primary": [
+      {
+        "name": "IGDB",
+        "base_url": "https://images.igdb.com/igdb/image/upload/t_cover_big/",
+        "description": "Internet Game Database - 高质量游戏封面",
+        "reliability": "high"
+      },
+      {
+        "name": "MobyGames",
+        "base_url": "https://www.mobygames.com/images/covers/l/",
+        "description": "MobyGames 游戏数据库",
+        "reliability": "high"
+      },
+      {
+        "name": "LibRetro Thumbnails",
+        "base_url": "https://raw.githubusercontent.com/libretro-thumbnails/",
+        "description": "LibRetro 官方缩略图库",
+        "reliability": "high"
+      },
+      {
+        "name": "TheGamesDB",
+        "base_url": "https://cdn.thegamesdb.net/images/thumb/boxart/front/",
+        "description": "TheGamesDB 游戏数据库",
+        "reliability": "medium"
+      }
+    ],
+    "fallback": [
+      {
+        "name": "Placeholder Service",
+        "base_url": "https://via.placeholder.com/300x400/667eea/ffffff?text=",
+        "description": "占位符图片服务",
+        "reliability": "high"
+      },
+      {
+        "name": "DummyImage",
+        "base_url": "https://dummyimage.com/300x400/667eea/ffffff&text=",
+        "description": "虚拟图片生成服务",
+        "reliability": "high"
+      },
+      {
+        "name": "Picsum",
+        "base_url": "https://picsum.photos/300/400?random=",
+        "description": "随机图片服务",
+        "reliability": "medium"
+      }
+    ]
+  },
+  
+  "game_covers": {
+    "nes": {
+      "super_mario_bros": {
+        "name": "Super Mario Bros",
+        "sources": [
+          "https://images.igdb.com/igdb/image/upload/t_cover_big/co1nqv.jpg",
+          "https://www.mobygames.com/images/covers/l/7479-super-mario-bros-nes-front-cover.jpg",
+          "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Nintendo_Entertainment_System/master/Named_Boxarts/Super%20Mario%20Bros.%20(World).png",
+          "https://cdn.thegamesdb.net/images/thumb/boxart/front/7143-1.jpg",
+          "https://archive.org/download/nes-cart-scans/Super%20Mario%20Bros.%20(World).jpg"
+        ]
+      },
+      "zelda": {
+        "name": "The Legend of Zelda",
+        "sources": [
+          "https://images.igdb.com/igdb/image/upload/t_cover_big/co1nmu.jpg",
+          "https://www.mobygames.com/images/covers/l/7481-the-legend-of-zelda-nes-front-cover.jpg",
+          "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Nintendo_Entertainment_System/master/Named_Boxarts/Legend%20of%20Zelda,%20The%20(USA).png",
+          "https://cdn.thegamesdb.net/images/thumb/boxart/front/7144-1.jpg",
+          "https://archive.org/download/nes-cart-scans/Legend%20of%20Zelda,%20The%20(USA).jpg"
+        ]
+      },
+      "metroid": {
+        "name": "Metroid",
+        "sources": [
+          "https://images.igdb.com/igdb/image/upload/t_cover_big/co1nmw.jpg",
+          "https://www.mobygames.com/images/covers/l/7482-metroid-nes-front-cover.jpg",
+          "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Nintendo_Entertainment_System/master/Named_Boxarts/Metroid%20(USA).png",
+          "https://cdn.thegamesdb.net/images/thumb/boxart/front/7145-1.jpg",
+          "https://archive.org/download/nes-cart-scans/Metroid%20(USA).jpg"
+        ]
+      },
+      "castlevania": {
+        "name": "Castlevania",
+        "sources": [
+          "https://images.igdb.com/igdb/image/upload/t_cover_big/co1nmx.jpg",
+          "https://www.mobygames.com/images/covers/l/7483-castlevania-nes-front-cover.jpg",
+          "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Nintendo_Entertainment_System/master/Named_Boxarts/Castlevania%20(USA).png",
+          "https://cdn.thegamesdb.net/images/thumb/boxart/front/7146-1.jpg",
+          "https://archive.org/download/nes-cart-scans/Castlevania%20(USA).jpg"
+        ]
+      },
+      "mega_man": {
+        "name": "Mega Man",
+        "sources": [
+          "https://images.igdb.com/igdb/image/upload/t_cover_big/co1nmy.jpg",
+          "https://www.mobygames.com/images/covers/l/7484-mega-man-nes-front-cover.jpg",
+          "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Nintendo_Entertainment_System/master/Named_Boxarts/Mega%20Man%20(USA).png",
+          "https://cdn.thegamesdb.net/images/thumb/boxart/front/7147-1.jpg",
+          "https://archive.org/download/nes-cart-scans/Mega%20Man%20(USA).jpg"
+        ]
+      },
+      "contra": {
+        "name": "Contra",
+        "sources": [
+          "https://images.igdb.com/igdb/image/upload/t_cover_big/co1nmz.jpg",
+          "https://www.mobygames.com/images/covers/l/7485-contra-nes-front-cover.jpg",
+          "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Nintendo_Entertainment_System/master/Named_Boxarts/Contra%20(USA).png",
+          "https://cdn.thegamesdb.net/images/thumb/boxart/front/7148-1.jpg",
+          "https://archive.org/download/nes-cart-scans/Contra%20(USA).jpg"
+        ]
+      },
+      "duck_hunt": {
+        "name": "Duck Hunt",
+        "sources": [
+          "https://images.igdb.com/igdb/image/upload/t_cover_big/co1nn0.jpg",
+          "https://www.mobygames.com/images/covers/l/7486-duck-hunt-nes-front-cover.jpg",
+          "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Nintendo_Entertainment_System/master/Named_Boxarts/Duck%20Hunt%20(World).png",
+          "https://cdn.thegamesdb.net/images/thumb/boxart/front/7149-1.jpg",
+          "https://archive.org/download/nes-cart-scans/Duck%20Hunt%20(World).jpg"
+        ]
+      },
+      "pac_man": {
+        "name": "Pac-Man",
+        "sources": [
+          "https://images.igdb.com/igdb/image/upload/t_cover_big/co1nn1.jpg",
+          "https://www.mobygames.com/images/covers/l/7487-pac-man-nes-front-cover.jpg",
+          "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Nintendo_Entertainment_System/master/Named_Boxarts/Pac-Man%20(USA).png",
+          "https://cdn.thegamesdb.net/images/thumb/boxart/front/7150-1.jpg",
+          "https://archive.org/download/nes-cart-scans/Pac-Man%20(USA).jpg"
+        ]
+      },
+      "donkey_kong": {
+        "name": "Donkey Kong",
+        "sources": [
+          "https://images.igdb.com/igdb/image/upload/t_cover_big/co1nn2.jpg",
+          "https://www.mobygames.com/images/covers/l/7488-donkey-kong-nes-front-cover.jpg",
+          "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Nintendo_Entertainment_System/master/Named_Boxarts/Donkey%20Kong%20(World).png",
+          "https://cdn.thegamesdb.net/images/thumb/boxart/front/7151-1.jpg",
+          "https://archive.org/download/nes-cart-scans/Donkey%20Kong%20(World).jpg"
+        ]
+      },
+      "galaga": {
+        "name": "Galaga",
+        "sources": [
+          "https://images.igdb.com/igdb/image/upload/t_cover_big/co1nn3.jpg",
+          "https://www.mobygames.com/images/covers/l/7489-galaga-nes-front-cover.jpg",
+          "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Nintendo_Entertainment_System/master/Named_Boxarts/Galaga%20(USA).png",
+          "https://cdn.thegamesdb.net/images/thumb/boxart/front/7152-1.jpg",
+          "https://archive.org/download/nes-cart-scans/Galaga%20(USA).jpg"
+        ]
+      }
+    },
+    
+    "snes": {
+      "super_mario_world": {
+        "name": "Super Mario World",
+        "sources": [
+          "https://images.igdb.com/igdb/image/upload/t_cover_big/co1nqw.jpg",
+          "https://www.mobygames.com/images/covers/l/7490-super-mario-world-snes-front-cover.jpg",
+          "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/master/Named_Boxarts/Super%20Mario%20World%20(USA).png",
+          "https://cdn.thegamesdb.net/images/thumb/boxart/front/7153-1.jpg",
+          "https://archive.org/download/snes-cart-scans/Super%20Mario%20World%20(USA).jpg"
+        ]
+      },
+      "chrono_trigger": {
+        "name": "Chrono Trigger",
+        "sources": [
+          "https://images.igdb.com/igdb/image/upload/t_cover_big/co1nqx.jpg",
+          "https://www.mobygames.com/images/covers/l/7491-chrono-trigger-snes-front-cover.jpg",
+          "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/master/Named_Boxarts/Chrono%20Trigger%20(USA).png",
+          "https://cdn.thegamesdb.net/images/thumb/boxart/front/7154-1.jpg",
+          "https://archive.org/download/snes-cart-scans/Chrono%20Trigger%20(USA).jpg"
+        ]
+      }
+    },
+    
+    "gameboy": {
+      "tetris": {
+        "name": "Tetris",
+        "sources": [
+          "https://images.igdb.com/igdb/image/upload/t_cover_big/co1nqy.jpg",
+          "https://www.mobygames.com/images/covers/l/7492-tetris-game-boy-front-cover.jpg",
+          "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Game_Boy/master/Named_Boxarts/Tetris%20(World).png",
+          "https://cdn.thegamesdb.net/images/thumb/boxart/front/7155-1.jpg",
+          "https://archive.org/download/gameboy-cart-scans/Tetris%20(World).jpg"
+        ]
+      },
+      "pokemon_red": {
+        "name": "Pokemon Red Version",
+        "sources": [
+          "https://images.igdb.com/igdb/image/upload/t_cover_big/co1nqz.jpg",
+          "https://www.mobygames.com/images/covers/l/7493-pokemon-red-version-game-boy-front-cover.jpg",
+          "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Game_Boy/master/Named_Boxarts/Pokemon%20-%20Red%20Version%20(USA,%20Europe).png",
+          "https://cdn.thegamesdb.net/images/thumb/boxart/front/7156-1.jpg",
+          "https://archive.org/download/gameboy-cart-scans/Pokemon%20-%20Red%20Version%20(USA,%20Europe).jpg"
+        ]
+      }
+    }
+  },
+  
+  "download_settings": {
+    "timeout": 15,
+    "max_retries": 3,
+    "retry_delay": 2,
+    "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+    "max_file_size": 5242880,
+    "min_file_size": 1024,
+    "allowed_formats": ["jpg", "jpeg", "png", "gif", "webp"],
+    "quality": 85
+  },
+  
+  "placeholder_settings": {
+    "width": 300,
+    "height": 400,
+    "background_color": "#667eea",
+    "text_color": "#ffffff",
+    "accent_color": "#FFD700",
+    "font_size": 24,
+    "small_font_size": 16
+  }
+}

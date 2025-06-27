@@ -515,3 +515,85 @@ class CheatManager:
         except Exception as e:
             logger.error(f"❌ 设置自动启用失败: {e}")
             return False
+
+    def update_cheat_status(self, system: str, cheat_id: str, enabled: bool) -> bool:
+        """更新金手指启用状态"""
+        try:
+            if system in self.cheat_database:
+                if "common_cheats" in self.cheat_database[system]:
+                    if cheat_id in self.cheat_database[system]["common_cheats"]:
+                        self.cheat_database[system]["common_cheats"][cheat_id]["enabled"] = enabled
+
+                        # 保存配置到文件
+                        self.save_cheat_database()
+
+                        logger.info(f"✅ 金手指状态更新: {system}.{cheat_id} = {enabled}")
+                        return True
+
+            logger.warning(f"⚠️ 金手指不存在: {system}.{cheat_id}")
+            return False
+
+        except Exception as e:
+            logger.error(f"❌ 更新金手指状态失败: {e}")
+            return False
+
+    def save_cheat_database(self) -> bool:
+        """保存金手指数据库到文件"""
+        try:
+            config_file = self.config_dir / "general_cheats.json"
+            with open(config_file, 'w', encoding='utf-8') as f:
+                json.dump(self.cheat_database, f, indent=2, ensure_ascii=False)
+
+            logger.info(f"✅ 金手指数据库已保存: {config_file}")
+            return True
+
+        except Exception as e:
+            logger.error(f"❌ 保存金手指数据库失败: {e}")
+            return False
+
+    def is_cheat_enabled(self, system: str, cheat_id: str) -> bool:
+        """检查金手指是否启用"""
+        try:
+            return self.cheat_database.get(system, {}).get("common_cheats", {}).get(cheat_id, {}).get("enabled", False)
+        except Exception:
+            return False
+
+    def get_cheat_details(self, system: str, cheat_id: str) -> Dict:
+        """获取金手指详细信息"""
+        try:
+            return self.cheat_database.get(system, {}).get("common_cheats", {}).get(cheat_id, {})
+        except Exception:
+            return {}
+
+    def get_all_cheats_for_system(self, system: str) -> Dict:
+        """获取系统的所有金手指"""
+        return self.cheat_database.get(system, {}).get("common_cheats", {})
+
+    def apply_cheats_to_game(self, system: str, game_id: str, enabled_cheats: List[str]) -> bool:
+        """将金手指应用到游戏"""
+        try:
+            # 创建游戏专用的金手指文件
+            cheat_file = self.project_root / "data" / "cheats" / system / f"{game_id}.cht"
+            cheat_file.parent.mkdir(parents=True, exist_ok=True)
+
+            cheat_content = []
+            applied_count = 0
+
+            for cheat_id in enabled_cheats:
+                cheat_info = self.get_cheat_details(system, cheat_id)
+                if cheat_info and cheat_info.get("enabled", False):
+                    cheat_content.append(f"# {cheat_info.get('name', cheat_id)}")
+                    cheat_content.append(f"{cheat_info.get('code', '')}")
+                    cheat_content.append("")
+                    applied_count += 1
+
+            # 写入金手指文件
+            with open(cheat_file, 'w', encoding='utf-8') as f:
+                f.write('\n'.join(cheat_content))
+
+            logger.info(f"✅ 已应用 {applied_count} 个金手指到游戏 {game_id}")
+            return True
+
+        except Exception as e:
+            logger.error(f"❌ 应用金手指到游戏失败: {e}")
+            return False

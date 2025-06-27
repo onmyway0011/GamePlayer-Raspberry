@@ -312,3 +312,38 @@ class SettingsManager:
         except Exception as e:
             logger.error(f"❌ 应用树莓派优化失败: {e}")
             return False
+
+    def get_all_settings(self) -> Dict:
+        """获取所有设置"""
+        return self.settings.copy()
+
+    def update_setting(self, category: str, setting: str, value: Any) -> bool:
+        """更新单个设置"""
+        try:
+            if category not in self.settings:
+                self.settings[category] = {}
+
+            self.settings[category][setting] = value
+
+            # 保存到用户设置文件
+            self.save_user_settings()
+
+            logger.info(f"✅ 设置已更新: {category}.{setting} = {value}")
+            return True
+
+        except Exception as e:
+            logger.error(f"❌ 更新设置失败: {e}")
+            return False
+
+    def save_user_settings(self) -> bool:
+        """保存用户设置"""
+        try:
+            with open(self.user_settings_file, 'w', encoding='utf-8') as f:
+                json.dump(self.settings, f, indent=2, ensure_ascii=False)
+
+            logger.info(f"✅ 用户设置已保存: {self.user_settings_file}")
+            return True
+
+        except Exception as e:
+            logger.error(f"❌ 保存用户设置失败: {e}")
+            return False

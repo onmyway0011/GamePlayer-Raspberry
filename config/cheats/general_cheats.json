@@ -7,7 +7,7 @@
         "description": "获得无限生命数",
         "code": "AEAEAE",
         "type": "game_genie",
-        "enabled": false,
+        "enabled": true,
         "auto_enable": true
       },
       "infinite_time": {

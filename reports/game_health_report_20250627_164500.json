@@ -1,0 +1,149 @@
+{
+  "timestamp": 1751013245.425909,
+  "overall_status": "needs_attention",
+  "games_total": 9,
+  "games_healthy": 0,
+  "games_fixed": 0,
+  "systems": {
+    "nes": {
+      "emulator_status": "not_installed",
+      "games": {
+        "super_mario_bros": {
+          "status": "broken",
+          "issues": [
+            "ROM文件缺失",
+            "模拟器不可用: not_installed"
+          ],
+          "rom_exists": false,
+          "cover_exists": true,
+          "emulator_available": false,
+          "config_valid": true
+        },
+        "zelda": {
+          "status": "broken",
+          "issues": [
+            "ROM文件缺失",
+            "模拟器不可用: not_installed"
+          ],
+          "rom_exists": false,
+          "cover_exists": true,
+          "emulator_available": false,
+          "config_valid": true
+        },
+        "metroid": {
+          "status": "broken",
+          "issues": [
+            "ROM文件缺失",
+            "封面图片缺失",
+            "模拟器不可用: not_installed"
+          ],
+          "rom_exists": false,
+          "cover_exists": false,
+          "emulator_available": false,
+          "config_valid": true
+        },
+        "castlevania": {
+          "status": "broken",
+          "issues": [
+            "ROM文件缺失",
+            "封面图片缺失",
+            "模拟器不可用: not_installed"
+          ],
+          "rom_exists": false,
+          "cover_exists": false,
+          "emulator_available": false,
+          "config_valid": true
+        },
+        "mega_man": {
+          "status": "broken",
+          "issues": [
+            "ROM文件缺失",
+            "封面图片缺失",
+            "模拟器不可用: not_installed"
+          ],
+          "rom_exists": false,
+          "cover_exists": false,
+          "emulator_available": false,
+          "config_valid": true
+        }
+      },
+      "issues": [],
+      "fixes": []
+    },
+    "snes": {
+      "emulator_status": "not_installed",
+      "games": {
+        "super_mario_world": {
+          "status": "broken",
+          "issues": [
+            "ROM文件缺失",
+            "模拟器不可用: not_installed"
+          ],
+          "rom_exists": false,
+          "cover_exists": true,
+          "emulator_available": false,
+          "config_valid": true
+        },
+        "chrono_trigger": {
+          "status": "broken",
+          "issues": [
+            "ROM文件缺失",
+            "模拟器不可用: not_installed"
+          ],
+          "rom_exists": false,
+          "cover_exists": true,
+          "emulator_available": false,
+          "config_valid": true
+        }
+      },
+      "issues": [],
+      "fixes": []
+    },
+    "gameboy": {
+      "emulator_status": "not_installed",
+      "games": {
+        "tetris": {
+          "status": "broken",
+          "issues": [
+            "ROM文件缺失",
+            "模拟器不可用: not_installed"
+          ],
+          "rom_exists": false,
+          "cover_exists": true,
+          "emulator_available": false,
+          "config_valid": true
+        },
+        "pokemon_red": {
+          "status": "broken",
+          "issues": [
+            "ROM文件缺失",
+            "封面图片缺失",
+            "模拟器不可用: not_installed"
+          ],
+          "rom_exists": false,
+          "cover_exists": false,
+          "emulator_available": false,
+          "config_valid": true
+        }
+      },
+      "issues": [],
+      "fixes": []
+    }
+  },
+  "issues_found": [],
+  "fixes_applied": [
+    "创建ROM: Super Mario Bros",
+    "创建ROM: The Legend of Zelda",
+    "创建ROM: Metroid",
+    "创建封面: Metroid",
+    "创建ROM: Castlevania",
+    "创建封面: Castlevania",
+    "创建ROM: Mega Man",
+    "创建封面: Mega Man",
+    "创建ROM: Super Mario World",
+    "创建ROM: Chrono Trigger",
+    "创建ROM: Tetris",
+    "创建ROM: Pokemon Red",
+    "创建封面: Pokemon Red"
+  ]
+}
