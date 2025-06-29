@@ -15,8 +15,7 @@ import threading
 import webbrowser
 from pathlib import Path
 from typing import Dict, List, Optional
-from http.server import HTTPServer, SimpleHTTPRequestHandler
-import socketserver
+from http.server import HTTPServer, SimpleHTTPRequestHandler, ThreadingHTTPServer
 
 # 添加项目根目录到Python路径
 project_root = Path(__file__).parent.parent.parent
@@ -163,18 +162,35 @@ class EnhancedGameLauncher:
         logger.info(f"🔍 扫描游戏目录: {self.roms_dir}")
 
         games = []
+        
+        # 检查目录是否存在
+        if not self.roms_dir.exists():
+            logger.warning(f"⚠️ 游戏目录不存在: {self.roms_dir}")
+            return games
+
+        # 扫描 .nes 文件
         rom_files = list(self.roms_dir.glob("*.nes"))
+        
+        # 如果当前目录没有 .nes 文件，尝试扫描 nes 子目录
+        if not rom_files:
+            nes_subdir = self.roms_dir / "nes"
+            if nes_subdir.exists():
+                logger.info(f"🔍 扫描子目录: {nes_subdir}")
+                rom_files = list(nes_subdir.glob("*.nes"))
 
         for rom_file in rom_files:
-            game_info = {
-                "id": rom_file.stem,
-                "title": rom_file.stem.replace("_", " ").title(),
-                "path": str(rom_file),
-                "size": rom_file.stat().st_size,
-                "has_save": self.has_save_file(rom_file.stem),
-                "last_played": self.get_last_played(rom_file.stem)
-            }
-            games.append(game_info)
+            try:
+                game_info = {
+                    "id": rom_file.stem,
+                    "title": rom_file.stem.replace("_", " ").title(),
+                    "path": str(rom_file),
+                    "size": rom_file.stat().st_size,
+                    "has_save": self.has_save_file(rom_file.stem),
+                    "last_played": self.get_last_played(rom_file.stem)
+                }
+                games.append(game_info)
+            except Exception as e:
+                logger.warning(f"⚠️ 处理游戏文件失败 {rom_file}: {e}")
 
         # 按最后游玩时间排序
         games.sort(key=lambda x: x.get("last_played", 0), reverse=True)
@@ -348,12 +364,11 @@ class EnhancedGameLauncher:
             web_dir = Path("data/web")
             web_dir.mkdir(parents=True, exist_ok=True)
 
-            class CustomHandler(SimpleHTTPRequestHandler):
-                def __init__(self, *args, **kwargs):
-                    """TODO: Add docstring"""
-                    super().__init__(*args, directory=str(web_dir), **kwargs)
+            import os
+            os.chdir(str(web_dir))
 
-            self.web_server = socketserver.TCPServer(("", port), CustomHandler)
+            handler = SimpleHTTPRequestHandler
+            self.web_server = ThreadingHTTPServer(("", port), handler)
             logger.info(f"🌐 Web服务器启动: http://localhost:{port}")
 
             # 在新线程中运行服务器
@@ -378,8 +393,6 @@ class EnhancedGameLauncher:
 
         with open(web_dir / "games.json", "w") as f:
             f.write(games_json)
-
-        logger.info("🌐 Web界面文件已创建")
 
         logger.info("🌐 Web界面文件已创建")
 
@@ -491,15 +504,18 @@ def main():
         if args.web_only:
             # 只启动Web服务器
             launcher.games = launcher.scan_games()
-            launcher.start_web_server(args.port)
-            print(f"🌐 Web服务器运行在: http://localhost:{args.port}/game_switcher/")
-            print("按 Ctrl+C 停止服务器")
+            if launcher.start_web_server(args.port):
+                print(f"🌐 Web服务器运行在: http://localhost:{args.port}/game_switcher/")
+                print("按 Ctrl+C 停止服务器")
 
-            try:
-                while True:
-                    time.sleep(1)
-            except KeyboardInterrupt:
-                print("\n👋 服务器已停止")
+                try:
+                    while True:
+                        time.sleep(1)
+                except KeyboardInterrupt:
+                    print("\n👋 服务器已停止")
+            else:
+                print("❌ Web服务器启动失败")
+                sys.exit(1)
 
         elif args.autostart:
             # 自动启动模式

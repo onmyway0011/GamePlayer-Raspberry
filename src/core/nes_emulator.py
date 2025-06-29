@@ -29,6 +29,30 @@ except ImportError:
 class NESEmulator:
     """简单的NES模拟器"""
 
+    def get_system_font(self, size: int):
+        """获取系统字体，支持中文显示"""
+        # macOS 常见中文字体
+        mac_fonts = [
+            'PingFang SC', 'Hiragino Sans GB', 'STHeiti', 
+            'Arial Unicode MS', 'Helvetica Neue', 'Arial'
+        ]
+        
+        for font_name in mac_fonts:
+            try:
+                font = pygame.font.SysFont(font_name, size)
+                # 测试字体是否能渲染中文字符
+                test_surface = font.render('测试', True, (255, 255, 255))
+                if test_surface.get_width() > 0:
+                    return font
+            except:
+                continue
+        
+        # 如果都失败了，使用默认字体
+        try:
+            return pygame.font.SysFont(None, size)
+        except:
+            return pygame.font.Font(None, size)
+
     def __init__(self):
         """TODO: Add docstring"""
         # 初始化Pygame
@@ -94,9 +118,9 @@ class NESEmulator:
         self.clock = pygame.time.Clock()
         self.frame_count = 0
 
-        # 字体
-        self.font = pygame.font.Font(None, 24)
-        self.small_font = pygame.font.Font(None, 16)
+        # 字体设置 - 修复中文显示问题
+        self.font = self.get_system_font(24)
+        self.small_font = self.get_system_font(16)
 
         # 控制器状态
         self.controller = {

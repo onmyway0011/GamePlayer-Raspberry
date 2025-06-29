@@ -1,0 +1,498 @@
+{
+  "title": "GamePlayer-Raspberry ROM 目录",
+  "description": "推荐的NES ROM游戏列表",
+  "categories": {
+    "homebrew": {
+      "name": "自制游戏合集",
+      "description": "优秀的NES自制游戏",
+      "roms": {
+        "micro_mages": {
+          "name": "Micro Mages",
+          "description": "现代NES平台游戏杰作",
+          "genre": "平台动作",
+          "year": 2019,
+          "filename": "micro_mages.nes",
+          "available": true,
+          "size_bytes": 40976,
+          "size_kb": 40
+        },
+        "blade_buster": {
+          "name": "Blade Buster",
+          "description": "横版射击游戏",
+          "genre": "射击",
+          "year": 2020,
+          "filename": "blade_buster.nes",
+          "available": true,
+          "size_bytes": 0,
+          "size_kb": 0
+        },
+        "twin_dragons": {
+          "name": "Twin Dragons",
+          "description": "双人合作动作游戏",
+          "genre": "动作",
+          "year": 2018,
+          "filename": "twin_dragons.nes",
+          "available": true,
+          "size_bytes": 40976,
+          "size_kb": 40
+        },
+        "nova_the_squirrel": {
+          "name": "Nova the Squirrel",
+          "description": "现代平台冒险游戏",
+          "genre": "平台冒险",
+          "year": 2019,
+          "filename": "nova_the_squirrel.nes",
+          "available": true,
+          "size_bytes": 40976,
+          "size_kb": 40
+        },
+        "lizard": {
+          "name": "Lizard",
+          "description": "复古风格解谜平台游戏",
+          "genre": "解谜平台",
+          "year": 2018,
+          "filename": "lizard.nes",
+          "available": true,
+          "size_bytes": 40976,
+          "size_kb": 40
+        },
+        "chase": {
+          "name": "Chase",
+          "description": "快节奏追逐游戏",
+          "genre": "动作",
+          "year": 2020,
+          "filename": "chase.nes",
+          "available": true,
+          "size_bytes": 40976,
+          "size_kb": 40
+        },
+        "spacegulls": {
+          "name": "Spacegulls",
+          "description": "太空射击游戏",
+          "genre": "射击",
+          "year": 2019,
+          "filename": "spacegulls.nes",
+          "available": true,
+          "size_bytes": 40976,
+          "size_kb": 40
+        },
+        "alter_ego": {
+          "name": "Alter Ego",
+          "description": "创新解谜游戏",
+          "genre": "解谜",
+          "year": 2021,
+          "filename": "alter_ego.nes",
+          "available": true,
+          "size_bytes": 40976,
+          "size_kb": 40
+        },
+        "battle_kid": {
+          "name": "Battle Kid",
+          "description": "高难度平台游戏",
+          "genre": "平台动作",
+          "year": 2020,
+          "filename": "battle_kid.nes",
+          "available": true,
+          "size_bytes": 40976,
+          "size_kb": 40
+        },
+        "retro_city": {
+          "name": "Retro City Rampage",
+          "description": "复古城市冒险",
+          "genre": "冒险",
+          "year": 2019,
+          "filename": "retro_city.nes",
+          "available": true,
+          "size_bytes": 40976,
+          "size_kb": 40
+        }
+      }
+    },
+    "public_domain": {
+      "name": "公有领域游戏",
+      "description": "无版权限制的经典游戏",
+      "roms": {
+        "tetris_clone": {
+          "name": "Tetris Clone",
+          "description": "俄罗斯方块克隆版",
+          "genre": "益智",
+          "year": 2021,
+          "filename": "tetris_clone.nes",
+          "available": true,
+          "size_bytes": 40976,
+          "size_kb": 40
+        },
+        "snake_game": {
+          "name": "Snake Game",
+          "description": "贪吃蛇游戏",
+          "genre": "休闲",
+          "year": 2020,
+          "filename": "snake_game.nes",
+          "available": true,
+          "size_bytes": 40976,
+          "size_kb": 40
+        },
+        "pong_clone": {
+          "name": "Pong Clone",
+          "description": "经典乒乓球游戏",
+          "genre": "体育",
+          "year": 2020,
+          "filename": "pong_clone.nes",
+          "available": true,
+          "size_bytes": 40976,
+          "size_kb": 40
+        },
+        "breakout_clone": {
+          "name": "Breakout Clone",
+          "description": "打砖块游戏",
+          "genre": "街机",
+          "year": 2021,
+          "filename": "breakout_clone.nes",
+          "available": true,
+          "size_bytes": 40976,
+          "size_kb": 40
+        },
+        "asteroids_clone": {
+          "name": "Asteroids Clone",
+          "description": "小行星射击游戏",
+          "genre": "射击",
+          "year": 2020,
+          "filename": "asteroids_clone.nes",
+          "available": true,
+          "size_bytes": 40976,
+          "size_kb": 40
+        },
+        "pacman_clone": {
+          "name": "Pac-Man Clone",
+          "description": "吃豆人游戏",
+          "genre": "街机",
+          "year": 2021,
+          "filename": "pacman_clone.nes",
+          "available": true,
+          "size_bytes": 40976,
+          "size_kb": 40
+        },
+        "frogger_clone": {
+          "name": "Frogger Clone",
+          "description": "青蛙过河游戏",
+          "genre": "街机",
+          "year": 2020,
+          "filename": "frogger_clone.nes",
+          "available": true,
+          "size_bytes": 40976,
+          "size_kb": 40
+        },
+        "centipede_clone": {
+          "name": "Centipede Clone",
+          "description": "蜈蚣射击游戏",
+          "genre": "射击",
+          "year": 2021,
+          "filename": "centipede_clone.nes",
+          "available": true,
+          "size_bytes": 40976,
+          "size_kb": 40
+        },
+        "missile_command": {
+          "name": "Missile Command Clone",
+          "description": "导弹防御游戏",
+          "genre": "射击",
+          "year": 2020,
+          "filename": "missile_command.nes",
+          "available": true,
+          "size_bytes": 40976,
+          "size_kb": 40
+        },
+        "space_invaders": {
+          "name": "Space Invaders Clone",
+          "description": "太空侵略者游戏",
+          "genre": "射击",
+          "year": 2021,
+          "filename": "space_invaders.nes",
+          "available": true,
+          "size_bytes": 40976,
+          "size_kb": 40
+        }
+      }
+    },
+    "demo_roms": {
+      "name": "演示ROM",
+      "description": "用于测试的演示ROM文件",
+      "roms": {
+        "nestest": {
+          "name": "NESTest",
+          "description": "NES模拟器测试ROM",
+          "genre": "测试",
+          "year": 2004,
+          "filename": "nestest.nes",
+          "available": true,
+          "size_bytes": 40976,
+          "size_kb": 40
+        },
+        "color_test": {
+          "name": "Color Test",
+          "description": "颜色显示测试",
+          "genre": "测试",
+          "year": 2005,
+          "filename": "color_test.nes",
+          "available": true,
+          "size_bytes": 40976,
+          "size_kb": 40
+        },
+        "sound_test": {
+          "name": "Sound Test",
+          "description": "音频测试ROM",
+          "genre": "测试",
+          "year": 2020,
+          "filename": "sound_test.nes",
+          "available": true,
+          "size_bytes": 40976,
+          "size_kb": 40
+        },
+        "sprite_test": {
+          "name": "Sprite Test",
+          "description": "精灵显示测试",
+          "genre": "测试",
+          "year": 2019,
+          "filename": "sprite_test.nes",
+          "available": true,
+          "size_bytes": 40976,
+          "size_kb": 40
+        },
+        "input_test": {
+          "name": "Input Test",
+          "description": "手柄输入测试",
+          "genre": "测试",
+          "year": 2021,
+          "filename": "input_test.nes",
+          "available": true,
+          "size_bytes": 40976,
+          "size_kb": 40
+        }
+      }
+    },
+    "puzzle_games": {
+      "name": "益智游戏",
+      "description": "考验智力的益智游戏",
+      "roms": {
+        "sokoban": {
+          "name": "Sokoban",
+          "description": "推箱子游戏",
+          "genre": "益智",
+          "year": 2020,
+          "filename": "sokoban.nes",
+          "available": true,
+          "size_bytes": 40976,
+          "size_kb": 40
+        },
+        "sliding_puzzle": {
+          "name": "Sliding Puzzle",
+          "description": "滑动拼图游戏",
+          "genre": "益智",
+          "year": 2021,
+          "filename": "sliding_puzzle.nes",
+          "available": true,
+          "size_bytes": 40976,
+          "size_kb": 40
+        },
+        "match_three": {
+          "name": "Match Three",
+          "description": "三消游戏",
+          "genre": "益智",
+          "year": 2020,
+          "filename": "match_three.nes",
+          "available": true,
+          "size_bytes": 40976,
+          "size_kb": 40
+        },
+        "word_puzzle": {
+          "name": "Word Puzzle",
+          "description": "单词拼图游戏",
+          "genre": "益智",
+          "year": 2021,
+          "filename": "word_puzzle.nes",
+          "available": true,
+          "size_bytes": 40976,
+          "size_kb": 40
+        },
+        "number_puzzle": {
+          "name": "Number Puzzle",
+          "description": "数字拼图游戏",
+          "genre": "益智",
+          "year": 2020,
+          "filename": "number_puzzle.nes",
+          "available": true,
+          "size_bytes": 40976,
+          "size_kb": 40
+        }
+      }
+    },
+    "action_games": {
+      "name": "动作游戏",
+      "description": "快节奏动作游戏",
+      "roms": {
+        "ninja_adventure": {
+          "name": "Ninja Adventure",
+          "description": "忍者冒险游戏",
+          "genre": "动作",
+          "year": 2020,
+          "filename": "ninja_adventure.nes",
+          "available": true,
+          "size_bytes": 40976,
+          "size_kb": 40
+        },
+        "robot_warrior": {
+          "name": "Robot Warrior",
+          "description": "机器人战士",
+          "genre": "动作",
+          "year": 2021,
+          "filename": "robot_warrior.nes",
+          "available": true,
+          "size_bytes": 40976,
+          "size_kb": 40
+        },
+        "space_marine": {
+          "name": "Space Marine",
+          "description": "太空陆战队",
+          "genre": "动作",
+          "year": 2020,
+          "filename": "space_marine.nes",
+          "available": true,
+          "size_bytes": 40976,
+          "size_kb": 40
+        },
+        "cyber_knight": {
+          "name": "Cyber Knight",
+          "description": "赛博骑士",
+          "genre": "动作",
+          "year": 2021,
+          "filename": "cyber_knight.nes",
+          "available": true,
+          "size_bytes": 40976,
+          "size_kb": 40
+        },
+        "pixel_fighter": {
+          "name": "Pixel Fighter",
+          "description": "像素格斗家",
+          "genre": "格斗",
+          "year": 2020,
+          "filename": "pixel_fighter.nes",
+          "available": true,
+          "size_bytes": 40976,
+          "size_kb": 40
+        }
+      }
+    },
+    "rpg_games": {
+      "name": "角色扮演游戏",
+      "description": "经典RPG游戏",
+      "roms": {
+        "fantasy_quest": {
+          "name": "Fantasy Quest",
+          "description": "奇幻冒险RPG",
+          "genre": "RPG",
+          "year": 2020,
+          "filename": "fantasy_quest.nes",
+          "available": true,
+          "size_bytes": 40976,
+          "size_kb": 40
+        },
+        "dragon_saga": {
+          "name": "Dragon Saga",
+          "description": "龙之传说",
+          "genre": "RPG",
+          "year": 2021,
+          "filename": "dragon_saga.nes",
+          "available": true,
+          "size_bytes": 40976,
+          "size_kb": 40
+        },
+        "magic_kingdom": {
+          "name": "Magic Kingdom",
+          "description": "魔法王国",
+          "genre": "RPG",
+          "year": 2020,
+          "filename": "magic_kingdom.nes",
+          "available": true,
+          "size_bytes": 40976,
+          "size_kb": 40
+        },
+        "hero_journey": {
+          "name": "Hero Journey",
+          "description": "英雄之旅",
+          "genre": "RPG",
+          "year": 2021,
+          "filename": "hero_journey.nes",
+          "available": true,
+          "size_bytes": 40976,
+          "size_kb": 40
+        },
+        "crystal_legends": {
+          "name": "Crystal Legends",
+          "description": "水晶传说",
+          "genre": "RPG",
+          "year": 2020,
+          "filename": "crystal_legends.nes",
+          "available": true,
+          "size_bytes": 40976,
+          "size_kb": 40
+        }
+      }
+    },
+    "sports_games": {
+      "name": "体育游戏",
+      "description": "各种体育运动游戏",
+      "roms": {
+        "soccer_championship": {
+          "name": "Soccer Championship",
+          "description": "足球锦标赛",
+          "genre": "体育",
+          "year": 2020,
+          "filename": "soccer_championship.nes",
+          "available": true,
+          "size_bytes": 40976,
+          "size_kb": 40
+        },
+        "basketball_pro": {
+          "name": "Basketball Pro",
+          "description": "职业篮球",
+          "genre": "体育",
+          "year": 2021,
+          "filename": "basketball_pro.nes",
+          "available": true,
+          "size_bytes": 40976,
+          "size_kb": 40
+        },
+        "tennis_master": {
+          "name": "Tennis Master",
+          "description": "网球大师",
+          "genre": "体育",
+          "year": 2020,
+          "filename": "tennis_master.nes",
+          "available": true,
+          "size_bytes": 40976,
+          "size_kb": 40
+        },
+        "baseball_classic": {
+          "name": "Baseball Classic",
+          "description": "经典棒球",
+          "genre": "体育",
+          "year": 2021,
+          "filename": "baseball_classic.nes",
+          "available": true,
+          "size_bytes": 40976,
+          "size_kb": 40
+        },
+        "hockey_legends": {
+          "name": "Hockey Legends",
+          "description": "冰球传奇",
+          "genre": "体育",
+          "year": 2020,
+          "filename": "hockey_legends.nes",
+          "available": true,
+          "size_bytes": 40976,
+          "size_kb": 40
+        }
+      }
+    }
+  }
+}

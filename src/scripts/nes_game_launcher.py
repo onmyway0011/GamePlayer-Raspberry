@@ -22,9 +22,38 @@ sys.path.insert(0, str(project_root))
 class NESGameLauncher:
     """NES游戏启动器"""
 
-    def __init__(self, roms_dir: str = "/home/pi/RetroPie/roms/nes"):
-        """TODO: Add docstring"""
-        self.roms_dir = Path(roms_dir)
+    def get_system_font(self, size: int):
+        """获取系统字体，支持中文显示"""
+        # macOS 常见中文字体
+        mac_fonts = [
+            'PingFang SC', 'Hiragino Sans GB', 'STHeiti', 
+            'Arial Unicode MS', 'Helvetica Neue', 'Arial'
+        ]
+        
+        for font_name in mac_fonts:
+            try:
+                font = pygame.font.SysFont(font_name, size)
+                # 测试字体是否能渲染中文字符
+                test_surface = font.render('测试', True, (255, 255, 255))
+                if test_surface.get_width() > 0:
+                    return font
+            except:
+                continue
+        
+        # 如果都失败了，使用默认字体
+        try:
+            return pygame.font.SysFont(None, size)
+        except:
+            return pygame.font.Font(None, size)
+
+    def __init__(self, roms_dir: str = None):
+        """初始化游戏启动器"""
+        if roms_dir is None:
+            # 使用项目内的 ROM 目录
+            project_root = Path(__file__).parent.parent.parent
+            self.roms_dir = project_root / "data" / "roms" / "nes"
+        else:
+            self.roms_dir = Path(roms_dir)
         self.games = []
         self.selected_index = 0
         self.running = True
@@ -43,10 +72,17 @@ class NESGameLauncher:
         self.GRAY = (128, 128, 128)
         self.YELLOW = (255, 255, 0)
 
-        # 字体
-        self.font_large = pygame.font.Font(None, 36)
-        self.font_medium = pygame.font.Font(None, 24)
-        self.font_small = pygame.font.Font(None, 18)
+        # 字体设置 - 修复中文显示问题
+        try:
+            # 尝试使用系统默认字体
+            self.font_large = self.get_system_font(36)
+            self.font_medium = self.get_system_font(24)
+            self.font_small = self.get_system_font(18)
+        except:
+            # 如果系统字体不可用，使用默认字体
+            self.font_large = pygame.font.Font(None, 36)
+            self.font_medium = pygame.font.Font(None, 24)
+            self.font_small = pygame.font.Font(None, 18)
 
         # 加载游戏列表
         self.load_games()
@@ -322,41 +358,37 @@ class NESGameLauncher:
                         waiting = False
 
         try:
-            # 使用专用的游戏运行器
-            runner_cmd = ["python3", "scripts/run_nes_game.py", game["path"]]
-
-            print(f"🎮 启动游戏运行器: {' '.join(runner_cmd)}")
-
-            # 在新进程中启动游戏
-            process = subprocess.Popen(runner_cmd,
-                                     stdout=subprocess.PIPE,
-                                     stderr=subprocess.STDOUT,
-                                     text=True,
-                                     bufsize=1,
-                                     universal_newlines=True)
-
-            # 等待一小段时间检查是否成功启动
-            time.sleep(3)
-
-            if process.poll() is None:  # 进程仍在运行
-                print(f"✅ 游戏启动成功: {game['name']}")
-
-                # 显示游戏运行中的界面
+            # 启动游戏
+            print(f"🎮 启动游戏: {game['name']}")
+            
+            # 使用正确的脚本路径
+            script_path = Path(__file__).parent / "run_nes_game.py"
+            if not script_path.exists():
+                # 如果脚本不存在，尝试其他可能的路径
+                script_path = Path(__file__).parent.parent / "scripts" / "run_nes_game.py"
+            
+            if not script_path.exists():
+                # 尝试 src/scripts 目录
+                script_path = Path(__file__).parent / "run_nes_game.py"
+            
+            if script_path.exists():
+                cmd = [
+                    "python3", str(script_path), game['path']
+                ]
+                print(f"🎮 启动游戏运行器: {' '.join(cmd)}")
+                
+                process = subprocess.Popen(
+                    cmd,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE,
+                    text=True
+                )
+                
+                # 显示游戏运行界面
                 self.show_game_running(game, process)
-
-                # 等待游戏进程结束
-                process.wait()
-                print(f"👋 游戏已退出: {game['name']}")
             else:
-                # 进程已结束，可能启动失败
-                stdout, stderr = process.communicate()
-                error_msg = stdout if stdout else "未知错误"
-                print(f"❌ 游戏启动失败: {error_msg}")
-
-                # 显示错误信息
-                self.show_error(f"启动失败: {error_msg}")
-
-                # 如果启动失败，显示ROM信息作为备选
+                # 如果脚本不存在，显示ROM信息
+                print(f"⚠️ 游戏启动脚本不存在: {script_path}")
                 self.show_rom_info(game)
 
         except Exception as e:
@@ -537,8 +569,12 @@ def main():
     """主函数"""
     import argparse
 
+    # 获取项目根目录
+    project_root = Path(__file__).parent.parent.parent
+    default_roms_dir = str(project_root / "data" / "roms" / "nes")
+
     parser = argparse.ArgumentParser(description="NES游戏启动器")
-    parser.add_argument("--roms-dir", default="/home/pi/RetroPie/roms/nes", help="ROM目录路径")
+    parser.add_argument("--roms-dir", default=default_roms_dir, help="ROM目录路径")
 
     args = parser.parse_args()
 

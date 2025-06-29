@@ -4,13 +4,13 @@
     "install_path": "/opt/retropie/emulators/nesticle",
     "checksum": "",
     "dependencies": [],
-    "install_date": "2025-06-26T15:48:44.774084"
+    "install_date": "2025-06-29T21:21:37.420150"
   },
   "virtuanes": {
     "version": "0.97",
     "install_path": "/opt/retropie/emulators/virtuanes",
     "checksum": "",
     "dependencies": [],
-    "install_date": "2025-06-26T15:48:44.779253"
+    "install_date": "2025-06-29T21:21:37.421162"
   }
 }

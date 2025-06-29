@@ -2,7 +2,7 @@
   {
     "id": "Micro_Mages",
     "title": "Micro Mages",
-    "path": "/Users/ON-MY-WAY/\u5feb\u624b/AICODE/GamePlayer-Raspberry/data/roms/nes/Micro_Mages.nes",
+    "path": "/Users/ON-MY-WAY/\u521b\u4e1a/GamePlayer-Raspberry/data/roms/nes/Micro_Mages.nes",
     "size": 32768,
     "has_save": false,
     "last_played": 0
@@ -10,7 +10,15 @@
   {
     "id": "Pac-Man_Demo",
     "title": "Pac-Man Demo",
-    "path": "/Users/ON-MY-WAY/\u5feb\u624b/AICODE/GamePlayer-Raspberry/data/roms/nes/Pac-Man_Demo.nes",
+    "path": "/Users/ON-MY-WAY/\u521b\u4e1a/GamePlayer-Raspberry/data/roms/nes/Pac-Man_Demo.nes",
+    "size": 32768,
+    "has_save": false,
+    "last_played": 0
+  },
+  {
+    "id": "Castlevania",
+    "title": "Castlevania",
+    "path": "/Users/ON-MY-WAY/\u521b\u4e1a/GamePlayer-Raspberry/data/roms/nes/Castlevania.nes",
     "size": 32768,
     "has_save": false,
     "last_played": 0
@@ -18,7 +26,23 @@
   {
     "id": "Metroid_Demo",
     "title": "Metroid Demo",
-    "path": "/Users/ON-MY-WAY/\u5feb\u624b/AICODE/GamePlayer-Raspberry/data/roms/nes/Metroid_Demo.nes",
+    "path": "/Users/ON-MY-WAY/\u521b\u4e1a/GamePlayer-Raspberry/data/roms/nes/Metroid_Demo.nes",
+    "size": 32768,
+    "has_save": false,
+    "last_played": 0
+  },
+  {
+    "id": "Contra",
+    "title": "Contra",
+    "path": "/Users/ON-MY-WAY/\u521b\u4e1a/GamePlayer-Raspberry/data/roms/nes/Contra.nes",
+    "size": 32768,
+    "has_save": false,
+    "last_played": 0
+  },
+  {
+    "id": "Duck_Hunt",
+    "title": "Duck Hunt",
+    "path": "/Users/ON-MY-WAY/\u521b\u4e1a/GamePlayer-Raspberry/data/roms/nes/Duck_Hunt.nes",
     "size": 32768,
     "has_save": false,
     "last_played": 0
@@ -26,7 +50,7 @@
   {
     "id": "Contra_Demo",
     "title": "Contra Demo",
-    "path": "/Users/ON-MY-WAY/\u5feb\u624b/AICODE/GamePlayer-Raspberry/data/roms/nes/Contra_Demo.nes",
+    "path": "/Users/ON-MY-WAY/\u521b\u4e1a/GamePlayer-Raspberry/data/roms/nes/Contra_Demo.nes",
     "size": 32768,
     "has_save": false,
     "last_played": 0
@@ -34,7 +58,31 @@
   {
     "id": "Super_Mario_Bros_Demo",
     "title": "Super Mario Bros Demo",
-    "path": "/Users/ON-MY-WAY/\u5feb\u624b/AICODE/GamePlayer-Raspberry/data/roms/nes/Super_Mario_Bros_Demo.nes",
+    "path": "/Users/ON-MY-WAY/\u521b\u4e1a/GamePlayer-Raspberry/data/roms/nes/Super_Mario_Bros_Demo.nes",
+    "size": 32768,
+    "has_save": false,
+    "last_played": 0
+  },
+  {
+    "id": "Donkey_Kong",
+    "title": "Donkey Kong",
+    "path": "/Users/ON-MY-WAY/\u521b\u4e1a/GamePlayer-Raspberry/data/roms/nes/Donkey_Kong.nes",
+    "size": 24592,
+    "has_save": false,
+    "last_played": 0
+  },
+  {
+    "id": "Pac_Man",
+    "title": "Pac Man",
+    "path": "/Users/ON-MY-WAY/\u521b\u4e1a/GamePlayer-Raspberry/data/roms/nes/Pac_Man.nes",
+    "size": 32768,
+    "has_save": false,
+    "last_played": 0
+  },
+  {
+    "id": "Metroid",
+    "title": "Metroid",
+    "path": "/Users/ON-MY-WAY/\u521b\u4e1a/GamePlayer-Raspberry/data/roms/nes/Metroid.nes",
     "size": 32768,
     "has_save": false,
     "last_played": 0
@@ -42,7 +90,7 @@
   {
     "id": "Tetris_Demo",
     "title": "Tetris Demo",
-    "path": "/Users/ON-MY-WAY/\u5feb\u624b/AICODE/GamePlayer-Raspberry/data/roms/nes/Tetris_Demo.nes",
+    "path": "/Users/ON-MY-WAY/\u521b\u4e1a/GamePlayer-Raspberry/data/roms/nes/Tetris_Demo.nes",
     "size": 32768,
     "has_save": false,
     "last_played": 0
@@ -50,7 +98,7 @@
   {
     "id": "Dragon_Quest_Demo",
     "title": "Dragon Quest Demo",
-    "path": "/Users/ON-MY-WAY/\u5feb\u624b/AICODE/GamePlayer-Raspberry/data/roms/nes/Dragon_Quest_Demo.nes",
+    "path": "/Users/ON-MY-WAY/\u521b\u4e1a/GamePlayer-Raspberry/data/roms/nes/Dragon_Quest_Demo.nes",
     "size": 32768,
     "has_save": false,
     "last_played": 0
@@ -58,7 +106,7 @@
   {
     "id": "Final_Fantasy_Demo",
     "title": "Final Fantasy Demo",
-    "path": "/Users/ON-MY-WAY/\u5feb\u624b/AICODE/GamePlayer-Raspberry/data/roms/nes/Final_Fantasy_Demo.nes",
+    "path": "/Users/ON-MY-WAY/\u521b\u4e1a/GamePlayer-Raspberry/data/roms/nes/Final_Fantasy_Demo.nes",
     "size": 32768,
     "has_save": false,
     "last_played": 0
@@ -66,7 +114,15 @@
   {
     "id": "Blade_Buster",
     "title": "Blade Buster",
-    "path": "/Users/ON-MY-WAY/\u5feb\u624b/AICODE/GamePlayer-Raspberry/data/roms/nes/Blade_Buster.nes",
+    "path": "/Users/ON-MY-WAY/\u521b\u4e1a/GamePlayer-Raspberry/data/roms/nes/Blade_Buster.nes",
+    "size": 32768,
+    "has_save": false,
+    "last_played": 0
+  },
+  {
+    "id": "Legend_of_Zelda",
+    "title": "Legend Of Zelda",
+    "path": "/Users/ON-MY-WAY/\u521b\u4e1a/GamePlayer-Raspberry/data/roms/nes/Legend_of_Zelda.nes",
     "size": 32768,
     "has_save": false,
     "last_played": 0
@@ -74,7 +130,23 @@
   {
     "id": "Mega_Man_Demo",
     "title": "Mega Man Demo",
-    "path": "/Users/ON-MY-WAY/\u5feb\u624b/AICODE/GamePlayer-Raspberry/data/roms/nes/Mega_Man_Demo.nes",
+    "path": "/Users/ON-MY-WAY/\u521b\u4e1a/GamePlayer-Raspberry/data/roms/nes/Mega_Man_Demo.nes",
+    "size": 32768,
+    "has_save": false,
+    "last_played": 0
+  },
+  {
+    "id": "Super_Mario_Bros",
+    "title": "Super Mario Bros",
+    "path": "/Users/ON-MY-WAY/\u521b\u4e1a/GamePlayer-Raspberry/data/roms/nes/Super_Mario_Bros.nes",
+    "size": 24592,
+    "has_save": false,
+    "last_played": 0
+  },
+  {
+    "id": "Mega_Man",
+    "title": "Mega Man",
+    "path": "/Users/ON-MY-WAY/\u521b\u4e1a/GamePlayer-Raspberry/data/roms/nes/Mega_Man.nes",
     "size": 32768,
     "has_save": false,
     "last_played": 0
@@ -82,15 +154,23 @@
   {
     "id": "The_Legend_of_Zelda_Demo",
     "title": "The Legend Of Zelda Demo",
-    "path": "/Users/ON-MY-WAY/\u5feb\u624b/AICODE/GamePlayer-Raspberry/data/roms/nes/The_Legend_of_Zelda_Demo.nes",
+    "path": "/Users/ON-MY-WAY/\u521b\u4e1a/GamePlayer-Raspberry/data/roms/nes/The_Legend_of_Zelda_Demo.nes",
     "size": 32768,
+    "has_save": false,
+    "last_played": 0
+  },
+  {
+    "id": "Galaga",
+    "title": "Galaga",
+    "path": "/Users/ON-MY-WAY/\u521b\u4e1a/GamePlayer-Raspberry/data/roms/nes/Galaga.nes",
+    "size": 24592,
     "has_save": false,
     "last_played": 0
   },
   {
     "id": "Castlevania_Demo",
     "title": "Castlevania Demo",
-    "path": "/Users/ON-MY-WAY/\u5feb\u624b/AICODE/GamePlayer-Raspberry/data/roms/nes/Castlevania_Demo.nes",
+    "path": "/Users/ON-MY-WAY/\u521b\u4e1a/GamePlayer-Raspberry/data/roms/nes/Castlevania_Demo.nes",
     "size": 32768,
     "has_save": false,
     "last_played": 0
@@ -98,7 +178,7 @@
   {
     "id": "Lizard",
     "title": "Lizard",
-    "path": "/Users/ON-MY-WAY/\u5feb\u624b/AICODE/GamePlayer-Raspberry/data/roms/nes/Lizard.nes",
+    "path": "/Users/ON-MY-WAY/\u521b\u4e1a/GamePlayer-Raspberry/data/roms/nes/Lizard.nes",
     "size": 32768,
     "has_save": false,
     "last_played": 0
