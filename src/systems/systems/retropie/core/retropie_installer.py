@@ -158,9 +158,7 @@ class RetroPieInstaller:
                 return str(exe_path)
         return None
 
-    def _run_command(self, cmd: List[str],
-        """TODO: Add docstring"""
-                     check: bool = True) -> Tuple[int, str, str]:
+    def _run_command(self, cmd: List[str], check: bool = True) -> Tuple[int, str, str]:
         """
         运行命令并返回结果
 

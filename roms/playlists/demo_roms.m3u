@@ -1,8 +1,0 @@
-# 演示ROM
-# 用于测试的演示ROM文件
-
-../nestest.nes
-../color_test.nes
-../sound_test.nes
-../sprite_test.nes
-../input_test.nes

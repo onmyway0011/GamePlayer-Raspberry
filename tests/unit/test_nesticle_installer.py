@@ -395,7 +395,7 @@ class TestNesticleIntegration(unittest.TestCase):
     @patch.object(NesticleInstaller, 'set_as_default_emulator', return_value=True)
     @patch.object(NesticleInstaller, 'verify_installation', return_value=True)
     def test_integration_workflow(self, mock_verify, mock_default, mock_launch,
-        """TODO: Add docstring"""
+
                                 mock_retroarch, mock_save, mock_cheat, mock_config, mock_deps):
         """测试完整集成工作流"""
         installer = NesticleInstaller(str(self.config_file))
