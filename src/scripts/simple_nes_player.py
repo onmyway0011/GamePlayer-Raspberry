@@ -33,18 +33,18 @@ class SimpleNESPlayer:
             'PingFang SC', 'Hiragino Sans GB', 'STHeiti',
             'Arial Unicode MS', 'Helvetica Neue', 'Arial'
         ]
-        
+
         # Linux 常见中文字体
         linux_fonts = [
             'WenQuanYi Micro Hei', 'Noto Sans CJK SC', 'Droid Sans Fallback',
             'DejaVu Sans', 'Liberation Sans'
         ]
-        
+
         # Windows 常见中文字体
         windows_fonts = [
             'Microsoft YaHei', 'SimHei', 'SimSun', 'Arial Unicode MS'
         ]
-        
+
         # 根据系统选择字体列表
         if sys.platform.startswith('darwin'):  # macOS
             font_list = mac_fonts
@@ -164,7 +164,7 @@ class SimpleNESPlayer:
             # 如果中文渲染失败，使用英文
             name_text = self.font_large.render(self.rom_path.stem, True, self.WHITE)
             self.screen.blit(name_text, (10, y_offset))
-        
+
         y_offset += 40
 
         if "error" in self.rom_info:
@@ -200,10 +200,10 @@ class SimpleNESPlayer:
                     line = line.replace("分数", "Score")
                 elif "等级" in line:
                     line = line.replace("等级", "Level")
-                
+
                 text_surface = self.font_small.render(line, True, self.WHITE)
                 self.screen.blit(text_surface, (10, y_offset))
-            
+
             y_offset += 20
 
     def draw_game_simulation(self):
@@ -329,7 +329,7 @@ class SimpleNESPlayer:
     def run(self):
         """运行游戏"""
         clock = pygame.time.Clock()
-        
+
         print(f"🎮 启动简单NES播放器: {self.rom_path.name}")
         print(f"📋 控制说明:")
         print(f"   - WASD/方向键: 移动")
@@ -365,7 +365,6 @@ def main():
     rom_path = sys.argv[1]
     player = SimpleNESPlayer(rom_path)
     player.run()
-
 
 if __name__ == "__main__":
     main()

@@ -27,6 +27,8 @@ project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
 
 # 模拟器检测和安装提示
+
+
 def check_emulator_availability():
     """检查模拟器可用性并提供安装建议"""
     emulators = {
@@ -46,16 +48,16 @@ def check_emulator_availability():
             'description': '多系统模拟器'
         }
     }
-    
+
     available_emulators = []
     missing_emulators = []
-    
+
     for emulator, info in emulators.items():
         if subprocess.run(['which', emulator], capture_output=True).returncode == 0:
             available_emulators.append(emulator)
         else:
             missing_emulators.append((emulator, info))
-    
+
     if not available_emulators:
         print("⚠️ 未检测到可用的NES模拟器")
         print("💡 建议安装以下模拟器之一:")
@@ -63,8 +65,9 @@ def check_emulator_availability():
             print(f"  • {info['name']}: {info['description']}")
             print(f"    安装命令: {info['install_command']}")
         print("🔧 或者使用内置的Python模拟器")
-    
+
     return available_emulators
+
 
 class NESGameRunner:
     """NES游戏运行器"""
@@ -147,7 +150,7 @@ class NESGameRunner:
         for emu in emulator_candidates:
             if emu["command"][0]:
                 available.append(emu)
-        
+
         # 如果没有检测到外部模拟器，添加内置Python模拟器
         if not available:
             available.append({
@@ -155,7 +158,7 @@ class NESGameRunner:
                 "command": [sys.executable, "src/scripts/simple_nes_player.py"],
                 "priority": 999
             })
-        
+
         # 按优先级排序
         available.sort(key=lambda x: x["priority"])
         return available
@@ -185,7 +188,7 @@ class NESGameRunner:
                 if len(header) < 16:
                     print(f"❌ ROM文件头部不完整")
                     return False
-                
+
                 if header[:4] != b'NES\x1a':
                     print(f"❌ 不是有效的NES ROM文件（缺少NES头部标识）")
                     print(f"   期望: NES\\x1a")
@@ -220,7 +223,7 @@ class NESGameRunner:
             env = os.environ.copy()
             env['PYTHONIOENCODING'] = 'utf-8'
             env['PYTHONUNBUFFERED'] = '1'
-            
+
             # 启动进程
             self.running_process = subprocess.Popen(
                 cmd,
@@ -332,7 +335,7 @@ class NESGameRunner:
         # 尝试运行游戏，如果失败则自动切换模拟器
         for i, emulator in enumerate(available_emulators):
             print(f"\n🎮 尝试使用模拟器 {i+1}/{len(available_emulators)}: {emulator['name']}")
-            
+
             success = self.run_with_emulator(emulator, rom_path)
             if success:
                 print(f"✅ 使用 {emulator['name']} 成功运行游戏")

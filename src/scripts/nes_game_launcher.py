@@ -14,15 +14,17 @@ from pathlib import Path
 from typing import List, Dict, Optional
 
 # 依赖检测和自动安装
+
+
 def check_and_install_dependencies():
     """检查并安装必要的依赖"""
     missing_deps = []
-    
+
     try:
         import pygame
     except ImportError:
         missing_deps.append("pygame")
-    
+
     if missing_deps:
         print("⚠️ 检测到缺失的依赖库，正在自动安装...")
         try:

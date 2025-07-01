@@ -17,7 +17,10 @@ BIN_DIR.mkdir(parents=True, exist_ok=True)
 HEADERS = {"Accept": "application/vnd.github.v3+json"}
 
 # 检测平台
+
+
 def get_platform():
+    """TODO: Add docstring"""
     sys_os = platform.system().lower()
     arch = platform.machine().lower()
     if sys_os == "darwin":
@@ -31,7 +34,10 @@ def get_platform():
 PLATFORM = get_platform()
 
 # 下载文件
+
+
 def download_file(url, out_path):
+    """TODO: Add docstring"""
     print(f"下载: {url}")
     r = requests.get(url, stream=True)
     r.raise_for_status()
@@ -41,7 +47,10 @@ def download_file(url, out_path):
     print(f"已保存: {out_path}")
 
 # 解压文件
+
+
 def extract_file(file_path, dest_dir):
+    """TODO: Add docstring"""
     if file_path.suffix in ['.gz', '.tar']:
         with tarfile.open(file_path, 'r:*') as tar:
             tar.extractall(dest_dir)
@@ -53,7 +62,10 @@ def extract_file(file_path, dest_dir):
     print(f"已解压到: {dest_dir}")
 
 # 获取GitHub最新release下载链接
+
+
 def get_latest_github_asset(repo, keyword):
+    """TODO: Add docstring"""
     api = f"https://api.github.com/repos/{repo}/releases/latest"
     r = requests.get(api, headers=HEADERS)
     r.raise_for_status()
@@ -69,7 +81,10 @@ def get_latest_github_asset(repo, keyword):
     return None, None
 
 # 集成Mesen
+
+
 def install_mesen():
+    """TODO: Add docstring"""
     print("\n==== 集成 Mesen ====")
     repo = "SourMesen/Mesen"
     if PLATFORM == "macos":
@@ -97,7 +112,10 @@ def install_mesen():
         print("未找到Mesen主程序")
 
 # 集成puNES
+
+
 def install_punes():
+    """TODO: Add docstring"""
     print("\n==== 集成 puNES ====")
     repo = "punesemu/puNES"
     if PLATFORM == "macos":
@@ -130,7 +148,10 @@ def install_punes():
         print(f"已软链: {punes_link} -> {out_path}")
 
 # 集成Nestopia UE
+
+
 def install_nestopia():
+    """TODO: Add docstring"""
     print("\n==== 集成 Nestopia UE ====")
     repo = "0ldsk00l/nestopia"
     if PLATFORM == "macos":
@@ -166,4 +187,4 @@ if __name__ == "__main__":
     install_mesen()
     install_punes()
     install_nestopia()
-    print(f"\n✅ Mesen、puNES、Nestopia UE 已自动集成到{EMUDIR}，并软链到{BIN_DIR}。\n") 
+    print(f"\n✅ Mesen、puNES、Nestopia UE 已自动集成到{EMUDIR}，并软链到{BIN_DIR}。\n")

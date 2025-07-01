@@ -22,6 +22,7 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+
 class ROMSourceUpdater:
     """ROM源自动更新器"""
 
@@ -29,10 +30,10 @@ class ROMSourceUpdater:
         """初始化更新器"""
         self.config_dir = Path(config_dir)
         self.config_dir.mkdir(parents=True, exist_ok=True)
-        
+
         self.sources_file = self.config_dir / "rom_sources.json"
         self.existing_sources = self._load_existing_sources()
-        
+
         # 已知的ROM源网站
         self.known_sources = {
             "github": {
@@ -201,7 +202,7 @@ class ROMSourceUpdater:
     def merge_sources(self, new_sources: Dict) -> Dict:
         """合并新旧ROM源"""
         merged_sources = self.existing_sources.copy()
-        
+
         for source_id, source_data in new_sources.items():
             if source_id not in merged_sources:
                 merged_sources[source_id] = source_data
@@ -209,93 +210,93 @@ class ROMSourceUpdater:
                 # 合并ROM列表
                 existing_roms = merged_sources[source_id].get("roms", {})
                 new_roms = source_data.get("roms", {})
-                
+
                 # 只添加不存在的ROM
                 for rom_id, rom_data in new_roms.items():
                     if rom_id not in existing_roms:
                         existing_roms[rom_id] = rom_data
                         logger.info(f"➕ 添加新ROM: {rom_data['name']}")
-                
+
                 merged_sources[source_id]["roms"] = existing_roms
                 merged_sources[source_id]["last_updated"] = time.strftime("%Y-%m-%d %H:%M:%S")
-        
+
         return merged_sources
 
     def validate_sources(self, sources: Dict) -> Dict:
         """验证ROM源的有效性"""
         logger.info("🔍 验证ROM源有效性...")
-        
+
         valid_sources = {}
-        
+
         for source_id, source_data in sources.items():
             valid_roms = {}
-            
+
             for rom_id, rom_data in source_data.get("roms", {}).items():
                 urls = rom_data.get("urls", [])
                 valid_urls = []
-                
+
                 for url in urls:
                     if self._validate_url(url):
                         valid_urls.append(url)
-                
+
                 if valid_urls:
                     rom_data["urls"] = valid_urls
                     valid_roms[rom_id] = rom_data
                     logger.info(f"✅ ROM有效: {rom_data['name']}")
                 else:
                     logger.warning(f"⚠️ ROM无效: {rom_data['name']}")
-            
+
             if valid_roms:
                 source_data["roms"] = valid_roms
                 valid_sources[source_id] = source_data
                 logger.info(f"✅ 源有效: {source_data['name']} ({len(valid_roms)} 个ROM)")
             else:
                 logger.warning(f"⚠️ 源无效: {source_data['name']}")
-        
+
         return valid_sources
 
-    def _validate_url(self, url: str) -> bool:
+    def _validate_url(self, url: str):
         """验证URL是否有效"""
         try:
             # 只检查URL格式和基本可访问性
             parsed = urlparse(url)
             if not parsed.scheme or not parsed.netloc:
                 return False
-            
+
             # 这里可以添加更详细的验证逻辑
             # 比如检查文件是否存在、大小是否合理等
             return True
-            
+
         except Exception:
             return False
 
-    def update_sources(self) -> bool:
+    def update_sources(self):
         """执行完整的ROM源更新"""
         logger.info("🚀 开始ROM源自动更新...")
-        
+
         try:
             # 1. 发现新源
             new_sources = self.discover_new_sources()
-            
+
             if not new_sources:
                 logger.info("ℹ️ 未发现新的ROM源")
                 return True
-            
+
             # 2. 合并源
             merged_sources = self.merge_sources(new_sources)
-            
+
             # 3. 验证源
             valid_sources = self.validate_sources(merged_sources)
-            
+
             # 4. 保存更新后的源
             self._save_sources(valid_sources)
-            
+
             # 5. 生成更新报告
             self._generate_update_report(new_sources, valid_sources)
-            
+
             logger.info("✅ ROM源更新完成")
             return True
-            
+
         except Exception as e:
             logger.error(f"❌ ROM源更新失败: {e}")
             return False
@@ -305,13 +306,13 @@ class ROMSourceUpdater:
         logger.info("\n" + "="*60)
         logger.info("📊 ROM源更新报告")
         logger.info("="*60)
-        
+
         total_new_roms = sum(len(source.get("roms", {})) for source in new_sources.values())
         total_valid_roms = sum(len(source.get("roms", {})) for source in valid_sources.values())
-        
+
         logger.info(f"📈 新发现ROM: {total_new_roms} 个")
         logger.info(f"📈 有效ROM总数: {total_valid_roms} 个")
-        
+
         for source_id, source_data in new_sources.items():
             logger.info(f"\n📦 {source_data['name']}:")
             for rom_id, rom_data in source_data.get("roms", {}).items():
@@ -356,6 +357,5 @@ def main():
             logger.error("❌ 更新失败")
             sys.exit(1)
 
-
 if __name__ == "__main__":
-    main() 
+    main()

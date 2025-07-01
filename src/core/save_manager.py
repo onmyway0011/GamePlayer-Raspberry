@@ -54,7 +54,7 @@ class SaveManager:
         try:
             with open(rom_file, 'rb') as f:
                 content = f.read()
-                game_id = hashlib.md5(content, usedforsecurity=False).hexdigest()[:16]
+                game_id = hashlib.md5(content, usedforsecurity=False, usedforsecurity=False, usedforsecurity=False, usedforsecurity=False).hexdigest()[:16]
         except Exception:
             # 如果无法读取文件，使用文件名
             game_id = hashlib.md5(rom_file.name.encode()).hexdigest()[:16]

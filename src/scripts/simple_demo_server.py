@@ -1862,11 +1862,13 @@ HTML_TEMPLATE = """
 
 @app.route('/')
 
+
 def index():
     """主页"""
     return render_template_string(HTML_TEMPLATE, port=request.environ.get('SERVER_PORT', '3000'))
 
 @app.route('/api/status')
+
 
 def api_status():
     """API状态"""
@@ -1884,11 +1886,13 @@ def api_status():
 
 @app.route('/api/games')
 
+
 def api_games():
     """游戏列表API"""
     return jsonify(GAMES_DATABASE)
 
 @app.route('/api/game/<system>/<game_id>')
+
 
 def api_game_info(system, game_id):
     """获取特定游戏信息"""
@@ -1901,6 +1905,7 @@ def api_game_info(system, game_id):
     return jsonify(game)
 
 @app.route('/api/saves/<game_id>')
+
 
 def api_saves(game_id):
     """获取游戏存档信息"""
@@ -1923,6 +1928,7 @@ def api_saves(game_id):
     })
 
 @app.route('/api/cheats/<game_id>')
+
 
 def api_game_cheats(game_id):
     """获取游戏金手指信息"""
@@ -1969,6 +1975,7 @@ def api_game_cheats(game_id):
 
 @app.route('/api/cheats')
 
+
 def api_cheats():
     """金手指系统API"""
     return jsonify({
@@ -1979,6 +1986,7 @@ def api_cheats():
     })
 
 @app.route('/api/launch_game', methods=['POST'])
+
 
 def api_launch_game():
     """真正启动游戏API"""
@@ -2057,6 +2065,7 @@ def api_launch_game():
 
 @app.route('/api/stop_game', methods=['POST'])
 
+
 def api_stop_game():
     """停止游戏API"""
     try:
@@ -2084,6 +2093,7 @@ def api_stop_game():
 
 @app.route('/api/game_status/<game_id>')
 
+
 def api_game_status(game_id):
     """获取游戏状态API"""
     try:
@@ -2109,6 +2119,7 @@ def api_game_status(game_id):
         return jsonify({'success': False, 'error': str(e)}), 500
 
 @app.route('/api/system_check')
+
 
 def api_system_check():
     """系统状态检查API"""
@@ -2137,6 +2148,7 @@ def api_system_check():
         return jsonify({'success': False, 'error': str(e)}), 500
 
 @app.route('/api/cheat_config/<system>', methods=['GET', 'POST'])
+
 
 def api_cheat_config(system):
     """金手指配置API"""
@@ -2194,6 +2206,7 @@ def api_cheat_config(system):
         return jsonify({'success': False, 'error': str(e)}), 500
 
 @app.route('/api/settings', methods=['GET', 'POST'])
+
 
 def api_settings():
     """系统设置API"""
@@ -2270,6 +2283,7 @@ def api_settings():
 
 @app.route('/static/images/covers/<system>/<filename>')
 
+
 def serve_cover_image(system, filename):
     """提供游戏封面图片"""
     try:
@@ -2285,6 +2299,7 @@ def serve_cover_image(system, filename):
         return jsonify({'error': str(e)}), 404
 
 @app.route('/api/download_covers', methods=['POST'])
+
 
 def api_download_covers():
     """下载游戏封面API"""
@@ -2309,6 +2324,7 @@ def api_download_covers():
 
 @app.route('/api/create_demo_roms', methods=['POST'])
 
+
 def api_create_demo_roms():
     """创建演示ROM文件API"""
     try:
@@ -2328,6 +2344,7 @@ def api_create_demo_roms():
         return jsonify({'success': False, 'error': str(e)}), 500
 
 @app.route('/api/initialize_game_data', methods=['POST'])
+
 
 def api_initialize_game_data():
     """初始化游戏数据API"""
@@ -2378,6 +2395,7 @@ def api_initialize_game_data():
 
 @app.route('/api/check_all_games', methods=['POST'])
 
+
 def api_check_all_games():
     """检查所有游戏的健康状态API"""
     try:
@@ -2405,6 +2423,7 @@ def api_check_all_games():
         return jsonify({'success': False, 'error': str(e)}), 500
 
 @app.route('/api/fix_all_games', methods=['POST'])
+
 
 def api_fix_all_games():
     """自动修复所有游戏问题API"""
@@ -2441,6 +2460,7 @@ def api_fix_all_games():
 
 @app.route('/api/game_health_report')
 
+
 def api_game_health_report():
     """获取游戏健康报告API"""
     try:
@@ -2464,6 +2484,7 @@ def api_game_health_report():
         return jsonify({'success': False, 'error': str(e)}), 500
 
 @app.route('/api/auto_fix_game/<system>/<game_id>', methods=['POST'])
+
 
 def api_auto_fix_game(system, game_id):
     """自动修复单个游戏API"""

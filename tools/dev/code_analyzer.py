@@ -11,17 +11,19 @@ from pathlib import Path
 from typing import Dict, List, Tuple, Any
 
 # 依赖检测
+
+
 def check_dependencies():
     """检查必要的依赖"""
     required_modules = ['ast', 'json']
     missing_deps = []
-    
+
     for module in required_modules:
         try:
             __import__(module)
         except ImportError:
             missing_deps.append(module)
-    
+
     if missing_deps:
         print(f"❌ 缺失必要的标准库模块: {', '.join(missing_deps)}")
         print("这些是Python标准库模块，通常应该可用")

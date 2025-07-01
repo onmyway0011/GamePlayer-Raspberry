@@ -1,8 +1,8 @@
 {
   "optimization_summary": {
-    "total_files": 73,
-    "total_issues_fixed": 12,
-    "total_improvements": 137
+    "total_files": 78,
+    "total_issues_fixed": 0,
+    "total_improvements": 89
   },
   "file_results": [
     {
@@ -17,23 +17,21 @@
     },
     {
       "file_path": "test_nes_api.py",
-      "original_lines": 76,
+      "original_lines": 78,
       "optimized_lines": 78,
       "issues_fixed": [],
       "performance_improvements": [],
       "code_quality_improvements": [
-        "优化代码格式和空行",
         "分析类型提示需求"
       ]
     },
     {
       "file_path": "test_nes_launch.py",
-      "original_lines": 38,
+      "original_lines": 39,
       "optimized_lines": 39,
       "issues_fixed": [],
       "performance_improvements": [],
       "code_quality_improvements": [
-        "优化代码格式和空行",
         "分析类型提示需求"
       ]
     },
@@ -69,37 +67,43 @@
     },
     {
       "file_path": "tools/dev/code_analyzer.py",
-      "original_lines": 363,
-      "optimized_lines": 363,
+      "original_lines": 386,
+      "optimized_lines": 387,
       "issues_fixed": [],
       "performance_improvements": [],
       "code_quality_improvements": [
+        "优化代码格式和空行",
         "分析类型提示需求"
       ]
     },
     {
       "file_path": "tools/dev/project_cleaner.py",
-      "original_lines": 340,
+      "original_lines": 344,
       "optimized_lines": 344,
-      "issues_fixed": [
-        "修复类型注解语法错误"
-      ],
+      "issues_fixed": [],
       "performance_improvements": [],
       "code_quality_improvements": [
-        "优化代码格式和空行",
-        "分析类型提示需求",
-        "添加缺失的docstring",
-        "添加缺失的docstring"
+        "类型提示分析失败: invalid syntax (<unknown>, line 238)"
       ]
     },
     {
-      "file_path": "tools/dev/code_optimizer.py",
-      "original_lines": 438,
-      "optimized_lines": 439,
+      "file_path": "tools/dev/auto_install_top_nes_emulators.py",
+      "original_lines": 183,
+      "optimized_lines": 190,
       "issues_fixed": [],
       "performance_improvements": [],
       "code_quality_improvements": [
         "优化代码格式和空行",
+        "分析类型提示需求"
+      ]
+    },
+    {
+      "file_path": "tools/dev/code_optimizer.py",
+      "original_lines": 439,
+      "optimized_lines": 439,
+      "issues_fixed": [],
+      "performance_improvements": [],
+      "code_quality_improvements": [
         "分析类型提示需求"
       ]
     },
@@ -145,13 +149,12 @@
     },
     {
       "file_path": "tests/unit/test_nesticle_installer.py",
-      "original_lines": 429,
+      "original_lines": 430,
       "optimized_lines": 430,
       "issues_fixed": [],
       "performance_improvements": [],
       "code_quality_improvements": [
-        "分析类型提示需求",
-        "添加缺失的docstring"
+        "类型提示分析失败: invalid syntax (<unknown>, line 398)"
       ]
     },
     {
@@ -161,20 +164,16 @@
       "issues_fixed": [],
       "performance_improvements": [],
       "code_quality_improvements": [
-        "优化代码格式和空行",
         "分析类型提示需求"
       ]
     },
     {
       "file_path": "src/core/cheat_manager.py",
-      "original_lines": 599,
+      "original_lines": 598,
       "optimized_lines": 598,
-      "issues_fixed": [
-        "修复类型注解语法错误"
-      ],
+      "issues_fixed": [],
       "performance_improvements": [],
       "code_quality_improvements": [
-        "优化代码格式和空行",
         "分析类型提示需求"
       ]
     },
@@ -210,29 +209,22 @@
     },
     {
       "file_path": "src/core/rom_manager.py",
-      "original_lines": 428,
+      "original_lines": 429,
       "optimized_lines": 429,
-      "issues_fixed": [
-        "修复类型注解语法错误"
-      ],
+      "issues_fixed": [],
       "performance_improvements": [],
       "code_quality_improvements": [
-        "优化代码格式和空行",
         "分析类型提示需求"
       ]
     },
     {
       "file_path": "src/core/enhanced_cover_downloader.py",
-      "original_lines": 355,
+      "original_lines": 358,
       "optimized_lines": 358,
-      "issues_fixed": [
-        "修复类型注解语法错误"
-      ],
+      "issues_fixed": [],
       "performance_improvements": [],
       "code_quality_improvements": [
-        "优化代码格式和空行",
-        "分析类型提示需求",
-        "添加缺失的docstring"
+        "分析类型提示需求"
       ]
     },
     {
@@ -252,23 +244,17 @@
       "issues_fixed": [],
       "performance_improvements": [],
       "code_quality_improvements": [
-        "分析类型提示需求"
+        "类型提示分析失败: expected an indented block (<unknown>, line 163)"
       ]
     },
     {
       "file_path": "src/core/cover_downloader.py",
-      "original_lines": 286,
+      "original_lines": 289,
       "optimized_lines": 289,
-      "issues_fixed": [
-        "修复类型注解语法错误"
-      ],
-      "performance_improvements": [
-        "优化性能相关代码"
-      ],
+      "issues_fixed": [],
+      "performance_improvements": [],
       "code_quality_improvements": [
-        "优化代码格式和空行",
-        "分析类型提示需求",
-        "添加缺失的docstring"
+        "分析类型提示需求"
       ]
     },
     {
@@ -310,7 +296,7 @@
       "issues_fixed": [],
       "performance_improvements": [],
       "code_quality_improvements": [
-        "分析类型提示需求"
+        "类型提示分析失败: expected an indented block (<unknown>, line 254)"
       ]
     },
     {
@@ -325,180 +311,149 @@
     },
     {
       "file_path": "src/core/settings_manager.py",
-      "original_lines": 349,
+      "original_lines": 350,
       "optimized_lines": 350,
-      "issues_fixed": [
-        "修复类型注解语法错误"
-      ],
+      "issues_fixed": [],
       "performance_improvements": [],
       "code_quality_improvements": [
-        "优化代码格式和空行",
         "分析类型提示需求"
       ]
     },
     {
       "file_path": "src/core/bing_cover_downloader.py",
-      "original_lines": 368,
+      "original_lines": 371,
       "optimized_lines": 371,
-      "issues_fixed": [
-        "修复类型注解语法错误"
-      ],
+      "issues_fixed": [],
       "performance_improvements": [],
       "code_quality_improvements": [
-        "优化代码格式和空行",
-        "分析类型提示需求",
-        "添加缺失的docstring"
+        "分析类型提示需求"
       ]
     },
     {
       "file_path": "src/core/game_launcher.py",
-      "original_lines": 349,
+      "original_lines": 352,
       "optimized_lines": 352,
-      "issues_fixed": [
-        "修复类型注解语法错误"
-      ],
+      "issues_fixed": [],
       "performance_improvements": [],
       "code_quality_improvements": [
-        "优化代码格式和空行",
-        "分析类型提示需求",
-        "添加缺失的docstring",
-        "添加缺失的docstring"
+        "类型提示分析失败: invalid syntax (<unknown>, line 235)"
       ]
     },
     {
       "file_path": "src/core/system_checker.py",
-      "original_lines": 640,
+      "original_lines": 642,
       "optimized_lines": 642,
       "issues_fixed": [],
       "performance_improvements": [],
       "code_quality_improvements": [
-        "优化代码格式和空行",
-        "分析类型提示需求",
-        "添加缺失的docstring"
+        "分析类型提示需求"
       ]
     },
     {
       "file_path": "src/core/game_health_checker.py",
-      "original_lines": 607,
+      "original_lines": 610,
       "optimized_lines": 610,
-      "issues_fixed": [
-        "修复类型注解语法错误"
-      ],
-      "performance_improvements": [
-        "优化性能相关代码"
-      ],
+      "issues_fixed": [],
+      "performance_improvements": [],
       "code_quality_improvements": [
-        "优化代码格式和空行",
-        "分析类型提示需求",
-        "添加缺失的docstring"
+        "分析类型提示需求"
       ]
     },
     {
       "file_path": "src/web/web_config.py",
-      "original_lines": 90,
+      "original_lines": 91,
       "optimized_lines": 91,
       "issues_fixed": [],
       "performance_improvements": [],
       "code_quality_improvements": [
         "优化导入语句顺序",
-        "优化代码格式和空行",
         "分析类型提示需求"
       ]
     },
     {
       "file_path": "src/scripts/demo_all_features.py",
-      "original_lines": 285,
-      "optimized_lines": 288,
+      "original_lines": 527,
+      "optimized_lines": 527,
       "issues_fixed": [],
       "performance_improvements": [],
       "code_quality_improvements": [
-        "优化代码格式和空行",
-        "分析类型提示需求",
-        "添加缺失的docstring"
+        "分析类型提示需求"
       ]
     },
     {
       "file_path": "src/scripts/auto_save_sync.py",
-      "original_lines": 207,
+      "original_lines": 212,
       "optimized_lines": 212,
       "issues_fixed": [],
       "performance_improvements": [],
       "code_quality_improvements": [
-        "优化代码格式和空行",
         "分析类型提示需求"
       ]
     },
     {
       "file_path": "src/scripts/test_auto_cheats.py",
-      "original_lines": 199,
+      "original_lines": 203,
       "optimized_lines": 203,
       "issues_fixed": [],
       "performance_improvements": [],
       "code_quality_improvements": [
-        "优化代码格式和空行",
         "分析类型提示需求"
       ]
     },
     {
       "file_path": "src/scripts/test_enhanced_covers.py",
-      "original_lines": 209,
+      "original_lines": 216,
       "optimized_lines": 216,
       "issues_fixed": [],
       "performance_improvements": [],
       "code_quality_improvements": [
-        "优化代码格式和空行",
         "分析类型提示需求"
       ]
     },
     {
       "file_path": "src/scripts/verify_docker_integration.py",
-      "original_lines": 258,
+      "original_lines": 264,
       "optimized_lines": 264,
       "issues_fixed": [],
       "performance_improvements": [],
       "code_quality_improvements": [
-        "优化代码格式和空行",
         "分析类型提示需求"
       ]
     },
     {
       "file_path": "src/scripts/quick_function_test.py",
-      "original_lines": 275,
+      "original_lines": 282,
       "optimized_lines": 282,
       "issues_fixed": [],
       "performance_improvements": [],
       "code_quality_improvements": [
-        "优化代码格式和空行",
         "分析类型提示需求"
       ]
     },
     {
       "file_path": "src/scripts/auto_code_fix.py",
-      "original_lines": 358,
+      "original_lines": 361,
       "optimized_lines": 361,
       "issues_fixed": [],
       "performance_improvements": [],
       "code_quality_improvements": [
-        "优化代码格式和空行",
-        "分析类型提示需求",
-        "添加缺失的docstring"
+        "分析类型提示需求"
       ]
     },
     {
       "file_path": "src/scripts/simple_demo_server.py",
-      "original_lines": 2502,
-      "optimized_lines": 2523,
+      "original_lines": 2544,
+      "optimized_lines": 2544,
       "issues_fixed": [],
       "performance_improvements": [],
       "code_quality_improvements": [
-        "优化代码格式和空行",
         "分析类型提示需求"
       ]
     },
     {
       "file_path": "src/scripts/demo_game.py",
-      "original_lines": 295,
-      "optimized_lines": 295,
+      "original_lines": 296,
+      "optimized_lines": 296,
       "issues_fixed": [],
       "performance_improvements": [],
       "code_quality_improvements": [
@@ -507,13 +462,12 @@
     },
     {
       "file_path": "src/scripts/smart_installer.py",
-      "original_lines": 575,
+      "original_lines": 576,
       "optimized_lines": 576,
       "issues_fixed": [],
       "performance_improvements": [],
       "code_quality_improvements": [
-        "优化代码格式和空行",
-        "分析类型提示需求"
+        "类型提示分析失败: expected an indented block (<unknown>, line 539)"
       ]
     },
     {
@@ -538,33 +492,28 @@
     },
     {
       "file_path": "src/scripts/download_roms.py",
-      "original_lines": 218,
+      "original_lines": 221,
       "optimized_lines": 221,
       "issues_fixed": [],
       "performance_improvements": [],
       "code_quality_improvements": [
-        "优化代码格式和空行",
         "分析类型提示需求"
       ]
     },
     {
       "file_path": "src/scripts/check_dependencies.py",
-      "original_lines": 348,
+      "original_lines": 351,
       "optimized_lines": 351,
-      "issues_fixed": [
-        "修复类型注解语法错误"
-      ],
+      "issues_fixed": [],
       "performance_improvements": [],
       "code_quality_improvements": [
-        "优化代码格式和空行",
-        "分析类型提示需求",
-        "添加缺失的docstring"
+        "分析类型提示需求"
       ]
     },
     {
       "file_path": "src/scripts/nes_game_launcher.py",
-      "original_lines": 589,
-      "optimized_lines": 589,
+      "original_lines": 616,
+      "optimized_lines": 617,
       "issues_fixed": [],
       "performance_improvements": [],
       "code_quality_improvements": [
@@ -574,54 +523,69 @@
     },
     {
       "file_path": "src/scripts/final_nes_fix.py",
-      "original_lines": 309,
+      "original_lines": 316,
       "optimized_lines": 316,
       "issues_fixed": [],
       "performance_improvements": [],
       "code_quality_improvements": [
-        "优化代码格式和空行",
+        "分析类型提示需求"
+      ]
+    },
+    {
+      "file_path": "src/scripts/auto_security_fix.py",
+      "original_lines": 263,
+      "optimized_lines": 263,
+      "issues_fixed": [],
+      "performance_improvements": [],
+      "code_quality_improvements": [
         "分析类型提示需求"
       ]
     },
     {
       "file_path": "src/scripts/rom_downloader.py",
-      "original_lines": 837,
-      "optimized_lines": 837,
+      "original_lines": 553,
+      "optimized_lines": 554,
       "issues_fixed": [],
       "performance_improvements": [],
       "code_quality_improvements": [
+        "优化代码格式和空行",
         "分析类型提示需求"
       ]
     },
     {
       "file_path": "src/scripts/fix_emulator_startup.py",
-      "original_lines": 414,
+      "original_lines": 417,
       "optimized_lines": 417,
-      "issues_fixed": [
-        "修复类型注解语法错误"
-      ],
+      "issues_fixed": [],
       "performance_improvements": [],
       "code_quality_improvements": [
-        "优化代码格式和空行",
-        "分析类型提示需求",
-        "添加缺失的docstring"
+        "分析类型提示需求"
       ]
     },
     {
       "file_path": "src/scripts/check_core_dependencies.py",
-      "original_lines": 164,
+      "original_lines": 167,
       "optimized_lines": 167,
       "issues_fixed": [],
       "performance_improvements": [],
       "code_quality_improvements": [
-        "优化代码格式和空行",
         "分析类型提示需求"
       ]
     },
     {
       "file_path": "src/scripts/test_core_functions.py",
-      "original_lines": 392,
+      "original_lines": 402,
       "optimized_lines": 402,
+      "issues_fixed": [],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "分析类型提示需求"
+      ]
+    },
+    {
+      "file_path": "src/scripts/universal_game_launcher.py",
+      "original_lines": 114,
+      "optimized_lines": 115,
       "issues_fixed": [],
       "performance_improvements": [],
       "code_quality_improvements": [
@@ -636,49 +600,43 @@
       "issues_fixed": [],
       "performance_improvements": [],
       "code_quality_improvements": [
-        "优化代码格式和空行",
         "分析类型提示需求"
       ]
     },
     {
       "file_path": "src/scripts/auto_fix_all_games.py",
-      "original_lines": 280,
+      "original_lines": 283,
       "optimized_lines": 283,
       "issues_fixed": [],
       "performance_improvements": [],
       "code_quality_improvements": [
-        "优化代码格式和空行",
-        "分析类型提示需求",
-        "添加缺失的docstring"
+        "分析类型提示需求"
       ]
     },
     {
       "file_path": "src/scripts/quick_fix_nes.py",
-      "original_lines": 221,
+      "original_lines": 226,
       "optimized_lines": 226,
       "issues_fixed": [],
       "performance_improvements": [],
       "code_quality_improvements": [
-        "优化代码格式和空行",
         "分析类型提示需求"
       ]
     },
     {
       "file_path": "src/scripts/manage_cover_sources.py",
-      "original_lines": 298,
+      "original_lines": 301,
       "optimized_lines": 301,
       "issues_fixed": [],
       "performance_improvements": [],
       "code_quality_improvements": [
-        "优化代码格式和空行",
-        "分析类型提示需求",
-        "添加缺失的docstring"
+        "分析类型提示需求"
       ]
     },
     {
       "file_path": "src/scripts/simple_nes_player.py",
-      "original_lines": 293,
-      "optimized_lines": 293,
+      "original_lines": 370,
+      "optimized_lines": 370,
       "issues_fixed": [],
       "performance_improvements": [],
       "code_quality_improvements": [
@@ -687,20 +645,29 @@
     },
     {
       "file_path": "src/scripts/fix_nes_emulator.py",
-      "original_lines": 360,
+      "original_lines": 363,
       "optimized_lines": 363,
       "issues_fixed": [],
       "performance_improvements": [],
       "code_quality_improvements": [
-        "优化代码格式和空行",
-        "分析类型提示需求",
-        "添加缺失的docstring"
+        "分析类型提示需求"
       ]
     },
     {
       "file_path": "src/scripts/run_nes_game.py",
-      "original_lines": 284,
-      "optimized_lines": 284,
+      "original_lines": 401,
+      "optimized_lines": 402,
+      "issues_fixed": [],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "优化代码格式和空行",
+        "分析类型提示需求"
+      ]
+    },
+    {
+      "file_path": "src/scripts/auto_full_pipeline.py",
+      "original_lines": 304,
+      "optimized_lines": 304,
       "issues_fixed": [],
       "performance_improvements": [],
       "code_quality_improvements": [
@@ -709,26 +676,31 @@
     },
     {
       "file_path": "src/scripts/fix_nes_runtime_failure.py",
-      "original_lines": 433,
+      "original_lines": 438,
       "optimized_lines": 438,
-      "issues_fixed": [
-        "修复类型注解语法错误"
-      ],
+      "issues_fixed": [],
       "performance_improvements": [],
       "code_quality_improvements": [
-        "优化代码格式和空行",
-        "分析类型提示需求",
-        "添加缺失的docstring"
+        "分析类型提示需求"
+      ]
+    },
+    {
+      "file_path": "src/scripts/auto_update_rom_sources.py",
+      "original_lines": 361,
+      "optimized_lines": 361,
+      "issues_fixed": [],
+      "performance_improvements": [],
+      "code_quality_improvements": [
+        "分析类型提示需求"
       ]
     },
     {
       "file_path": "src/scripts/test_settings.py",
-      "original_lines": 198,
+      "original_lines": 202,
       "optimized_lines": 202,
       "issues_fixed": [],
       "performance_improvements": [],
       "code_quality_improvements": [
-        "优化代码格式和空行",
         "分析类型提示需求"
       ]
     },
@@ -784,13 +756,12 @@
     },
     {
       "file_path": "src/systems/systems/retropie/tests/tests/conftest.py",
-      "original_lines": 7,
+      "original_lines": 8,
       "optimized_lines": 8,
       "issues_fixed": [],
       "performance_improvements": [],
       "code_quality_improvements": [
         "优化导入语句顺序",
-        "优化代码格式和空行",
         "分析类型提示需求"
       ]
     },

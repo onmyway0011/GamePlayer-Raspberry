@@ -236,7 +236,7 @@ class ROMManager:
                 "size": rom_info.get("size", "未知"),
                 "downloaded": True,
                 "file_path": str(rom_file),
-                "checksum": hashlib.md5(demo_content, usedforsecurity=False).hexdigest()
+                "checksum": hashlib.md5(demo_content, usedforsecurity=False, usedforsecurity=False, usedforsecurity=False, usedforsecurity=False).hexdigest()
             }
 
             with open(info_file, 'w', encoding='utf-8') as f:
@@ -279,7 +279,7 @@ class ROMManager:
                 "size": f"{len(demo_content)} bytes",
                 "demo": True,
                 "file_path": str(rom_file),
-                "checksum": hashlib.md5(demo_content, usedforsecurity=False).hexdigest()
+                "checksum": hashlib.md5(demo_content, usedforsecurity=False, usedforsecurity=False, usedforsecurity=False, usedforsecurity=False).hexdigest()
             }
 
             with open(info_file, 'w', encoding='utf-8') as f:

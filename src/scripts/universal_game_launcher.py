@@ -41,7 +41,10 @@ PLATFORM_EMULATORS = {
 }
 
 # ROM后缀与平台映射
+
+
 def detect_platform(rom_path: str) -> Optional[str]:
+    """TODO: Add docstring"""
     ext = Path(rom_path).suffix.lower()
     if ext in ['.nes']:
         return 'nes'
@@ -55,7 +58,9 @@ def detect_platform(rom_path: str) -> Optional[str]:
         return 'md'
     return None
 
+
 def get_available_emulators(platform: str) -> List[dict]:
+    """TODO: Add docstring"""
     emulators = PLATFORM_EMULATORS.get(platform, [])
     available = []
     for emu in emulators:
@@ -67,7 +72,9 @@ def get_available_emulators(platform: str) -> List[dict]:
     available.sort(key=lambda x: x['priority'])
     return available
 
+
 def run_game(rom_path: str):
+    """TODO: Add docstring"""
     platform = detect_platform(rom_path)
     if not platform:
         print(f'❌ 无法识别ROM平台: {rom_path}')
@@ -97,12 +104,12 @@ if __name__ == '__main__':
         print('用法: python3 universal_game_launcher.py <rom_path>')
         print('支持平台: NES(.nes), SNES(.smc/.sfc), GB(.gb), GBA(.gba), MD(.md/.gen/.bin)')
         sys.exit(1)
-    
+
     rom_path = sys.argv[1]
     if rom_path in ['--help', '-h']:
         print('多平台ROM自动启动器')
         print('用法: python3 universal_game_launcher.py <rom_path>')
         print('支持平台: NES(.nes), SNES(.smc/.sfc), GB(.gb), GBA(.gba), MD(.md/.gen/.bin)')
         sys.exit(0)
-    
-    run_game(rom_path) 
+
+    run_game(rom_path)

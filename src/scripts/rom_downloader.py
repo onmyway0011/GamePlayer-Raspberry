@@ -20,15 +20,17 @@ from urllib.parse import urlparse
 import time
 
 # 依赖检测和自动安装
+
+
 def check_and_install_dependencies():
     """检查并安装必要的依赖"""
     missing_deps = []
-    
+
     try:
         import requests
     except ImportError:
         missing_deps.append("requests")
-    
+
     if missing_deps:
         print("⚠️ 检测到缺失的依赖库，正在自动安装...")
         try:
@@ -53,6 +55,7 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+
 class ROMDownloader:
     """NES ROM下载器"""
 
@@ -60,17 +63,17 @@ class ROMDownloader:
         """初始化下载器"""
         self.download_dir = Path(download_dir)
         self.download_dir.mkdir(parents=True, exist_ok=True)
-        
+
         # 并行下载配置
         self.max_workers = 5  # 最大并行下载数
         self.max_retries = 3  # 最大重试次数
-        
+
         # 推荐ROM配置
         self.recommended_roms = self._load_rom_config()
-        
+
         # 备用ROM配置
         self.fallback_roms = self._generate_fallback_roms()
-        
+
         # 下载统计
         self.download_stats = {
             "total_attempts": 0,
@@ -159,7 +162,7 @@ class ROMDownloader:
                 "size_kb": 32
             },
             "blade_buster": {
-                "name": "Blade Buster", 
+                "name": "Blade Buster",
                 "content": self._generate_sample_rom("Blade Buster"),
                 "size_kb": 32
             },
@@ -200,11 +203,11 @@ class ROMDownloader:
 
         # 创建PRG ROM (32KB) - 包含简单的游戏逻辑
         prg_rom = bytearray(32768)
-        
+
         # 在PRG ROM开头添加游戏标题
         title_bytes = name.encode('ascii')[:16]
         prg_rom[0:len(title_bytes)] = title_bytes
-        
+
         # 添加一些基本的游戏数据
         # 简单的精灵数据
         sprite_data = [
@@ -217,7 +220,7 @@ class ROMDownloader:
             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
         ]
-        
+
         # 将精灵数据写入PRG ROM
         for i, byte in enumerate(sprite_data):
             if i < len(prg_rom):
@@ -225,14 +228,14 @@ class ROMDownloader:
 
         # 创建CHR ROM (8KB) - 包含图形数据
         chr_rom = bytearray(8192)
-        
+
         # 添加一些基本的图形模式数据
         # 简单的背景图案
         pattern_data = [
             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,  # 空白图案
             0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,  # 实心图案
         ]
-        
+
         # 将图案数据写入CHR ROM
         for i, byte in enumerate(pattern_data):
             if i < len(chr_rom):
@@ -240,23 +243,23 @@ class ROMDownloader:
 
         return bytes(header + prg_rom + chr_rom)
 
-    def download_rom_with_retry(self, rom_info: Dict, filename: str) -> bool:
+    def download_rom_with_retry(self, rom_info: Dict, filename: str):
         """带重试的ROM下载"""
         self.download_stats["total_attempts"] += 1
-        
+
         # 获取所有可用的URL
         urls = rom_info.get("urls", [])
         if not urls:
             logger.error(f"❌ {filename} 没有可用的下载地址")
             return False
-        
+
         # 尝试每个URL，最多重试3次
         for attempt in range(self.max_retries):
             for url_index, url in enumerate(urls):
                 try:
                     logger.info(f"📥 尝试下载 {filename} (源 {url_index + 1}/{len(urls)}, 尝试 {attempt + 1}/{self.max_retries})")
                     logger.info(f"🔗 URL: {url}")
-                    
+
                     success = self._download_single_rom(url, filename, rom_info.get("size_kb"))
                     if success:
                         self.download_stats["successful_downloads"] += 1
@@ -264,24 +267,24 @@ class ROMDownloader:
                         return True
                     else:
                         logger.warning(f"⚠️ {filename} 下载失败 (源 {url_index + 1})")
-                        
+
                 except Exception as e:
                     logger.error(f"❌ {filename} 下载异常 (源 {url_index + 1}): {e}")
                     continue
-            
+
             # 如果所有URL都失败了，等待后重试
             if attempt < self.max_retries - 1:
                 wait_time = (attempt + 1) * 2  # 递增等待时间
                 logger.info(f"⏳ 等待 {wait_time} 秒后重试...")
                 time.sleep(wait_time)
                 self.download_stats["retry_count"] += 1
-        
+
         # 所有尝试都失败了
         self.download_stats["failed_downloads"] += 1
         logger.error(f"❌ {filename} 所有下载源都失败了")
         return False
 
-    def _download_single_rom(self, url: str, filename: str, expected_size: Optional[int] = None) -> bool:
+    def _download_single_rom(self, url: str, filename: str, expected_size: Optional[int] = None):
         """下载单个ROM文件"""
         file_path = self.download_dir / filename
 
@@ -319,7 +322,7 @@ class ROMDownloader:
                             print(f"\r📥 下载进度: {progress:.1f}% ({downloaded//1024}KB/{total_size//1024}KB)", end='')
 
             print()  # 换行
-            
+
             # 验证下载的文件
             if file_path.exists() and file_path.stat().st_size > 0:
                 logger.info(f"✅ 下载完成: {filename} ({downloaded//1024}KB)")
@@ -355,32 +358,32 @@ class ROMDownloader:
     def download_roms_parallel(self, rom_list: List[Tuple[str, Dict, str]]) -> Dict[str, bool]:
         """并行下载ROM文件"""
         results = {}
-        
+
         logger.info(f"🚀 开始并行下载 {len(rom_list)} 个ROM文件 (最大并行数: {self.max_workers})")
-        
+
         with ThreadPoolExecutor(max_workers=self.max_workers) as executor:
             # 提交所有下载任务
             future_to_rom = {}
             for rom_id, rom_info, filename in rom_list:
                 future = executor.submit(self.download_rom_with_retry, rom_info, filename)
                 future_to_rom[future] = (rom_id, filename)
-            
+
             # 处理完成的任务
             for future in as_completed(future_to_rom):
                 rom_id, filename = future_to_rom[future]
                 try:
                     success = future.result()
                     results[rom_id] = success
-                    
+
                     if success:
                         logger.info(f"✅ 并行下载完成: {filename}")
                     else:
                         logger.warning(f"⚠️ 并行下载失败: {filename}")
-                        
+
                 except Exception as e:
                     logger.error(f"❌ 并行下载异常 {filename}: {e}")
                     results[rom_id] = False
-        
+
         return results
 
     def download_category(self, category: str) -> Dict[str, bool]:
@@ -407,7 +410,7 @@ class ROMDownloader:
             if not success:
                 rom_info = category_info["roms"][rom_id]
                 logger.warning(f"⚠️ 下载失败，创建备用ROM: {rom_id}")
-                
+
                 if rom_id in self.fallback_roms:
                     success = self.create_fallback_rom(rom_id, self.fallback_roms[rom_id])
                 else:
@@ -418,7 +421,7 @@ class ROMDownloader:
                         "size_kb": rom_info["size_kb"]
                     }
                     success = self.create_fallback_rom(rom_id, fallback_info)
-                
+
                 results[rom_id] = success
 
         return results
@@ -466,7 +469,7 @@ class ROMDownloader:
         # 统计文件大小
         total_size = sum(f.stat().st_size for f in self.download_dir.glob("*.nes"))
         logger.info(f"💾 总大小: {total_size // 1024}KB ({total_size // 1024 // 1024}MB)")
-        
+
         # 显示下载统计
         logger.info(f"\n📊 下载统计:")
         logger.info(f"  总尝试次数: {self.download_stats['total_attempts']}")
