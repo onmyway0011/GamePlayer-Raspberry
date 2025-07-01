@@ -19,10 +19,12 @@ import base64
 project_root = Path(__file__).parent.parent.parent
 sys.path.insert(0, str(project_root))
 
+
 class EnhancedCoverDownloader:
     """增强的游戏封面下载器"""
-    
+
     def __init__(self):
+        """TODO: Add docstring"""
         self.project_root = project_root
         self.covers_dir = self.project_root / "data" / "web" / "images" / "covers"
         self.covers_dir.mkdir(parents=True, exist_ok=True)
@@ -87,8 +89,8 @@ class EnhancedCoverDownloader:
                 "accent_color": "#FFD700"
             }
         }
-    
-    def download_cover_from_sources(self, system: str, game_id: str, sources: List[str], game_name: str = "") -> bool:
+
+    def download_cover_from_sources(self, system: str, game_id: str, sources: List[str], game_name: str = ""):
         """从多个源尝试下载封面"""
         cover_path = self.covers_dir / system / f"{game_id}.jpg"
 
@@ -146,8 +148,8 @@ class EnhancedCoverDownloader:
         # 所有源都失败，尝试创建占位符
         print(f"  🎨 创建占位符封面...")
         return self.create_placeholder_cover(system, game_id, game_name or game_id.replace('_', ' ').title())
-    
-    def create_placeholder_cover(self, system: str, game_id: str, game_name: str) -> bool:
+
+    def create_placeholder_cover(self, system: str, game_id: str, game_name: str):
         """创建占位符封面"""
         try:
             # 确保系统目录存在
@@ -221,13 +223,13 @@ class EnhancedCoverDownloader:
             except Exception as e2:
                 print(f"  ❌ 创建文本占位符也失败: {e2}")
                 return False
-    
+
     def _wrap_text(self, text: str, max_width: int) -> List[str]:
         """文本换行"""
         words = text.split()
         lines = []
         current_line = []
-        
+
         for word in words:
             if len(' '.join(current_line + [word])) <= max_width:
                 current_line.append(word)
@@ -235,12 +237,12 @@ class EnhancedCoverDownloader:
                 if current_line:
                     lines.append(' '.join(current_line))
                 current_line = [word]
-        
+
         if current_line:
             lines.append(' '.join(current_line))
-        
+
         return lines
-    
+
     def download_all_covers(self) -> Dict[str, Dict]:
         """下载所有游戏封面"""
         print("🖼️ 开始下载游戏封面（增强版）...")
@@ -278,27 +280,27 @@ class EnhancedCoverDownloader:
             print(f"📊 {system.upper()} 完成: {success_count}/{total_count} ({results[system]['rate']})")
 
         return results
-    
+
     def add_cover_source(self, system: str, game_id: str, urls: List[str]):
         """添加新的封面源"""
         if system not in self.cover_sources:
             self.cover_sources[system] = {}
-        
+
         if game_id not in self.cover_sources[system]:
             self.cover_sources[system][game_id] = []
-        
+
         self.cover_sources[system][game_id].extend(urls)
         print(f"✅ 为 {system}/{game_id} 添加了 {len(urls)} 个封面源")
-    
+
     def get_cover_path(self, system: str, game_id: str) -> Optional[str]:
         """获取游戏封面路径"""
         cover_path = self.covers_dir / system / f"{game_id}.jpg"
-        
+
         if cover_path.exists():
             return f"/static/images/covers/{system}/{game_id}.jpg"
-        
+
         return None
-    
+
     def generate_cover_report(self) -> Dict:
         """生成封面下载报告"""
         report = {
@@ -308,46 +310,47 @@ class EnhancedCoverDownloader:
             "total_games": 0,
             "sources_used": len(self.cover_sources)
         }
-        
+
         for system in ["nes", "snes", "gameboy", "gba", "genesis"]:
             system_dir = self.covers_dir / system
-            
+
             if system_dir.exists():
                 covers = list(system_dir.glob("*.jpg"))
                 games_with_sources = len(self.cover_sources.get(system, {}))
-                
+
                 report["systems"][system] = {
                     "downloaded_covers": len(covers),
                     "available_sources": games_with_sources,
                     "coverage": f"{len(covers)/max(games_with_sources, 1)*100:.1f}%"
                 }
-                
+
                 report["total_covers"] += len(covers)
                 report["total_games"] += games_with_sources
-        
+
         report["overall_coverage"] = f"{report['total_covers']/max(report['total_games'], 1)*100:.1f}%"
-        
+
         return report
+
 
 def main():
     """主函数"""
     downloader = EnhancedCoverDownloader()
-    
+
     print("🖼️ GamePlayer-Raspberry 增强封面下载器")
     print("=" * 50)
-    
+
     # 下载所有封面
     results = downloader.download_all_covers()
-    
+
     # 生成报告
     report = downloader.generate_cover_report()
-    
+
     print(f"\n📊 下载完成报告:")
     print(f"总封面数: {report['total_covers']}")
     print(f"总游戏数: {report['total_games']}")
     print(f"覆盖率: {report['overall_coverage']}")
     print(f"使用源数: {report['sources_used']}")
-    
+
     for system, stats in report["systems"].items():
         print(f"  {system.upper()}: {stats['downloaded_covers']}/{stats['available_sources']} ({stats['coverage']})")
 

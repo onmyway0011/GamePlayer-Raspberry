@@ -8,14 +8,70 @@ import sys
 import pygame
 import time
 import random
+import locale
+import os
 from pathlib import Path
+
+# 设置编码
+if sys.platform.startswith('win'):
+    os.environ['PYTHONIOENCODING'] = 'utf-8'
+else:
+    try:
+        locale.setlocale(locale.LC_ALL, 'zh_CN.UTF-8')
+    except:
+        pass
 
 
 class SimpleNESPlayer:
     """简单的NES播放器"""
 
+    def get_system_font(self, size: int):
+        """获取系统字体，支持中文显示"""
+        # macOS 常见中文字体
+        mac_fonts = [
+            'PingFang SC', 'Hiragino Sans GB', 'STHeiti',
+            'Arial Unicode MS', 'Helvetica Neue', 'Arial'
+        ]
+        
+        # Linux 常见中文字体
+        linux_fonts = [
+            'WenQuanYi Micro Hei', 'Noto Sans CJK SC', 'Droid Sans Fallback',
+            'DejaVu Sans', 'Liberation Sans'
+        ]
+        
+        # Windows 常见中文字体
+        windows_fonts = [
+            'Microsoft YaHei', 'SimHei', 'SimSun', 'Arial Unicode MS'
+        ]
+        
+        # 根据系统选择字体列表
+        if sys.platform.startswith('darwin'):  # macOS
+            font_list = mac_fonts
+        elif sys.platform.startswith('linux'):  # Linux
+            font_list = linux_fonts
+        elif sys.platform.startswith('win'):  # Windows
+            font_list = windows_fonts
+        else:
+            font_list = mac_fonts + linux_fonts + windows_fonts
+
+        for font_name in font_list:
+            try:
+                font = pygame.font.SysFont(font_name, size)
+                # 测试字体是否能渲染中文字符
+                test_surface = font.render('测试', True, (255, 255, 255))
+                if test_surface.get_width() > 0:
+                    return font
+            except:
+                continue
+
+        # 如果都失败了，使用默认字体
+        try:
+            return pygame.font.SysFont(None, size)
+        except:
+            return pygame.font.Font(None, size)
+
     def __init__(self, rom_path: str):
-        """TODO: Add docstring"""
+        """初始化播放器"""
         self.rom_path = Path(rom_path)
         self.running = True
 
@@ -41,10 +97,10 @@ class SimpleNESPlayer:
             (0, 50, 60), (0, 0, 0), (0, 0, 0), (0, 0, 0)
         ]
 
-        # 字体
-        self.font_large = pygame.font.Font(None, 36)
-        self.font_medium = pygame.font.Font(None, 24)
-        self.font_small = pygame.font.Font(None, 18)
+        # 字体设置 - 修复中文显示问题
+        self.font_large = self.get_system_font(36)
+        self.font_medium = self.get_system_font(24)
+        self.font_small = self.get_system_font(18)
 
         # 游戏状态
         self.game_time = 0
@@ -100,13 +156,23 @@ class SimpleNESPlayer:
         y_offset = 10
 
         # ROM名称
-        name_text = self.font_large.render(self.rom_info.get("name", "未知游戏"), True, self.WHITE)
-        self.screen.blit(name_text, (10, y_offset))
+        try:
+            name_text = self.font_large.render(self.rom_info.get("name", "未知游戏"), True, self.WHITE)
+            self.screen.blit(name_text, (10, y_offset))
+        except:
+            # 如果中文渲染失败，使用英文
+            name_text = self.font_large.render(self.rom_path.stem, True, self.WHITE)
+            self.screen.blit(name_text, (10, y_offset))
+        
         y_offset += 40
 
         if "error" in self.rom_info:
-            error_text = self.font_medium.render(f"错误: {self.rom_info['error']}", True, self.RED)
-            self.screen.blit(error_text, (10, y_offset))
+            try:
+                error_text = self.font_medium.render(f"错误: {self.rom_info['error']}", True, self.RED)
+                self.screen.blit(error_text, (10, y_offset))
+            except:
+                error_text = self.font_medium.render(f"Error: {self.rom_info['error']}", True, self.RED)
+                self.screen.blit(error_text, (10, y_offset))
             return
 
         # ROM信息
@@ -120,8 +186,23 @@ class SimpleNESPlayer:
         ]
 
         for line in info_lines:
-            text_surface = self.font_small.render(line, True, self.WHITE)
-            self.screen.blit(text_surface, (10, y_offset))
+            try:
+                text_surface = self.font_small.render(line, True, self.WHITE)
+                self.screen.blit(text_surface, (10, y_offset))
+            except:
+                # 如果中文渲染失败，尝试英文
+                if "文件大小" in line:
+                    line = line.replace("文件大小", "File Size")
+                elif "游戏时间" in line:
+                    line = line.replace("游戏时间", "Game Time")
+                elif "分数" in line:
+                    line = line.replace("分数", "Score")
+                elif "等级" in line:
+                    line = line.replace("等级", "Level")
+                
+                text_surface = self.font_small.render(line, True, self.WHITE)
+                self.screen.blit(text_surface, (10, y_offset))
+            
             y_offset += 20
 
     def draw_game_simulation(self):
@@ -161,8 +242,14 @@ class SimpleNESPlayer:
 
         y_offset = 480 - len(controls) * 20
         for control in controls:
-            text_surface = self.font_small.render(control, True, self.GRAY)
-            self.screen.blit(text_surface, (400, y_offset))
+            try:
+                text_surface = self.font_small.render(control, True, self.GRAY)
+                self.screen.blit(text_surface, (400, y_offset))
+            except:
+                # 如果中文渲染失败，使用英文
+                control_en = control.replace("移动", "Move").replace("射击", "Shoot").replace("退出", "Exit")
+                text_surface = self.font_small.render(control_en, True, self.GRAY)
+                self.screen.blit(text_surface, (400, y_offset))
             y_offset += 20
 
     def update_game(self):
@@ -199,79 +286,73 @@ class SimpleNESPlayer:
                     self.score += 10
                     break
 
-        # 重新生成敌人
-        if len(self.enemies) < 3:
-            self.enemies.append({
-                'x': 500,
-                'y': random.randint(150, 400),
-                'dx': -1,
-                'dy': random.choice([-1, 0, 1])
-            })
-
-        # 升级
-        if self.score > 0 and self.score % 100 == 0:
-            self.level = self.score // 100 + 1
+        # 如果敌人被消灭完，重新生成
+        if not self.enemies:
+            self.level += 1
+            for i in range(5 + self.level):
+                self.enemies.append({
+                    'x': 400 + i * 80,
+                    'y': 100 + (i % 3) * 60,
+                    'dx': -1 - (self.level * 0.2),
+                    'dy': 0
+                })
 
     def handle_events(self):
         """处理事件"""
-        keys = pygame.key.get_pressed()
-
-        # 玩家移动
-        if keys[pygame.K_w] or keys[pygame.K_UP]:
-            self.player_y = max(150, self.player_y - 3)
-        if keys[pygame.K_s] or keys[pygame.K_DOWN]:
-            self.player_y = min(450, self.player_y + 3)
-        if keys[pygame.K_a] or keys[pygame.K_LEFT]:
-            self.player_x = max(10, self.player_x - 3)
-        if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
-            self.player_x = min(480, self.player_x + 3)
-
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
-
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     self.running = False
-
                 elif event.key == pygame.K_SPACE:
                     # 发射子弹
                     self.bullets.append({
-                        'x': self.player_x + 20,
-                        'y': self.player_y + 10,
+                        'x': self.player_x + 10,
+                        'y': self.player_y,
                         'dx': 5,
                         'dy': 0
                     })
 
+        # 处理持续按键
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_a] or keys[pygame.K_LEFT]:
+            self.player_x = max(10, self.player_x - 5)
+        if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
+            self.player_x = min(480, self.player_x + 5)
+        if keys[pygame.K_w] or keys[pygame.K_UP]:
+            self.player_y = max(150, self.player_y - 5)
+        if keys[pygame.K_s] or keys[pygame.K_DOWN]:
+            self.player_y = min(450, self.player_y + 5)
+
     def run(self):
-        """运行播放器"""
-        print(f"🎮 启动NES播放器: {self.rom_path.name}")
-
-        if "error" in self.rom_info:
-            print(f"❌ {self.rom_info['error']}")
-
+        """运行游戏"""
         clock = pygame.time.Clock()
-        frame_count = 0
+        
+        print(f"🎮 启动简单NES播放器: {self.rom_path.name}")
+        print(f"📋 控制说明:")
+        print(f"   - WASD/方向键: 移动")
+        print(f"   - 空格: 射击")
+        print(f"   - ESC: 退出")
 
         while self.running:
             self.handle_events()
+            self.update_game()
 
-            # 每秒更新60次游戏状态
-            if frame_count % 1 == 0:
-                self.update_game()
+            # 清屏
+            self.screen.fill(self.BLACK)
 
             # 绘制界面
-            self.screen.fill(self.BLACK)
             self.draw_rom_info()
             self.draw_game_simulation()
             self.draw_controls()
 
+            # 更新显示
             pygame.display.flip()
-            clock.tick(60)
-            frame_count += 1
+            clock.tick(60)  # 60 FPS
 
         pygame.quit()
-        print("👋 NES播放器已退出")
+        print("👋 游戏播放器已退出")
 
 
 def main():
@@ -281,13 +362,9 @@ def main():
         sys.exit(1)
 
     rom_path = sys.argv[1]
+    player = SimpleNESPlayer(rom_path)
+    player.run()
 
-    try:
-        player = SimpleNESPlayer(rom_path)
-        player.run()
-    except Exception as e:
-        print(f"❌ 播放器运行失败: {e}")
-        sys.exit(1)
 
 if __name__ == "__main__":
     main()

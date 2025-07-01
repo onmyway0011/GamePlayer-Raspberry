@@ -18,23 +18,25 @@ from urllib.parse import quote
 project_root = Path(__file__).parent.parent.parent
 sys.path.insert(0, str(project_root))
 
+
 class CoverDownloader:
     """游戏封面下载器"""
-    
+
     def __init__(self):
+        """TODO: Add docstring"""
         self.project_root = project_root
         self.covers_dir = self.project_root / "data" / "web" / "images" / "covers"
         self.covers_dir.mkdir(parents=True, exist_ok=True)
-        
+
         # 创建系统子目录
         for system in ["nes", "snes", "gameboy", "gba", "genesis", "psx", "n64", "arcade"]:
             (self.covers_dir / system).mkdir(exist_ok=True)
-        
+
         self.session = requests.Session()
         self.session.headers.update({
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
         })
-        
+
         # 游戏封面URL映射
         self.cover_urls = {
             "nes": {
@@ -83,82 +85,82 @@ class CoverDownloader:
                 "phantasy_star_iv": "https://upload.wikimedia.org/wikipedia/en/c/c3/Phantasy_Star_IV_cover.jpg"
             }
         }
-    
-    def download_cover(self, system: str, game_id: str, url: str) -> bool:
+
+    def download_cover(self, system: str, game_id: str, url: str):
         """下载单个游戏封面"""
         try:
             cover_path = self.covers_dir / system / f"{game_id}.jpg"
-            
+
             # 如果文件已存在，跳过下载
             if cover_path.exists():
                 print(f"✅ 封面已存在: {system}/{game_id}")
                 return True
-            
+
             print(f"📥 下载封面: {system}/{game_id}")
-            
+
             # 下载图片
             response = self.session.get(url, timeout=30)
             response.raise_for_status()
-            
+
             # 保存图片
             with open(cover_path, 'wb') as f:
                 f.write(response.content)
-            
+
             print(f"✅ 封面下载成功: {cover_path}")
             return True
-            
+
         except Exception as e:
             print(f"❌ 下载封面失败 {system}/{game_id}: {e}")
             return False
-    
+
     def download_all_covers(self) -> Dict[str, int]:
         """下载所有游戏封面"""
         print("🖼️ 开始下载游戏封面...")
-        
+
         results = {}
-        
+
         for system, games in self.cover_urls.items():
             print(f"\n📂 下载 {system.upper()} 游戏封面...")
-            
+
             success_count = 0
             total_count = len(games)
-            
+
             for game_id, url in games.items():
                 if self.download_cover(system, game_id, url):
                     success_count += 1
-                
+
                 # 避免请求过于频繁
                 time.sleep(0.5)
-            
+
             results[system] = {
                 "success": success_count,
                 "total": total_count,
                 "rate": f"{success_count/total_count*100:.1f}%"
             }
-            
+
             print(f"📊 {system.upper()} 完成: {success_count}/{total_count} ({results[system]['rate']})")
-        
+
         return results
-    
+
     def get_cover_path(self, system: str, game_id: str) -> Optional[str]:
         """获取游戏封面路径"""
         cover_path = self.covers_dir / system / f"{game_id}.jpg"
-        
+
         if cover_path.exists():
             # 返回相对于web根目录的路径
             return f"/static/images/covers/{system}/{game_id}.jpg"
-        
+
         return None
-    
+
     def create_placeholder_cover(self, system: str, game_id: str, game_name: str) -> str:
         """创建占位符封面"""
         try:
             from PIL import Image, ImageDraw, ImageFont
-            
+
             # 创建占位符图片
             img = Image.new('RGB', (300, 400), color='#667eea')
             draw = ImageDraw.Draw(img)
-            
+
             # 尝试使用系统字体
             try:
                 font = ImageFont.truetype("/System/Library/Fonts/Arial.ttf", 24)
@@ -166,54 +168,54 @@ class CoverDownloader:
             except:
                 font = ImageFont.load_default()
                 small_font = ImageFont.load_default()
-            
+
             # 绘制游戏名称
             text_lines = self._wrap_text(game_name, 20)
             y_offset = 150
-            
+
             for line in text_lines:
                 bbox = draw.textbbox((0, 0), line, font=font)
                 text_width = bbox[2] - bbox[0]
                 x = (300 - text_width) // 2
                 draw.text((x, y_offset), line, fill='white', font=font)
                 y_offset += 30
-            
+
             # 绘制系统名称
             system_text = system.upper()
             bbox = draw.textbbox((0, 0), system_text, font=small_font)
             text_width = bbox[2] - bbox[0]
             x = (300 - text_width) // 2
             draw.text((x, 350), system_text, fill='#FFD700', font=small_font)
-            
+
             # 保存占位符
             placeholder_path = self.covers_dir / system / f"{game_id}.jpg"
             img.save(placeholder_path, 'JPEG', quality=85)
-            
+
             return f"/static/images/covers/{system}/{game_id}.jpg"
-            
+
         except Exception as e:
             print(f"⚠️ 创建占位符失败: {e}")
             return "/static/images/placeholder.jpg"
-    
+
     def _wrap_text(self, text: str, max_length: int) -> List[str]:
         """文本换行"""
         words = text.split()
         lines = []
         current_line = ""
-        
+
         for word in words:
-            if len(current_line + " " + word) <= max_length:
+            if len(f"{current_line} " + word) <= max_length:
                 current_line += " " + word if current_line else word
             else:
                 if current_line:
                     lines.append(current_line)
                 current_line = word
-        
+
         if current_line:
             lines.append(current_line)
-        
+
         return lines
-    
+
     def search_cover_online(self, game_name: str, system: str) -> Optional[str]:
         """在线搜索游戏封面"""
         try:
@@ -223,15 +225,15 @@ class CoverDownloader:
                 f"https://www.igdb.com/search?type=1&q={quote(game_name)}",
                 f"https://thegamesdb.net/search.php?name={quote(game_name)}"
             ]
-            
+
             # 这里可以实现更复杂的搜索逻辑
             # 目前返回None，使用预定义的URL
             return None
-            
+
         except Exception as e:
             print(f"⚠️ 在线搜索封面失败: {e}")
             return None
-    
+
     def generate_cover_report(self) -> Dict:
         """生成封面下载报告"""
         report = {
@@ -240,45 +242,46 @@ class CoverDownloader:
             "total_covers": 0,
             "total_games": 0
         }
-        
+
         for system in ["nes", "snes", "gameboy", "gba", "genesis"]:
             system_dir = self.covers_dir / system
-            
+
             if system_dir.exists():
                 covers = list(system_dir.glob("*.jpg"))
                 games_with_urls = len(self.cover_urls.get(system, {}))
-                
+
                 report["systems"][system] = {
                     "downloaded_covers": len(covers),
                     "available_urls": games_with_urls,
                     "coverage": f"{len(covers)/max(games_with_urls, 1)*100:.1f}%"
                 }
-                
+
                 report["total_covers"] += len(covers)
                 report["total_games"] += games_with_urls
-        
+
         report["overall_coverage"] = f"{report['total_covers']/max(report['total_games'], 1)*100:.1f}%"
-        
+
         return report
+
 
 def main():
     """主函数"""
     downloader = CoverDownloader()
-    
+
     print("🖼️ GamePlayer-Raspberry 游戏封面下载器")
     print("=" * 50)
-    
+
     # 下载所有封面
     results = downloader.download_all_covers()
-    
+
     # 生成报告
     report = downloader.generate_cover_report()
-    
+
     print(f"\n📊 下载完成报告:")
     print(f"总封面数: {report['total_covers']}")
     print(f"总游戏数: {report['total_games']}")
     print(f"覆盖率: {report['overall_coverage']}")
-    
+
     for system, stats in report["systems"].items():
         print(f"  {system.upper()}: {stats['downloaded_covers']}/{stats['available_urls']} ({stats['coverage']})")
 

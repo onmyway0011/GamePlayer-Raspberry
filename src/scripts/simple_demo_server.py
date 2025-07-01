@@ -552,36 +552,36 @@ HTML_TEMPLATE = """
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             color: white;
         }
-        
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
         }
-        
+
         .header {
             text-align: center;
             margin-bottom: 40px;
         }
-        
+
         .header h1 {
             font-size: 3rem;
             margin-bottom: 10px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
-        
+
         .header p {
             font-size: 1.2rem;
             opacity: 0.9;
         }
-        
+
         .status-card {
             background: rgba(255,255,255,0.1);
             backdrop-filter: blur(10px);
@@ -590,14 +590,14 @@ HTML_TEMPLATE = """
             margin-bottom: 30px;
             border: 1px solid rgba(255,255,255,0.2);
         }
-        
+
         .features-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 20px;
             margin-bottom: 30px;
         }
-        
+
         .feature-card {
             background: rgba(255,255,255,0.1);
             backdrop-filter: blur(10px);
@@ -606,40 +606,40 @@ HTML_TEMPLATE = """
             border: 1px solid rgba(255,255,255,0.2);
             transition: transform 0.3s ease;
         }
-        
+
         .feature-card:hover {
             transform: translateY(-5px);
         }
-        
+
         .feature-card h3 {
             font-size: 1.5rem;
             margin-bottom: 15px;
             color: #FFD700;
         }
-        
+
         .feature-list {
             list-style: none;
         }
-        
+
         .feature-list li {
             margin-bottom: 8px;
             padding-left: 20px;
             position: relative;
         }
-        
+
         .feature-list li:before {
             content: "✅";
             position: absolute;
             left: 0;
         }
-        
+
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
             margin-bottom: 30px;
         }
-        
+
         .stat-card {
             background: rgba(255,255,255,0.1);
             backdrop-filter: blur(10px);
@@ -648,19 +648,19 @@ HTML_TEMPLATE = """
             text-align: center;
             border: 1px solid rgba(255,255,255,0.2);
         }
-        
+
         .stat-number {
             font-size: 2.5rem;
             font-weight: bold;
             color: #FFD700;
             margin-bottom: 5px;
         }
-        
+
         .stat-label {
             font-size: 1rem;
             opacity: 0.9;
         }
-        
+
         .demo-section {
             background: rgba(255,255,255,0.1);
             backdrop-filter: blur(10px);
@@ -668,7 +668,7 @@ HTML_TEMPLATE = """
             padding: 30px;
             border: 1px solid rgba(255,255,255,0.2);
         }
-        
+
         .demo-button {
             background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
             color: white;
@@ -680,7 +680,7 @@ HTML_TEMPLATE = """
             transition: all 0.3s ease;
             margin: 10px;
         }
-        
+
         .demo-button:hover {
             transform: scale(1.05);
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
@@ -921,7 +921,7 @@ HTML_TEMPLATE = """
             <h1 class="pulse">🎮 GamePlayer-Raspberry</h1>
             <p>多系统游戏模拟器 - 游戏中心</p>
         </div>
-        
+
         <div class="status-card">
             <h2>🚀 系统状态</h2>
             <p><strong>版本:</strong> v4.0.0</p>
@@ -929,7 +929,7 @@ HTML_TEMPLATE = """
             <p><strong>Web服务器:</strong> Flask (端口 {{ port }})</p>
             <p><strong>状态:</strong> <span style="color: #4CAF50;">✅ 运行正常</span></p>
         </div>
-        
+
         <div class="features-grid">
             <div class="feature-card">
                 <h3>🎮 支持的游戏系统</h3>
@@ -944,7 +944,7 @@ HTML_TEMPLATE = """
                     <li>Arcade (街机)</li>
                 </ul>
             </div>
-            
+
             <div class="feature-card">
                 <h3>🎯 核心功能</h3>
                 <ul class="feature-list">
@@ -958,7 +958,7 @@ HTML_TEMPLATE = """
                     <li>一键部署</li>
                 </ul>
             </div>
-            
+
             <div class="feature-card">
                 <h3>🔧 技术特性</h3>
                 <ul class="feature-list">
@@ -973,7 +973,7 @@ HTML_TEMPLATE = """
                 </ul>
             </div>
         </div>
-        
+
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="stat-number">8</div>
@@ -992,7 +992,7 @@ HTML_TEMPLATE = """
                 <div class="stat-label">金手指类型</div>
             </div>
         </div>
-        
+
         <div class="games-section">
             <h2>🎮 游戏中心</h2>
             <p>选择游戏系统，点击游戏开始体验：</p>
@@ -1023,7 +1023,7 @@ HTML_TEMPLATE = """
             <button class="demo-button" onclick="fixAllGames()">🔧 自动修复</button>
             <button class="demo-button" onclick="showSaveData()">💾 存档管理</button>
         </div>
-        
+
         <div class="footer">
             <p>🍓 GamePlayer-Raspberry - 让经典游戏在树莓派上重新焕发生机</p>
             <p>GitHub: <a href="https://github.com/LIUCHAOVSYAN/GamePlayer-Raspberry" style="color: #FFD700;">LIUCHAOVSYAN/GamePlayer-Raspberry</a></p>
@@ -1044,7 +1044,7 @@ HTML_TEMPLATE = """
             </div>
         </div>
     </div>
-    
+
     <script>
         let currentSystem = 'nes';
         let gamesData = {};
@@ -1796,7 +1796,7 @@ HTML_TEMPLATE = """
         function showSaveData() {
             alert('💾 存档管理系统\\n\\n功能特性：\\n• 自动存档 - 游戏进度自动保存\\n• 多存档槽 - 支持多个存档位置\\n• 快速加载 - 一键加载存档\\n• 存档备份 - 云端同步存档\\n• 存档预览 - 显示存档详情\\n\\n永不丢失游戏进度！');
         }
-        
+
         // 初始化游戏数据
         async function initializeGameData() {
             try {
@@ -1839,7 +1839,7 @@ HTML_TEMPLATE = """
                 card.style.animation = 'fadeInUp 0.6s ease forwards';
             });
         });
-        
+
         // CSS动画
         const style = document.createElement('style');
         style.textContent = `
@@ -1861,11 +1861,13 @@ HTML_TEMPLATE = """
 """
 
 @app.route('/')
+
 def index():
     """主页"""
     return render_template_string(HTML_TEMPLATE, port=request.environ.get('SERVER_PORT', '3000'))
 
 @app.route('/api/status')
+
 def api_status():
     """API状态"""
     return jsonify({
@@ -1881,11 +1883,13 @@ def api_status():
     })
 
 @app.route('/api/games')
+
 def api_games():
     """游戏列表API"""
     return jsonify(GAMES_DATABASE)
 
 @app.route('/api/game/<system>/<game_id>')
+
 def api_game_info(system, game_id):
     """获取特定游戏信息"""
     games = GAMES_DATABASE.get(system, [])
@@ -1897,6 +1901,7 @@ def api_game_info(system, game_id):
     return jsonify(game)
 
 @app.route('/api/saves/<game_id>')
+
 def api_saves(game_id):
     """获取游戏存档信息"""
     saves = SAVE_DATA.get(game_id, {})
@@ -1918,6 +1923,7 @@ def api_saves(game_id):
     })
 
 @app.route('/api/cheats/<game_id>')
+
 def api_game_cheats(game_id):
     """获取游戏金手指信息"""
     # 从游戏数据库中找到游戏
@@ -1962,6 +1968,7 @@ def api_game_cheats(game_id):
     })
 
 @app.route('/api/cheats')
+
 def api_cheats():
     """金手指系统API"""
     return jsonify({
@@ -1972,6 +1979,7 @@ def api_cheats():
     })
 
 @app.route('/api/launch_game', methods=['POST'])
+
 def api_launch_game():
     """真正启动游戏API"""
     try:
@@ -2048,6 +2056,7 @@ def api_launch_game():
         return jsonify({'success': False, 'error': str(e)}), 500
 
 @app.route('/api/stop_game', methods=['POST'])
+
 def api_stop_game():
     """停止游戏API"""
     try:
@@ -2074,6 +2083,7 @@ def api_stop_game():
         return jsonify({'success': False, 'error': str(e)}), 500
 
 @app.route('/api/game_status/<game_id>')
+
 def api_game_status(game_id):
     """获取游戏状态API"""
     try:
@@ -2099,6 +2109,7 @@ def api_game_status(game_id):
         return jsonify({'success': False, 'error': str(e)}), 500
 
 @app.route('/api/system_check')
+
 def api_system_check():
     """系统状态检查API"""
     try:
@@ -2126,6 +2137,7 @@ def api_system_check():
         return jsonify({'success': False, 'error': str(e)}), 500
 
 @app.route('/api/cheat_config/<system>', methods=['GET', 'POST'])
+
 def api_cheat_config(system):
     """金手指配置API"""
     try:
@@ -2182,6 +2194,7 @@ def api_cheat_config(system):
         return jsonify({'success': False, 'error': str(e)}), 500
 
 @app.route('/api/settings', methods=['GET', 'POST'])
+
 def api_settings():
     """系统设置API"""
     try:
@@ -2256,6 +2269,7 @@ def api_settings():
         return jsonify({'success': False, 'error': str(e)}), 500
 
 @app.route('/static/images/covers/<system>/<filename>')
+
 def serve_cover_image(system, filename):
     """提供游戏封面图片"""
     try:
@@ -2271,6 +2285,7 @@ def serve_cover_image(system, filename):
         return jsonify({'error': str(e)}), 404
 
 @app.route('/api/download_covers', methods=['POST'])
+
 def api_download_covers():
     """下载游戏封面API"""
     try:
@@ -2293,6 +2308,7 @@ def api_download_covers():
         return jsonify({'success': False, 'error': str(e)}), 500
 
 @app.route('/api/create_demo_roms', methods=['POST'])
+
 def api_create_demo_roms():
     """创建演示ROM文件API"""
     try:
@@ -2312,6 +2328,7 @@ def api_create_demo_roms():
         return jsonify({'success': False, 'error': str(e)}), 500
 
 @app.route('/api/initialize_game_data', methods=['POST'])
+
 def api_initialize_game_data():
     """初始化游戏数据API"""
     try:
@@ -2360,6 +2377,7 @@ def api_initialize_game_data():
         return jsonify({'success': False, 'error': str(e)}), 500
 
 @app.route('/api/check_all_games', methods=['POST'])
+
 def api_check_all_games():
     """检查所有游戏的健康状态API"""
     try:
@@ -2387,6 +2405,7 @@ def api_check_all_games():
         return jsonify({'success': False, 'error': str(e)}), 500
 
 @app.route('/api/fix_all_games', methods=['POST'])
+
 def api_fix_all_games():
     """自动修复所有游戏问题API"""
     try:
@@ -2421,6 +2440,7 @@ def api_fix_all_games():
         return jsonify({'success': False, 'error': str(e)}), 500
 
 @app.route('/api/game_health_report')
+
 def api_game_health_report():
     """获取游戏健康报告API"""
     try:
@@ -2444,6 +2464,7 @@ def api_game_health_report():
         return jsonify({'success': False, 'error': str(e)}), 500
 
 @app.route('/api/auto_fix_game/<system>/<game_id>', methods=['POST'])
+
 def api_auto_fix_game(system, game_id):
     """自动修复单个游戏API"""
     try:
@@ -2498,5 +2519,5 @@ if __name__ == '__main__':
     print(f"🌐 启动Web服务器在端口 {port}")
     print(f"🔗 访问地址: http://localhost:{port}")
     print(f"📱 Docker演示模式已激活")
-    
+
     app.run(host='0.0.0.0', port=port, debug=False)

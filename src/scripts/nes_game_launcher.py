@@ -8,11 +8,37 @@ import os
 import sys
 import json
 import subprocess
-import pygame
 import threading
 import time
 from pathlib import Path
 from typing import List, Dict, Optional
+
+# 依赖检测和自动安装
+def check_and_install_dependencies():
+    """检查并安装必要的依赖"""
+    missing_deps = []
+    
+    try:
+        import pygame
+    except ImportError:
+        missing_deps.append("pygame")
+    
+    if missing_deps:
+        print("⚠️ 检测到缺失的依赖库，正在自动安装...")
+        try:
+            import subprocess
+            subprocess.check_call([sys.executable, "-m", "pip", "install"] + missing_deps)
+            print("✅ 依赖安装完成")
+        except subprocess.CalledProcessError:
+            print("❌ 自动安装失败，请手动安装:")
+            print(f"pip3 install {' '.join(missing_deps)}")
+            sys.exit(1)
+
+# 在导入pygame之前检查依赖
+check_and_install_dependencies()
+
+# 现在可以安全导入pygame
+import pygame
 
 # 添加项目根目录到Python路径
 project_root = Path(__file__).parent.parent
@@ -26,10 +52,10 @@ class NESGameLauncher:
         """获取系统字体，支持中文显示"""
         # macOS 常见中文字体
         mac_fonts = [
-            'PingFang SC', 'Hiragino Sans GB', 'STHeiti', 
+            'PingFang SC', 'Hiragino Sans GB', 'STHeiti',
             'Arial Unicode MS', 'Helvetica Neue', 'Arial'
         ]
-        
+
         for font_name in mac_fonts:
             try:
                 font = pygame.font.SysFont(font_name, size)
@@ -39,7 +65,7 @@ class NESGameLauncher:
                     return font
             except:
                 continue
-        
+
         # 如果都失败了，使用默认字体
         try:
             return pygame.font.SysFont(None, size)
@@ -360,30 +386,30 @@ class NESGameLauncher:
         try:
             # 启动游戏
             print(f"🎮 启动游戏: {game['name']}")
-            
+
             # 使用正确的脚本路径
             script_path = Path(__file__).parent / "run_nes_game.py"
             if not script_path.exists():
                 # 如果脚本不存在，尝试其他可能的路径
                 script_path = Path(__file__).parent.parent / "scripts" / "run_nes_game.py"
-            
+
             if not script_path.exists():
                 # 尝试 src/scripts 目录
                 script_path = Path(__file__).parent / "run_nes_game.py"
-            
+
             if script_path.exists():
                 cmd = [
                     "python3", str(script_path), game['path']
                 ]
                 print(f"🎮 启动游戏运行器: {' '.join(cmd)}")
-                
+
                 process = subprocess.Popen(
                     cmd,
                     stdout=subprocess.PIPE,
                     stderr=subprocess.PIPE,
                     text=True
                 )
-                
+
                 # 显示游戏运行界面
                 self.show_game_running(game, process)
             else:

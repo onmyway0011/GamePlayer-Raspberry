@@ -11,6 +11,7 @@ from typing import Dict, List, Optional, Tuple
 
 logger = logging.getLogger(__name__)
 
+
 class CheatManager:
     """金手指管理器"""
 
@@ -323,7 +324,7 @@ class CheatManager:
             return system_data["games"].get(game)
         return None
 
-    def enable_cheat(self, system: str, cheat_type: str, cheat_name: str) -> bool:
+    def enable_cheat(self, system: str, cheat_type: str, cheat_name: str):
         """启用金手指"""
         try:
             if system in self.cheat_database:
@@ -338,8 +339,7 @@ class CheatManager:
             logger.error(f"❌ 启用金手指失败: {e}")
             return False
 
-
-    def disable_cheat(self, system: str, cheat_type: str, cheat_name: str) -> bool:
+    def disable_cheat(self, system: str, cheat_type: str, cheat_name: str):
         """禁用金手指"""
         try:
             if system in self.cheat_database:
@@ -356,7 +356,7 @@ class CheatManager:
             logger.error(f"❌ 禁用金手指失败: {e}")
             return False
 
-    def toggle_cheat(self, system: str, cheat_type: str, cheat_name: str) -> bool:
+    def toggle_cheat(self, system: str, cheat_type: str, cheat_name: str):
         """切换金手指状态"""
         if system in self.cheat_database:
             if cheat_type == "common":
@@ -384,8 +384,7 @@ class CheatManager:
 
         logger.info("🧹 已清除所有金手指")
 
-
-    def export_cheat_config(self, file_path: str) -> bool:
+    def export_cheat_config(self, file_path: str):
         """导出金手指配置"""
         try:
             export_data = {
@@ -403,7 +402,7 @@ class CheatManager:
             logger.error(f"❌ 金手指配置导出失败: {e}")
             return False
 
-    def import_cheat_config(self, file_path: str) -> bool:
+    def import_cheat_config(self, file_path: str):
         """导入金手指配置"""
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
@@ -497,7 +496,7 @@ class CheatManager:
 
         return auto_cheats
 
-    def set_auto_enable_cheat(self, system: str, cheat_name: str, auto_enable: bool) -> bool:
+    def set_auto_enable_cheat(self, system: str, cheat_name: str, auto_enable: bool):
         """设置金手指是否自动启用"""
         try:
             if system in self.cheat_database:
@@ -516,7 +515,7 @@ class CheatManager:
             logger.error(f"❌ 设置自动启用失败: {e}")
             return False
 
-    def update_cheat_status(self, system: str, cheat_id: str, enabled: bool) -> bool:
+    def update_cheat_status(self, system: str, cheat_id: str, enabled: bool):
         """更新金手指启用状态"""
         try:
             if system in self.cheat_database:
@@ -537,7 +536,7 @@ class CheatManager:
             logger.error(f"❌ 更新金手指状态失败: {e}")
             return False
 
-    def save_cheat_database(self) -> bool:
+    def save_cheat_database(self):
         """保存金手指数据库到文件"""
         try:
             config_file = self.config_dir / "general_cheats.json"
@@ -551,7 +550,7 @@ class CheatManager:
             logger.error(f"❌ 保存金手指数据库失败: {e}")
             return False
 
-    def is_cheat_enabled(self, system: str, cheat_id: str) -> bool:
+    def is_cheat_enabled(self, system: str, cheat_id: str):
         """检查金手指是否启用"""
         try:
             return self.cheat_database.get(system, {}).get("common_cheats", {}).get(cheat_id, {}).get("enabled", False)
@@ -569,7 +568,7 @@ class CheatManager:
         """获取系统的所有金手指"""
         return self.cheat_database.get(system, {}).get("common_cheats", {})
 
-    def apply_cheats_to_game(self, system: str, game_id: str, enabled_cheats: List[str]) -> bool:
+    def apply_cheats_to_game(self, system: str, game_id: str, enabled_cheats: List[str]):
         """将金手指应用到游戏"""
         try:
             # 创建游戏专用的金手指文件

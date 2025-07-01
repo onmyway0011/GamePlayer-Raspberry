@@ -27,6 +27,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 
+
 class PackageInfo:
     """包信息"""
     name: str

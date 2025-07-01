@@ -1,0 +1,36 @@
+{
+  "archive": {
+    "name": "Internet Archive",
+    "base_url": "https://archive.org",
+    "discovered_at": "2025-07-01 08:18:14",
+    "roms": {
+      "archive_backup_1": {
+        "name": "Archive Backup ROM 1",
+        "genre": "动作",
+        "year": 2024,
+        "description": "archive.org备用ROM",
+        "size_kb": 32,
+        "urls": [
+          "https://archive.org/download/example-nes/example.nes"
+        ]
+      }
+    }
+  },
+  "github": {
+    "name": "GitHub Releases",
+    "base_url": "https://github.com",
+    "discovered_at": "2025-07-01 08:18:14",
+    "roms": {
+      "micromages": {
+        "name": "Micro Mages",
+        "genre": "平台",
+        "year": 2019,
+        "description": "github开源ROM",
+        "size_kb": 32,
+        "urls": [
+          "https://github.com/morphcat/micromages-nes/releases/download/v1.0/MicroMages.nes"
+        ]
+      }
+    }
+  }
+}

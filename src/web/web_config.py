@@ -46,6 +46,7 @@ HTML = """
 
 @app.route("/", methods=["GET", "POST"])
 
+
 def index():
     """
     处理根路由("/")的GET和POST请求，用于展示和更新模拟器配置。

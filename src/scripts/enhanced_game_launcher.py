@@ -162,7 +162,7 @@ class EnhancedGameLauncher:
         logger.info(f"🔍 扫描游戏目录: {self.roms_dir}")
 
         games = []
-        
+
         # 检查目录是否存在
         if not self.roms_dir.exists():
             logger.warning(f"⚠️ 游戏目录不存在: {self.roms_dir}")
@@ -170,7 +170,7 @@ class EnhancedGameLauncher:
 
         # 扫描 .nes 文件
         rom_files = list(self.roms_dir.glob("*.nes"))
-        
+
         # 如果当前目录没有 .nes 文件，尝试扫描 nes 子目录
         if not rom_files:
             nes_subdir = self.roms_dir / "nes"

@@ -33,10 +33,10 @@ class NESEmulator:
         """获取系统字体，支持中文显示"""
         # macOS 常见中文字体
         mac_fonts = [
-            'PingFang SC', 'Hiragino Sans GB', 'STHeiti', 
+            'PingFang SC', 'Hiragino Sans GB', 'STHeiti',
             'Arial Unicode MS', 'Helvetica Neue', 'Arial'
         ]
-        
+
         for font_name in mac_fonts:
             try:
                 font = pygame.font.SysFont(font_name, size)
@@ -46,7 +46,7 @@ class NESEmulator:
                     return font
             except:
                 continue
-        
+
         # 如果都失败了，使用默认字体
         try:
             return pygame.font.SysFont(None, size)

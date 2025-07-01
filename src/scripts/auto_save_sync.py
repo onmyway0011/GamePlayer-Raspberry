@@ -42,6 +42,7 @@ API_CONF = config["cloud_save"].get("custom_api", {})
 
 # ========== 云端存档操作 ==========
 
+
 def cos_client():
     """TODO: Add docstring"""
     return boto3.client(
@@ -118,6 +119,7 @@ def download_save(remote_key, local_path):
 
 # ========== 存档同步主流程 ==========
 
+
 def get_latest_save(game_name):
     """获取本地最新存档文件"""
     game_save_dir = SAVES_DIR / game_name
@@ -152,6 +154,7 @@ def sync_save_to_cloud(game_name):
 
 # ========== 金手指自动加载 ==========
 
+
 def enable_cheat(game_name):
     """启动模拟器时自动加载金手指"""
     cheat_file = CHEATS_DIR / f"{game_name}.cht"
@@ -162,6 +165,7 @@ def enable_cheat(game_name):
     return None
 
 # ========== 启动模拟器 ==========
+
 
 def launch_emulator(game_name, rom_path):
     """TODO: Add docstring"""
@@ -188,6 +192,7 @@ def launch_emulator(game_name, rom_path):
     subprocess.run(cmd)
 
 # ========== 主流程入口 ==========
+
 
 def main():
     """TODO: Add docstring"""

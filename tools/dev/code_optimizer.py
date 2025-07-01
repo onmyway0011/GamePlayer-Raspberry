@@ -16,6 +16,7 @@ from dataclasses import dataclass
 
 @dataclass
 
+
 class OptimizationResult:
     """优化结果"""
     file_path: str

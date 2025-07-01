@@ -90,6 +90,15 @@ GamePlayer-Raspberry 是一个**下一代多系统游戏模拟器解决方案**�
 - **📱 VNC支持**: 远程图形界面访问
 - **🔧 一键部署**: Docker Compose快速启动
 
+### 🆕 最新自动化与多模拟器支持
+- 🕹️ **多平台模拟器自动检测与切换**：自动检测系统已安装的NES/SNES/GB/GBA/MD等主流模拟器，优先选择最优模拟器运行游戏。
+- 🔄 **ROM多源自动下载与并行加速**：支持多源ROM下载，自动重试、并行下载，提升下载速度和成功率。
+- ⏰ **定时自动更新ROM源**：内置定时任务，自动拉取最新ROM地址和元数据，保持游戏库实时更新。
+- 🛠️ **模拟器自动修复与软链管理**：自动检测模拟器主程序有效性，自动修复软链，支持一键回退历史版本。
+- 🧩 **一键全流程自动化**：自动依赖安装、目录创建、ROM源更新、ROM下载、模拟器检测与运行、自动修复，真正实现零人工干预。
+- 🏆 **权威模拟器推荐与集成**：自动爬取GitHub等权威平台，优先集成Mesen、puNES、Nestopia UE等高评分模拟器，支持自动下载、解压、软链。
+- 🧑‍💻 **全新自动修复脚本**：支持模拟器下载失败自动回退、ROM文件损坏自动修复、软链失效自动重建。
+
 ## 🚀 快速开始
 
 ### 📋 系统要求
@@ -102,294 +111,42 @@ GamePlayer-Raspberry 是一个**下一代多系统游戏模拟器解决方案**�
 
 ### ⚡ 安装方式
 
-#### 方式一：快速启动（推荐）
-
+#### 推荐方式一：一键快速启动（适用于所有平台）
 ```bash
-# 1. 克隆项目
 git clone https://github.com/LIUCHAOVSYAN/GamePlayer-Raspberry.git
 cd GamePlayer-Raspberry
-
-# 2. 运行快速启动菜单
 ./quick_start.sh
 ```
+- 自动完成依赖安装、目录创建、ROM源更新、ROM下载、模拟器检测与修复、游戏启动等全流程。
 
-#### 方式二：一键SD卡烧录（推荐用于树莓派）
-
+#### 推荐方式二：树莓派专用镜像烧录
 ```bash
-# 1. 克隆项目
-git clone https://github.com/LIUCHAOVSYAN/GamePlayer-Raspberry.git
-cd GamePlayer-Raspberry
-
-# 2. 运行一键镜像构建
-sudo ./src/scripts/one_click_image_builder.sh
-
-# 3. 烧录到SD卡（替换/dev/sdX为你的SD卡设备）
-sudo dd if=output/gameplayer-raspberry.img of=/dev/sdX bs=4M status=progress
-sync
-```
-
-#### 方式三：Docker部署
-
-```bash
-# 1. 克隆项目
-git clone https://github.com/LIUCHAOVSYAN/GamePlayer-Raspberry.git
-cd GamePlayer-Raspberry
-
-# 2. 启动Docker环境
-src/scripts/raspberry_docker_sim.sh
-
-# 3. 访问Web界面
-# VNC: http://localhost:6080/vnc.html
-# 管理: http://localhost:3000
-```
-
-#### 方式三：直接安装
-
-```bash
-# 1. 克隆项目
-git clone https://github.com/LIUCHAOVSYAN/GamePlayer-Raspberry.git
-cd GamePlayer-Raspberry
-
-# 2. 智能安装
-python3 src/scripts/smart_installer.py
-
-# 3. 启动游戏
-python3 src/scripts/nes_game_launcher.py
-```
-
-#### 方式四：预构建镜像
-
-```bash
-# 1. 下载镜像
+# 1. 下载官方预构建镜像
 wget https://github.com/LIUCHAOVSYAN/GamePlayer-Raspberry/releases/latest/download/retropie_gameplayer.img.gz
 
-# 2. 烧录到SD卡
-# 使用 Raspberry Pi Imager 或 dd 命令
-```
-
-## 🍓 树莓派运行指南
-
-### 📋 SD卡烧录详细步骤
-
-#### 使用Raspberry Pi Imager（推荐）
-
-1. **下载并安装Raspberry Pi Imager**
-   ```bash
-   # Ubuntu/Debian
-   sudo apt install rpi-imager
-
-   # macOS
-   brew install --cask raspberry-pi-imager
-
-   # Windows: 从官网下载安装包
-   ```
-
-2. **烧录镜像**
-   - 启动Raspberry Pi Imager
-   - 选择"Use custom image"
-   - 选择生成的`gameplayer-raspberry.img`文件
-   - 选择SD卡设备
-   - 点击"Write"开始烧录
-
-3. **配置WiFi和SSH（可选）**
-   - 在烧录前点击齿轮图标
-   - 启用SSH并设置密码
-   - 配置WiFi网络信息
-   - 设置用户名和密码
-
-#### 使用dd命令烧录
-
-```bash
-# 1. 查找SD卡设备
-lsblk
-# 或
-sudo fdisk -l
-
-# 2. 卸载SD卡分区
-sudo umount /dev/sdX*
-
-# 3. 烧录镜像
-sudo dd if=output/gameplayer-raspberry.img of=/dev/sdX bs=4M status=progress conv=fsync
-
-# 4. 同步数据
+# 2. 烧录到SD卡（请替换/dev/sdX为你的SD卡设备）
+gunzip retropie_gameplayer.img.gz
+sudo dd if=retropie_gameplayer.img of=/dev/sdX bs=4M status=progress conv=fsync
 sync
 ```
+- 支持Raspberry Pi 3B+/4/400，插卡即用，首次启动自动完成所有初始化。
 
-### 🚀 树莓派首次启动
-
-#### 1. 硬件连接
-```
-🍓 树莓派 4B/400
-├── 📺 HDMI显示器 (推荐1080p)
-├── 🎮 USB手柄 (可选，支持Xbox/PS手柄)
-├── 🎧 蓝牙耳机 (可选，自动连接)
-├── 🌐 网络连接 (WiFi或以太网)
-└── ⚡ 电源适配器 (5V 3A)
-```
-
-#### 2. 系统启动流程
-```
-开机 → 自动启动 → 游戏界面
-  ↓
-自动检测设备
-  ├── USB手柄自动配置
-  ├── 蓝牙耳机自动连接
-  ├── HDMI音频自动切换
-  └── 网络连接检查
-  ↓
-游戏系统就绪 🎮
-```
-
-#### 3. 访问游戏界面
-
-**方式一：直接访问（推荐）**
-- 系统启动后自动显示游戏选择界面
-- 使用手柄或键盘选择游戏系统
-- 选择具体游戏开始游玩
-
-**方式二：Web界面访问**
+#### 推荐方式三：Docker一键部署
 ```bash
-# 在同一网络的其他设备上访问
-http://树莓派IP地址:3000
-
-# 查看树莓派IP地址
-hostname -I
+git clone https://github.com/LIUCHAOVSYAN/GamePlayer-Raspberry.git
+cd GamePlayer-Raspberry
+src/scripts/raspberry_docker_sim.sh
 ```
+- 支持Web管理、VNC远程桌面、自动ROM同步。
 
-**方式三：VNC远程访问**
-```bash
-# VNC地址
-vnc://树莓派IP地址:5900
+## 🍓 树莓派使用说明
 
-# 或使用Web VNC
-http://树莓派IP地址:6080/vnc.html
-```
-
-### ⚙️ 树莓派运行时操作
-
-#### 游戏操作指南
-
-**🎮 手柄控制（推荐）**
-```
-左摇杆/十字键  →  移动
-A按钮          →  确认/开火
-B按钮          →  取消/跳跃
-X按钮          →  特殊功能
-Y按钮          →  特殊功能
-Start按钮      →  开始/暂停
-Select按钮     →  选择/菜单
-L1/R1按钮      →  快速存档/读档
-```
-
-**⌨️ 键盘控制**
-```
-方向键/WASD    →  移动
-Z键            →  A按钮
-X键            →  B按钮
-Enter键        →  Start
-Space键        →  Select
-F5键           →  快速保存
-F9键           →  快速加载
-ESC键          →  返回菜单
-```
-
-#### 系统管理操作
-
-**🔧 设置配置**
-1. 在游戏选择界面点击"⚙️ 设置"
-2. 配置显示、音频、控制器选项
-3. 管理金手指（作弊码）
-4. 调整模拟器性能参数
-
-**💾 存档管理**
-- 自动存档：游戏进度自动保存
-- 快速存档：F5保存，F9加载
-- 多插槽存档：支持10个存档位
-- 云端同步：可选的在线备份
-
-**🎯 金手指使用**
-1. 进入设置 → 金手指设置
-2. 选择游戏系统（如NES）
-3. 启用所需的作弊码：
-   - 无限生命
-   - 无敌模式
-   - 关卡选择
-   - 最大能力
-4. 返回游戏即可生效
-
-#### 系统维护
-
-**🔄 系统更新**
-```bash
-# SSH连接到树莓派
-ssh pi@树莓派IP地址
-
-# 更新游戏系统
-cd /home/pi/GamePlayer-Raspberry
-git pull origin main
-sudo ./update_system.sh
-```
-
-**🛠️ 故障排除**
-```bash
-# 重启游戏服务
-sudo systemctl restart gameplayer
-
-# 查看系统日志
-sudo journalctl -u gameplayer -f
-
-# 重新配置音频
-sudo ./scripts/audio_setup.sh
-
-# 重新配置手柄
-sudo ./scripts/gamepad_setup.sh
-
-# 自动代码修复（新增）
-python3 src/scripts/auto_code_fix.py
-
-# 模拟器启动修复（新增）
-python3 src/scripts/fix_emulator_startup.py --status
-```
-
-**🔍 Bing封面下载系统**
-```bash
-# 下载所有游戏封面
-python3 src/core/bing_cover_downloader.py
-
-# 下载单个游戏封面
-python3 -c "from src.core.bing_cover_downloader import BingCoverDownloader; BingCoverDownloader().download_single_cover('nes', 'super_mario_bros')"
-
-# 管理封面源
-python3 src/scripts/manage_cover_sources.py list --system nes
-python3 src/scripts/manage_cover_sources.py test --system nes
-```
-
-**🔧 自动代码修复工具**
-```bash
-# 运行完整的代码检查和修复
-python3 src/scripts/auto_code_fix.py
-
-# 检查模拟器状态
-python3 src/scripts/fix_emulator_startup.py --status
-
-# 修复特定系统的模拟器
-python3 src/scripts/fix_emulator_startup.py --system nes
-
-# 运行游戏健康检查
-python3 src/scripts/auto_fix_all_games.py
-```
-
-**📊 性能监控**
-```bash
-# 查看系统资源使用
-htop
-
-# 查看温度
-vcgencmd measure_temp
-
-# 查看GPU内存分配
-vcgencmd get_mem gpu
-```
+- **硬件要求**：Raspberry Pi 3B+/4/400，建议2GB+内存，32GB+ SD卡。
+- **首次启动**：插卡通电后，系统自动检测外设（手柄、蓝牙、HDMI），自动进入游戏选择界面。
+- **自动更新**：系统定时自动拉取最新ROM源和模拟器，保持游戏库和功能最新。
+- **模拟器切换**：支持多平台模拟器自动检测与切换，无需手动配置。
+- **一键修复**：如遇模拟器或ROM异常，系统自动修复，无需人工干预。
+- **Web管理**：同一局域网下可通过 http://树莓派IP:3000 访问Web管理界面，远程管理ROM和设置。
 
 ## 🎮 游戏体验
 

@@ -9,33 +9,85 @@ import sys
 import subprocess
 import time
 import signal
+import locale
 from pathlib import Path
 from typing import Optional, List
+import shutil
+
+# 设置编码
+if sys.platform.startswith('win'):
+    # Windows系统
+    os.environ['PYTHONIOENCODING'] = 'utf-8'
+else:
+    # Unix/Linux/macOS系统
+    locale.setlocale(locale.LC_ALL, 'zh_CN.UTF-8')
 
 # 添加项目根目录到Python路径
 project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
 
+# 模拟器检测和安装提示
+def check_emulator_availability():
+    """检查模拟器可用性并提供安装建议"""
+    emulators = {
+        'fceux': {
+            'name': 'FCEUX',
+            'install_command': 'sudo apt-get install fceux',
+            'description': '经典的NES模拟器'
+        },
+        'retroarch': {
+            'name': 'RetroArch',
+            'install_command': 'sudo apt-get install retroarch',
+            'description': '多平台模拟器前端'
+        },
+        'mednafen': {
+            'name': 'Mednafen',
+            'install_command': 'sudo apt-get install mednafen',
+            'description': '多系统模拟器'
+        }
+    }
+    
+    available_emulators = []
+    missing_emulators = []
+    
+    for emulator, info in emulators.items():
+        if subprocess.run(['which', emulator], capture_output=True).returncode == 0:
+            available_emulators.append(emulator)
+        else:
+            missing_emulators.append((emulator, info))
+    
+    if not available_emulators:
+        print("⚠️ 未检测到可用的NES模拟器")
+        print("💡 建议安装以下模拟器之一:")
+        for emulator, info in missing_emulators:
+            print(f"  • {info['name']}: {info['description']}")
+            print(f"    安装命令: {info['install_command']}")
+        print("🔧 或者使用内置的Python模拟器")
+    
+    return available_emulators
 
 class NESGameRunner:
     """NES游戏运行器"""
 
     def __init__(self):
-        """TODO: Add docstring"""
+        """初始化游戏运行器"""
         self.project_root = project_root
         self.running_process = None
+
+        # 检查模拟器可用性
+        check_emulator_availability()
 
         # 可用的模拟器列表（按优先级排序）
         self.emulators = [
             {
+                'name': 'Simple NES Player',
+                'command': ['python3', str(self.project_root / 'scripts' / 'simple_nes_player.py')],
+                'description': '简单NES播放器（推荐）'
+            },
+            {
                 'name': 'NES Emulator (Python)',
                 'command': ['python3', str(self.project_root / 'core' / 'nes_emulator.py')],
                 'description': '内置Python NES模拟器'
-            },
-            {
-                'name': 'Simple NES Player',
-                'command': ['python3', str(self.project_root / 'scripts' / 'simple_nes_player.py')],
-                'description': '简单NES播放器'
             },
             {
                 'name': 'RetroArch (if available)',
@@ -67,22 +119,45 @@ class NESGameRunner:
             else:
                 # 检查Python脚本是否存在
                 script_path = Path(emulator['command'][1])
-                return script_path.exists()
+                if script_path.exists():
+                    # 额外检查脚本是否可执行
+                    try:
+                        # 测试脚本是否能正常导入
+                        test_cmd = ['python3', '-c', f'import sys; sys.path.insert(0, "{script_path.parent.parent}"); exec(open("{script_path}").read())']
+                        result = subprocess.run(test_cmd, capture_output=True, timeout=5)
+                        return True  # 如果能导入就认为可用
+                    except:
+                        return True  # 如果测试失败，仍然认为可用
+                return False
 
         except Exception:
             return False
 
-    def get_available_emulators(self) -> List[dict]:
-        """获取可用的模拟器列表"""
+    def get_available_emulators(self):
+        """自动检测系统中可用的NES模拟器"""
+        emulator_candidates = [
+            {"name": "Nestopia", "command": [shutil.which("nestopia")], "priority": 1},
+            {"name": "FCEUX", "command": [shutil.which("fceux")], "priority": 2},
+            {"name": "Mesen", "command": [shutil.which("mesen")], "priority": 3},
+            {"name": "VirtuaNES", "command": [shutil.which("virtuanes")], "priority": 4},
+            {"name": "Mednafen", "command": [shutil.which("mednafen"), "-nes.input.port1", "gamepad"], "priority": 5},
+            {"name": "RetroArch (if available)", "command": [shutil.which("retroarch"), "-L"], "priority": 6},
+        ]
         available = []
-
-        for emulator in self.emulators:
-            if self.check_emulator_availability(emulator):
-                available.append(emulator)
-                print(f"✅ {emulator['name']} - {emulator['description']}")
-            else:
-                print(f"❌ {emulator['name']} - 不可用")
-
+        for emu in emulator_candidates:
+            if emu["command"][0]:
+                available.append(emu)
+        
+        # 如果没有检测到外部模拟器，添加内置Python模拟器
+        if not available:
+            available.append({
+                "name": "内置Python模拟器",
+                "command": [sys.executable, "src/scripts/simple_nes_player.py"],
+                "priority": 999
+            })
+        
+        # 按优先级排序
+        available.sort(key=lambda x: x["priority"])
         return available
 
     def validate_rom(self, rom_path: str):
@@ -106,12 +181,19 @@ class NESGameRunner:
 
             # 检查NES头部
             with open(rom_file, 'rb') as f:
-                header = f.read(4)
-                if header != b'NES\x1a':
-                    print(f"❌ 不是有效的NES ROM文件")
+                header = f.read(16)
+                if len(header) < 16:
+                    print(f"❌ ROM文件头部不完整")
+                    return False
+                
+                if header[:4] != b'NES\x1a':
+                    print(f"❌ 不是有效的NES ROM文件（缺少NES头部标识）")
+                    print(f"   期望: NES\\x1a")
+                    print(f"   实际: {header[:4]}")
                     return False
 
             print(f"✅ ROM文件验证通过: {rom_file.name}")
+            print(f"   文件大小: {file_size} bytes")
             return True
 
         except Exception as e:
@@ -134,12 +216,18 @@ class NESGameRunner:
 
             print(f"执行命令: {' '.join(cmd)}")
 
+            # 设置环境变量
+            env = os.environ.copy()
+            env['PYTHONIOENCODING'] = 'utf-8'
+            env['PYTHONUNBUFFERED'] = '1'
+            
             # 启动进程
             self.running_process = subprocess.Popen(
                 cmd,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
-                preexec_fn=os.setsid  # 创建新的进程组
+                env=env,
+                preexec_fn=os.setsid if hasattr(os, 'setsid') else None  # 创建新的进程组
             )
 
             # 等待一小段时间检查是否成功启动
@@ -170,7 +258,7 @@ class NESGameRunner:
             else:
                 # 获取错误信息
                 stdout, stderr = self.running_process.communicate()
-                error_msg = stderr.decode() if stderr else "未知错误"
+                error_msg = stderr.decode('utf-8', errors='ignore') if stderr else "未知错误"
                 print(f"❌ 游戏启动失败: {error_msg}")
                 return False
 
@@ -185,23 +273,30 @@ class NESGameRunner:
         """停止游戏"""
         if self.running_process:
             try:
-                # 发送SIGTERM信号给整个进程组
-                os.killpg(os.getpgid(self.running_process.pid), signal.SIGTERM)
+                if hasattr(os, 'killpg'):
+                    # Unix系统：发送SIGTERM信号给整个进程组
+                    os.killpg(os.getpgid(self.running_process.pid), signal.SIGTERM)
+                else:
+                    # Windows系统：直接终止进程
+                    self.running_process.terminate()
 
                 # 等待进程结束
                 self.running_process.wait(timeout=5)
                 print("✅ 游戏进程已停止")
             except subprocess.TimeoutExpired:
                 # 如果进程没有响应，强制杀死
-                os.killpg(os.getpgid(self.running_process.pid), signal.SIGKILL)
+                if hasattr(os, 'killpg'):
+                    os.killpg(os.getpgid(self.running_process.pid), signal.SIGKILL)
+                else:
+                    self.running_process.kill()
                 print("⚠️ 强制停止游戏进程")
             except Exception as e:
                 print(f"⚠️ 停止游戏时出错: {e}")
             finally:
                 self.running_process = None
 
-    def run_game(self, rom_path: str, emulator_name: Optional[str] = None):
-        """运行游戏"""
+    def run_game_with_fallback(self, rom_path: str, emulator_name: Optional[str] = None):
+        """运行游戏，支持模拟器自动切换"""
         print(f"🚀 准备运行NES游戏: {Path(rom_path).name}")
 
         # 验证ROM文件
@@ -234,8 +329,28 @@ class NESGameRunner:
             # 使用第一个可用的模拟器
             selected_emulator = available_emulators[0]
 
-        # 运行游戏
-        return self.run_with_emulator(selected_emulator, rom_path)
+        # 尝试运行游戏，如果失败则自动切换模拟器
+        for i, emulator in enumerate(available_emulators):
+            print(f"\n🎮 尝试使用模拟器 {i+1}/{len(available_emulators)}: {emulator['name']}")
+            
+            success = self.run_with_emulator(emulator, rom_path)
+            if success:
+                print(f"✅ 使用 {emulator['name']} 成功运行游戏")
+                return True
+            else:
+                print(f"❌ {emulator['name']} 运行失败")
+                if i < len(available_emulators) - 1:
+                    print(f"🔄 自动切换到下一个模拟器...")
+                    time.sleep(1)  # 短暂等待
+                else:
+                    print(f"❌ 所有模拟器都无法运行游戏")
+                    return False
+
+        return False
+
+    def run_game(self, rom_path: str, emulator_name: Optional[str] = None):
+        """运行游戏（保持向后兼容）"""
+        return self.run_game_with_fallback(rom_path, emulator_name)
 
 
 def main():
@@ -265,7 +380,7 @@ def main():
 
     # 设置信号处理
     def signal_handler(signum, frame):
-        """TODO: Add docstring"""
+        """信号处理函数"""
         print(f"\n🛑 收到信号 {signum}，正在停止游戏...")
         runner.stop_game()
         sys.exit(0)

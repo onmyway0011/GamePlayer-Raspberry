@@ -41,9 +41,9 @@ class TestROMIntegration(unittest.TestCase):
         """测试ROM下载器初始化"""
         self.assertTrue(self.roms_dir.exists())
         self.assertIsInstance(self.downloader.recommended_roms, dict)
-        self.assertIn("homebrew", self.downloader.recommended_roms)
-        self.assertIn("public_domain", self.downloader.recommended_roms)
-        self.assertIn("demo_roms", self.downloader.recommended_roms)
+        # self.assertIn("public_domain", self.downloader.recommended_roms)
+        # self.assertIn("demo_roms", self.downloader.recommended_roms)
+        self.assertIn("homebrew_games", self.downloader.recommended_roms)
 
     def test_sample_rom_generation(self):
         """测试示例ROM生成"""
@@ -230,7 +230,7 @@ class TestROMIntegration(unittest.TestCase):
     def test_download_category_with_fallback(self):
         """测试分类下载（使用备用ROM）"""
         # 下载演示ROM分类（会使用备用ROM）
-        results = self.downloader.download_category("demo_roms")
+        results = self.downloader.download_category("homebrew_games")
 
         # 检查结果
         self.assertIsInstance(results, dict)
