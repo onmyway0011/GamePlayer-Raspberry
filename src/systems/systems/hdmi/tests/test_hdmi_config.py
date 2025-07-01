@@ -18,7 +18,7 @@ from src.core.hdmi_config import BaseInstaller as HDMIConfigurator
 
 def create_test_config(content: str) -> Path:
     """创建测试配置文件"""
-    test_file = Path(tempfile.mktemp(suffix='.txt'))
+    test_file = Path(tempfile.NamedTemporaryFile(delete=False, suffix='.txt').name)
     with open(test_file, 'w') as f:
         f.write(content)
     return test_file

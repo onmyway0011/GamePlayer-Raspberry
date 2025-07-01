@@ -250,8 +250,8 @@ class DeviceManager:
             if result.returncode == 0:
                 return 'Connected: yes' in result.stdout
 
-        except Exception:
-            pass
+        except Exception as e:
+        logger.warning(f"操作失败: {e}")
 
         return False
 

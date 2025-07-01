@@ -7,6 +7,7 @@ GamePlayer-Raspberry 演示游戏
 import pygame
 import sys
 import random
+import secrets
 import math
 import os
 

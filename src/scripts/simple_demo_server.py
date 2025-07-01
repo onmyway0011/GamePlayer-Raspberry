@@ -2520,4 +2520,4 @@ if __name__ == '__main__':
     print(f"🔗 访问地址: http://localhost:{port}")
     print(f"📱 Docker演示模式已激活")
 
-    app.run(host='0.0.0.0', port=port, debug=False)
+    app.run(host='127.0.0.1', port=port, debug=False)

@@ -544,8 +544,8 @@ fi
             full_path = mount_point / path
             try:
                 subprocess.run(['sudo', 'rm', '-rf', str(full_path)], check=False)
-            except Exception:
-                pass
+            except Exception as e:
+        logger.warning(f"操作失败: {e}")
         
         logger.info("✅ 镜像清理完成")
     

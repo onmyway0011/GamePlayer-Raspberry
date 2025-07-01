@@ -8,6 +8,7 @@ import sys
 import pygame
 import time
 import random
+import secrets
 import locale
 import os
 from pathlib import Path
@@ -228,7 +229,7 @@ class SimpleNESPlayer:
         # 绘制背景元素（模拟像素艺术）
         for i in range(0, 500, 50):
             for j in range(150, 470, 50):
-                color = self.nes_palette[random.randint(0, 15)]
+                color = self.nes_palette[secrets.randbelow(15)]
                 if random.random() < 0.1:  # 10%概率绘制背景像素
                     pygame.draw.rect(self.screen, color, (i, j, 5, 5))
 

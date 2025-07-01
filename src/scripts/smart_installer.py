@@ -535,8 +535,8 @@ class SmartInstaller:
                     try:
                         with open(file_path, 'rb') as f:
                             checksums.append(hashlib.md5(f.read()).hexdigest())
-                    except Exception:
-                        pass
+                    except Exception as e:
+        logger.warning(f"操作失败: {e}")
             return hashlib.md5(''.join(checksums).encode()).hexdigest()
 
     def run_full_installation(self):
