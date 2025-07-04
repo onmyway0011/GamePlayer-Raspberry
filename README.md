@@ -119,12 +119,27 @@ GamePlayer-Raspberry 是一个**下一代多系统游戏模拟器解决方案**�
 
 ### 📝 操作步骤
 
-#### 1. 新建Dockerfile（项目根目录）
-```Dockerfile
+#### 1. 新建 Dockerfile.rpi-builder（项目根目录）
+
+将以下内容保存为 `Dockerfile.rpi-builder`：
+
+```dockerfile
 FROM ubuntu:22.04
 RUN apt-get update && \
-    apt-get install -y sudo wget gzip kpartx losetup parted python3 python3-pip python3-venv qemu-user-static curl git && \
-    apt-get clean
+    apt-get install -y \
+    sudo \
+    wget \
+    gzip \
+    kpartx \
+    parted \
+    python3 \
+    python3-pip \
+    python3-venv \
+    qemu-user-static \
+    curl \
+    git \
+    util-linux \
+    && apt-get clean
 RUN echo "root ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 WORKDIR /workspace
 CMD ["/bin/bash"]
