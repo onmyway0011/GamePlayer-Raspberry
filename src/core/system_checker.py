@@ -22,7 +22,7 @@ class SystemChecker:
     """系统状态检查器"""
 
     def __init__(self):
-        """TODO: Add docstring"""
+        """TODO: 添加文档字符串"""
         self.project_root = project_root
         self.check_results = {}
         self.auto_fix_enabled = True

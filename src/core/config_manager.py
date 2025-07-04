@@ -14,7 +14,7 @@ class ConfigManager:
     """配置管理器"""
 
     def __init__(self, config_dir: str = "config"):
-        """TODO: Add docstring"""
+        """TODO: 添加文档字符串"""
         self.config_dir = Path(config_dir)
         self.config_dir.mkdir(parents=True, exist_ok=True)
 

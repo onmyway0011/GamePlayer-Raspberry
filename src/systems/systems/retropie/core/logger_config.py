@@ -32,7 +32,7 @@ def get_logger(name: str = 'GamePlayer', level: int = logging.INFO) -> logging.L
             s3_info = json.loads(s3_config)
             class S3UploadHandler(logging.Handler):
                 def emit(self, record):
-                    """TODO: Add docstring"""
+                    """TODO: 添加文档字符串"""
                     try:
                         s3 = boto3.client('s3', endpoint_url=s3_info.get('endpoint'))
                         log_entry = self.format(record)

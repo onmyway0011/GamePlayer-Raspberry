@@ -4,5 +4,5 @@ import pytest
 
 
 def auto_patch_input(monkeypatch):
-    """TODO: Add docstring"""
+    """TODO: 添加文档字符串"""
     monkeypatch.setattr('builtins.input', lambda *a, **k: 'yes')

@@ -132,7 +132,7 @@ def start_web_dashboard() -> None:
 
     @app.route('/logs')
     def logs() -> None:
-        """TODO: Add docstring"""
+        """TODO: 添加文档字符串"""
         keyword = request.args.get('keyword')
         anomaly = request.args.get('anomaly')
         anomaly_patterns = [anomaly] if anomaly else None
@@ -144,14 +144,14 @@ def start_web_dashboard() -> None:
 
     @app.route('/trend')
     def trend() -> None:
-        """TODO: Add docstring"""
+        """TODO: 添加文档字符串"""
         _, _, _, all_times, _, _ = analyze_logs()
         img_path = plot_trend(all_times)
         return send_from_directory(REPORT_DIR, os.path.basename(img_path))
 
     @app.route('/report')
     def report() -> None:
-        """TODO: Add docstring"""
+        """TODO: 添加文档字符串"""
         files = sorted([f for f in os.listdir(REPORT_DIR) if f.endswith('.md')], reverse=True)
         if not files:
             return 'No report', 404
@@ -181,7 +181,7 @@ def export_to_json() -> None:
 def schedule_auto_analyze(interval_min=10) -> None:
     """定时自动分析日志"""
     def loop() -> None:
-        """TODO: Add docstring"""
+        """TODO: 添加文档字符串"""
         while True:
             print(f"[AutoAnalyze] {datetime.now()} 自动分析...")
             stats, errors, warnings, all_times, keyword_hits, anomaly_hits = analyze_logs()

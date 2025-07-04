@@ -24,7 +24,7 @@ class BingCoverDownloader:
     """Bing图片搜索封面下载器"""
 
     def __init__(self):
-        """TODO: Add docstring"""
+        """初始化Bing封面下载器"""
         self.project_root = project_root
         self.covers_dir = self.project_root / "data" / "web" / "images" / "covers"
         self.covers_dir.mkdir(parents=True, exist_ok=True)

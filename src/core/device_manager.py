@@ -18,7 +18,7 @@ class DeviceManager:
     """设备管理器"""
 
     def __init__(self):
-        """TODO: Add docstring"""
+        """TODO: 添加文档字符串"""
         # 初始化pygame的joystick模块
         pygame.init()
         pygame.joystick.init()
@@ -251,7 +251,7 @@ class DeviceManager:
                 return 'Connected: yes' in result.stdout
 
         except Exception as e:
-        logger.warning(f"操作失败: {e}")
+            logger.warning(f"操作失败: {e}")
 
         return False
 

@@ -27,7 +27,7 @@ class AudioManager:
     """音频管理器"""
 
     def __init__(self, audio_dir: str = "data/audio"):
-        """TODO: Add docstring"""
+        """TODO: 添加文档字符串"""
         self.audio_dir = Path(audio_dir)
         self.audio_dir.mkdir(parents=True, exist_ok=True)
         self.audio_available = AUDIO_AVAILABLE

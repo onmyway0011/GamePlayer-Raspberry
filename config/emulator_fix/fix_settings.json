@@ -1,0 +1,45 @@
+{
+  "general": {
+    "max_retries": 3,
+    "timeout_seconds": 300,
+    "parallel_workers": 4,
+    "enable_cache": true,
+    "cache_duration_hours": 24,
+    "enable_transaction": true,
+    "backup_before_fix": true
+  },
+  "rom_settings": {
+    "min_size_bytes": 1024,
+    "max_size_bytes": 104857600,
+    "supported_extensions": [".nes", ".smc", ".sfc", ".gb", ".gbc", ".gba", ".md", ".gen"],
+    "create_missing": true,
+    "fix_corrupted": true,
+    "verify_headers": true
+  },
+  "emulator_settings": {
+    "test_timeout_seconds": 5,
+    "install_timeout_seconds": 600,
+    "auto_install": true,
+    "prefer_gui": true,
+    "fallback_to_cli": true
+  },
+  "logging": {
+    "level": "INFO",
+    "file": "logs/emulator_fix.log",
+    "max_size_mb": 10,
+    "backup_count": 5,
+    "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  },
+  "security": {
+    "validate_paths": true,
+    "restrict_commands": true,
+    "check_permissions": true,
+    "safe_mode": true
+  },
+  "ui": {
+    "show_progress": true,
+    "interactive_mode": false,
+    "generate_html_report": true,
+    "report_path": "reports/fix_report.html"
+  }
+}

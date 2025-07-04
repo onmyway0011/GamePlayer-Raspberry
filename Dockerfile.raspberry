@@ -1,89 +1,27 @@
-# GamePlayer-Raspberry 树莓派镜像
-# 基于官方树莓派OS镜像
-
-FROM balenalib/raspberry-pi-debian:bullseye
-
-# 设置环境变量
-ENV DEBIAN_FRONTEND=noninteractive
-ENV PYTHONPATH=/opt/gameplayer
-ENV HOME=/home/pi
-ENV USER=pi
+FROM ubuntu:22.04
 
 # 安装系统依赖
-RUN apt-get update && apt-get install -y \
-    # Python环境
-    python3 python3-pip python3-dev python3-venv \
-    # 游戏相关库
-    libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev \
-    # 音频支持
-    pulseaudio alsa-utils \
-    # 图形界面
-    xorg openbox lightdm \
-    # 网络工具
-    curl wget git \
-    # 系统工具
-    sudo htop vim nano \
-    # 编译工具
-    build-essential cmake pkg-config \
-    # 文件工具
-    unzip p7zip-full \
-    # 蓝牙支持
-    bluetooth bluez bluez-tools \
-    # USB支持
-    usbutils \
-    && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && \
+    apt-get install -y \
+    sudo \
+    wget \
+    gzip \
+    kpartx \
+    losetup \
+    parted \
+    python3 \
+    python3-pip \
+    python3-venv \
+    qemu-user-static \
+    curl \
+    git \
+    && apt-get clean
 
-# 创建pi用户
-RUN useradd -m -s /bin/bash pi && \
-    echo "pi:raspberry" | chpasswd && \
-    usermod -aG sudo,audio,video,input,bluetooth pi && \
-    echo "pi ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
-
-# 切换到pi用户
-USER pi
-WORKDIR /home/pi
-
-# 创建项目目录
-RUN mkdir -p /home/pi/GamePlayer-Raspberry
-
-# 复制项目文件
-COPY --chown=pi:pi . /home/pi/GamePlayer-Raspberry/
+# 配置sudo权限
+RUN echo "root ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 # 设置工作目录
-WORKDIR /home/pi/GamePlayer-Raspberry
+WORKDIR /workspace
 
-# 安装Python依赖
-RUN pip3 install --user -r requirements.txt
-
-# 创建ROM目录结构
-RUN mkdir -p data/roms/{nes,snes,gameboy,gba,genesis,psx,n64,arcade} && \
-    mkdir -p data/saves/{nes,snes,gameboy,gba,genesis,psx,n64,arcade} && \
-    mkdir -p logs
-
-# 下载ROM文件
-RUN python3 src/scripts/download_roms.py
-
-# 设置权限
-RUN chmod +x src/scripts/*.sh src/scripts/*.py
-
-# 创建启动脚本
-RUN echo '#!/bin/bash\n\
-echo "🍓 GamePlayer-Raspberry 启动中..."\n\
-\n\
-# 启动音频服务\n\
-pulseaudio --start --log-target=syslog\n\
-\n\
-# 启动蓝牙服务\n\
-sudo systemctl start bluetooth\n\
-\n\
-# 启动游戏系统\n\
-cd /home/pi/GamePlayer-Raspberry\n\
-python3 src/scripts/enhanced_game_launcher.py --web-only --port 3000\n\
-' > /home/pi/start_gameplayer.sh && \
-    chmod +x /home/pi/start_gameplayer.sh
-
-# 暴露端口
-EXPOSE 3000
-
-# 启动命令
-CMD ["/home/pi/start_gameplayer.sh"]
+# 默认命令
+CMD ["/bin/bash"] 

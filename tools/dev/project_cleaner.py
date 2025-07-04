@@ -234,9 +234,7 @@ class ProjectCleaner:
             ]
         }
 
-    def run_full_cleanup(self, remove_duplicates: bool = True,
-        """TODO: Add docstring"""
-                        remove_unused: bool = True) -> Dict:
+    def run_full_cleanup(self, remove_duplicates: bool = True, remove_unused: bool = True) -> Dict:
         """运行完整清理"""
         print("🚀 开始项目清理...")
 

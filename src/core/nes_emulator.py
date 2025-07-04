@@ -54,7 +54,7 @@ class NESEmulator:
             return pygame.font.Font(None, size)
 
     def __init__(self):
-        """TODO: Add docstring"""
+        """TODO: 添加文档字符串"""
         # 初始化Pygame
         pygame.init()
 

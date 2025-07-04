@@ -22,7 +22,7 @@ class GameLauncher:
     """游戏启动器"""
 
     def __init__(self):
-        """TODO: Add docstring"""
+        """初始化游戏启动器"""
         self.project_root = project_root
         self.running_games = {}  # 正在运行的游戏进程
         self.emulator_configs = self._load_emulator_configs()

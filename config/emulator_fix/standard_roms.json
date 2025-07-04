@@ -1,0 +1,30 @@
+{
+  "nes": {
+    "Super_Mario_Bros.nes": "超级马里奥兄弟",
+    "Legend_of_Zelda.nes": "塞尔达传说",
+    "Metroid.nes": "银河战士",
+    "Castlevania.nes": "恶魔城",
+    "Mega_Man.nes": "洛克人",
+    "Contra.nes": "魂斗罗",
+    "Duck_Hunt.nes": "打鸭子",
+    "Pac_Man.nes": "吃豆人",
+    "Donkey_Kong.nes": "大金刚",
+    "Galaga.nes": "小蜜蜂"
+  },
+  "snes": {
+    "Super_Mario_World.smc": "超级马里奥世界",
+    "The_Legend_of_Zelda_A_Link_to_the_Past.smc": "塞尔达传说：众神的三角力量",
+    "Super_Metroid.smc": "超级银河战士",
+    "Donkey_Kong_Country.smc": "大金刚国度"
+  },
+  "gameboy": {
+    "Tetris.gb": "俄罗斯方块",
+    "Pokemon_Red.gb": "口袋妖怪红版",
+    "The_Legend_of_Zelda_Links_Awakening.gb": "塞尔达传说：梦见岛"
+  },
+  "gba": {
+    "Pokemon_Ruby.gba": "口袋妖怪红宝石",
+    "The_Legend_of_Zelda_The_Minish_Cap.gba": "塞尔达传说：缩小帽",
+    "Metroid_Fusion.gba": "银河战士：融合"
+  }
+}

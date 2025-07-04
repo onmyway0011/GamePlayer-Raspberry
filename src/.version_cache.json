@@ -1,0 +1,16 @@
+{
+  "nesticle": {
+    "version": "0.95",
+    "install_path": "/opt/retropie/emulators/nesticle",
+    "checksum": "",
+    "dependencies": [],
+    "install_date": "2025-07-04T10:42:46.609530"
+  },
+  "virtuanes": {
+    "version": "0.97",
+    "install_path": "/opt/retropie/emulators/virtuanes",
+    "checksum": "",
+    "dependencies": [],
+    "install_date": "2025-07-04T10:42:46.609974"
+  }
+}

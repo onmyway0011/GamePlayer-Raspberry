@@ -1,0 +1,62 @@
+{
+  "emulators": {
+    "mednafen": {
+      "command": "mednafen",
+      "systems": {
+        "nes": ["-force_module", "nes"],
+        "snes": ["-force_module", "snes"],
+        "gameboy": ["-force_module", "gb"],
+        "gba": ["-force_module", "gba"]
+      },
+      "environment": {
+        "MEDNAFEN_ALLOWMULTI": "1"
+      }
+    },
+    "fceux": {
+      "command": "fceux",
+      "systems": {
+        "nes": []
+      }
+    },
+    "nestopia": {
+      "command": "nestopia",
+      "systems": {
+        "nes": []
+      }
+    },
+    "snes9x": {
+      "command": "snes9x",
+      "systems": {
+        "snes": []
+      }
+    },
+    "visualboyadvance-m": {
+      "command": "visualboyadvance-m",
+      "systems": {
+        "gameboy": [],
+        "gba": []
+      }
+    }
+  },
+  "install_commands": {
+    "brew": {
+      "fceux": "fceux",
+      "nestopia": "nestopia",
+      "snes9x": "snes9x",
+      "visualboyadvance-m": "visualboyadvance-m"
+    },
+    "apt": {
+      "fceux": "fceux",
+      "nestopia": "nestopia-ue",
+      "snes9x": "snes9x-gtk",
+      "visualboyadvance-m": "visualboyadvance-m"
+    }
+  },
+  "descriptions": {
+    "fceux": "优秀的NES模拟器，支持中文",
+    "nestopia": "高兼容性NES模拟器",
+    "snes9x": "最佳SNES模拟器",
+    "visualboyadvance-m": "Game Boy/GBA模拟器",
+    "mednafen": "多系统模拟器"
+  }
+}

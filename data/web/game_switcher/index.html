@@ -22,33 +22,6 @@
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
             margin-bottom: 30px;
         }
-        .status-bar {
-            background: rgba(0,0,0,0.5);
-            border: 1px solid #00ff00;
-            border-radius: 5px;
-            padding: 15px;
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .status-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .status-indicator {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: #00ff00;
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
-        }
         .game-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -62,16 +35,11 @@
             padding: 20px;
             cursor: pointer;
             transition: all 0.3s ease;
-            position: relative;
         }
         .game-card:hover {
             background: rgba(0,255,0,0.1);
             box-shadow: 0 0 20px rgba(0,255,0,0.3);
             transform: translateY(-5px);
-        }
-        .game-card.playing {
-            border-color: #ffff00;
-            box-shadow: 0 0 15px rgba(255,255,0,0.5);
         }
         .game-title {
             font-size: 18px;
@@ -87,7 +55,6 @@
         .game-actions {
             display: flex;
             gap: 10px;
-            flex-wrap: wrap;
         }
         .btn {
             padding: 8px 16px;
@@ -99,9 +66,6 @@
             text-decoration: none;
             font-size: 12px;
             transition: all 0.3s ease;
-            flex: 1;
-            text-align: center;
-            min-width: 80px;
         }
         .btn:hover {
             background: rgba(0,255,0,0.2);
@@ -110,14 +74,6 @@
             background: rgba(0,255,0,0.2);
             color: white;
         }
-        .btn-danger {
-            border-color: #ff0000;
-            color: #ff0000;
-            background: rgba(255,0,0,0.1);
-        }
-        .btn-danger:hover {
-            background: rgba(255,0,0,0.2);
-        }
         .save-info {
             background: rgba(255,255,0,0.1);
             border: 1px solid #ffff00;
@@ -125,20 +81,6 @@
             padding: 10px;
             margin-top: 10px;
             font-size: 12px;
-        }
-        .progress-bar {
-            width: 100%;
-            height: 4px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 2px;
-            margin-top: 5px;
-            overflow: hidden;
-        }
-        .progress-fill {
-            height: 100%;
-            background: #00ff00;
-            border-radius: 2px;
-            transition: width 0.3s ease;
         }
         .controls {
             background: rgba(0,0,0,0.5);
@@ -150,41 +92,14 @@
             color: #00ff00;
             margin-bottom: 15px;
         }
-        .loading {
-            text-align: center;
-            padding: 50px;
-            color: #00ff00;
-        }
-        .loading::after {
-            content: '...';
-            animation: dots 1.5s infinite;
-        }
-        @keyframes dots {
-            0%, 20% { content: '.'; }
-            40% { content: '..'; }
-            60%, 100% { content: '...'; }
-        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>🎮 GamePlayer-Raspberry 游戏选择器</h1>
         
-        <div class="status-bar">
-            <div class="status-item">
-                <div class="status-indicator"></div>
-                <span>系统状态: <span id="systemStatus">正常运行</span></span>
-            </div>
-            <div class="status-item">
-                <span>游戏总数: <span id="gameCount">0</span></span>
-            </div>
-            <div class="status-item">
-                <span>当前游戏: <span id="currentGame">无</span></span>
-            </div>
-        </div>
-        
         <div id="gameGrid" class="game-grid">
-            <div class="loading">正在加载游戏列表</div>
+            <!-- 游戏卡片将通过JavaScript动态生成 -->
         </div>
         
         <div class="controls">
@@ -193,317 +108,93 @@
             <p>• 点击"继续游戏"加载最近的存档</p>
             <p>• 点击"管理存档"查看所有存档</p>
             <p>• 游戏中按ESC键返回选择界面</p>
-            <p>• 支持自动存档和进度恢复</p>
         </div>
     </div>
 
     <script>
-        // 全局变量
-        let games = [];
-        let currentPlayingGame = null;
-        
-        // 初始化页面
-        document.addEventListener('DOMContentLoaded', function() {
-            loadGames();
-            setInterval(updateStatus, 5000); // 每5秒更新状态
-            console.log('🎮 GamePlayer-Raspberry 游戏选择器已加载');
-        });
-        
-        // 加载游戏列表
-        async function loadGames() {
-            try {
-                // 尝试从API获取游戏列表
-                const response = await fetch('/api/games');
-                if (response.ok) {
-                    games = await response.json();
-                } else {
-                    // 如果API不可用，使用示例数据
-                    games = getExampleGames();
-                }
-                
-                renderGameGrid();
-                updateGameCount();
-                
-            } catch (error) {
-                console.log('使用示例游戏数据');
-                games = getExampleGames();
-                renderGameGrid();
-                updateGameCount();
+        // 游戏数据（实际应该从API获取）
+        const games = [
+            {
+                id: "micro_mages",
+                title: "Micro Mages",
+                description: "现代NES平台游戏杰作",
+                category: "平台游戏",
+                hasProgress: true,
+                lastPlayed: "2025-06-26 20:30"
+            },
+            {
+                id: "nova_squirrel",
+                title: "Nova the Squirrel",
+                description: "现代平台冒险游戏",
+                category: "冒险游戏",
+                hasProgress: false,
+                lastPlayed: null
+            },
+            {
+                id: "lizard",
+                title: "Lizard",
+                description: "复古风格解谜平台游戏",
+                category: "解谜游戏",
+                hasProgress: true,
+                lastPlayed: "2025-06-25 15:45"
             }
-        }
-        
-        // 获取示例游戏数据
-        function getExampleGames() {
-            return [
-                {
-                    id: "micro_mages",
-                    title: "Micro Mages",
-                    description: "现代NES平台游戏杰作",
-                    category: "平台游戏",
-                    hasProgress: true,
-                    lastPlayed: "2025-06-26 20:30",
-                    progress: 65,
-                    playTime: "2小时15分钟"
-                },
-                {
-                    id: "nova_squirrel",
-                    title: "Nova the Squirrel",
-                    description: "现代平台冒险游戏",
-                    category: "冒险游戏",
-                    hasProgress: false,
-                    lastPlayed: null,
-                    progress: 0,
-                    playTime: "0分钟"
-                },
-                {
-                    id: "lizard",
-                    title: "Lizard",
-                    description: "复古风格解谜平台游戏",
-                    category: "解谜游戏",
-                    hasProgress: true,
-                    lastPlayed: "2025-06-25 15:45",
-                    progress: 30,
-                    playTime: "45分钟"
-                },
-                {
-                    id: "battle_kid",
-                    title: "Battle Kid",
-                    description: "高难度平台游戏",
-                    category: "动作游戏",
-                    hasProgress: true,
-                    lastPlayed: "2025-06-24 10:20",
-                    progress: 85,
-                    playTime: "3小时30分钟"
-                },
-                {
-                    id: "tetris_clone",
-                    title: "Tetris Clone",
-                    description: "经典俄罗斯方块",
-                    category: "益智游戏",
-                    hasProgress: false,
-                    lastPlayed: null,
-                    progress: 0,
-                    playTime: "0分钟"
-                },
-                {
-                    id: "space_marine",
-                    title: "Space Marine",
-                    description: "太空射击游戏",
-                    category: "射击游戏",
-                    hasProgress: true,
-                    lastPlayed: "2025-06-23 18:00",
-                    progress: 50,
-                    playTime: "1小时20分钟"
-                }
-            ];
-        }
-        
+        ];
+
         // 渲染游戏网格
         function renderGameGrid() {
             const gameGrid = document.getElementById('gameGrid');
             gameGrid.innerHTML = '';
 
-            if (games.length === 0) {
-                gameGrid.innerHTML = '<div class="loading">没有找到游戏文件</div>';
-                return;
-            }
-
             games.forEach(game => {
                 const gameCard = document.createElement('div');
                 gameCard.className = 'game-card';
-                if (game.id === currentPlayingGame) {
-                    gameCard.classList.add('playing');
-                }
                 
                 gameCard.innerHTML = `
                     <div class="game-title">${game.title}</div>
                     <div class="game-info">
                         <div>类型: ${game.category}</div>
                         <div>${game.description}</div>
-                        <div>游戏时间: ${game.playTime}</div>
                     </div>
                     ${game.hasProgress ? `
                         <div class="save-info">
-                            💾 进度: ${game.progress}% | 最后游玩: ${game.lastPlayed}
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: ${game.progress}%"></div>
-                            </div>
+                            💾 有存档 | 最后游玩: ${game.lastPlayed}
                         </div>
                     ` : ''}
                     <div class="game-actions">
-                        <button class="btn btn-primary" onclick="startGame('${game.id}', ${game.hasProgress})">
+                        <a href="#" class="btn btn-primary" onclick="startGame('${game.id}')">
                             ${game.hasProgress ? '继续游戏' : '开始游戏'}
-                        </button>
-                        <button class="btn" onclick="newGame('${game.id}')">新游戏</button>
-                        <button class="btn" onclick="manageSaves('${game.id}')">存档</button>
-                        ${game.id === currentPlayingGame ? 
-                            '<button class="btn btn-danger" onclick="stopGame()">停止</button>' : ''
-                        }
+                        </a>
+                        <a href="#" class="btn" onclick="newGame('${game.id}')">新游戏</a>
+                        <a href="#" class="btn" onclick="manageSaves('${game.id}')">管理存档</a>
                     </div>
                 `;
                 
                 gameGrid.appendChild(gameCard);
             });
         }
-        
-        // 更新游戏数量
-        function updateGameCount() {
-            document.getElementById('gameCount').textContent = games.length;
-        }
-        
-        // 更新状态
-        function updateStatus() {
-            // 这里可以添加实际的状态检查逻辑
-            const statusElement = document.getElementById('systemStatus');
-            const currentGameElement = document.getElementById('currentGame');
-            
-            if (currentPlayingGame) {
-                const game = games.find(g => g.id === currentPlayingGame);
-                currentGameElement.textContent = game ? game.title : '未知游戏';
-            } else {
-                currentGameElement.textContent = '无';
-            }
-        }
-        
+
         // 游戏控制函数
-        async function startGame(gameId, loadSave = false) {
-            console.log(`启动游戏: ${gameId}, 加载存档: ${loadSave}`);
-            
-            try {
-                // 发送启动游戏请求
-                const response = await fetch('/api/start-game', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        gameId: gameId,
-                        loadSave: loadSave
-                    })
-                });
-                
-                if (response.ok) {
-                    currentPlayingGame = gameId;
-                    renderGameGrid();
-                    showNotification(`正在启动 ${getGameTitle(gameId)}...`, 'success');
-                } else {
-                    showNotification('游戏启动失败', 'error');
-                }
-                
-            } catch (error) {
-                console.error('启动游戏失败:', error);
-                showNotification(`模拟启动 ${getGameTitle(gameId)}...`, 'info');
-                currentPlayingGame = gameId;
-                renderGameGrid();
-            }
+        function startGame(gameId) {
+            console.log(`启动游戏: ${gameId}`);
+            // 实际实现中应该调用后端API启动游戏
+            alert(`正在启动 ${gameId}...`);
         }
 
-        async function newGame(gameId) {
+        function newGame(gameId) {
             console.log(`新游戏: ${gameId}`);
-            
-            if (confirm('开始新游戏将清除现有存档，确定继续吗？')) {
-                try {
-                    const response = await fetch('/api/new-game', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ gameId: gameId })
-                    });
-                    
-                    if (response.ok) {
-                        currentPlayingGame = gameId;
-                        renderGameGrid();
-                        showNotification(`正在开始新游戏 ${getGameTitle(gameId)}...`, 'success');
-                    } else {
-                        showNotification('新游戏启动失败', 'error');
-                    }
-                    
-                } catch (error) {
-                    console.error('新游戏启动失败:', error);
-                    showNotification(`模拟开始新游戏 ${getGameTitle(gameId)}...`, 'info');
-                    currentPlayingGame = gameId;
-                    renderGameGrid();
-                }
-            }
+            alert(`正在开始新游戏 ${gameId}...`);
         }
 
-        async function manageSaves(gameId) {
+        function manageSaves(gameId) {
             console.log(`管理存档: ${gameId}`);
-            
-            try {
-                const response = await fetch(`/api/saves/${gameId}`);
-                if (response.ok) {
-                    const saves = await response.json();
-                    showSaveManager(gameId, saves);
-                } else {
-                    showNotification('无法获取存档信息', 'error');
-                }
-                
-            } catch (error) {
-                console.error('获取存档失败:', error);
-                showNotification(`打开 ${getGameTitle(gameId)} 存档管理...`, 'info');
-            }
+            alert(`打开 ${gameId} 存档管理...`);
         }
 
-        async function stopGame() {
-            if (currentPlayingGame && confirm('确定要停止当前游戏吗？')) {
-                try {
-                    const response = await fetch('/api/stop-game', {
-                        method: 'POST'
-                    });
-                    
-                    if (response.ok) {
-                        currentPlayingGame = null;
-                        renderGameGrid();
-                        showNotification('游戏已停止', 'success');
-                    } else {
-                        showNotification('停止游戏失败', 'error');
-                    }
-                    
-                } catch (error) {
-                    console.error('停止游戏失败:', error);
-                    currentPlayingGame = null;
-                    renderGameGrid();
-                    showNotification('游戏已停止', 'info');
-                }
-            }
-        }
-        
-        // 辅助函数
-        function getGameTitle(gameId) {
-            const game = games.find(g => g.id === gameId);
-            return game ? game.title : gameId;
-        }
-        
-        function showNotification(message, type = 'info') {
-            // 简单的通知实现
-            const notification = document.createElement('div');
-            notification.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                padding: 15px 20px;
-                background: ${type === 'success' ? '#00ff00' : type === 'error' ? '#ff0000' : '#ffff00'};
-                color: #000;
-                border-radius: 5px;
-                z-index: 1000;
-                font-family: 'Courier New', monospace;
-                font-weight: bold;
-            `;
-            notification.textContent = message;
-            
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                document.body.removeChild(notification);
-            }, 3000);
-        }
-        
-        function showSaveManager(gameId, saves) {
-            // 简单的存档管理器实现
-            alert(`${getGameTitle(gameId)} 存档管理\n\n这里将显示存档列表和管理选项`);
-        }
+        // 初始化页面
+        document.addEventListener('DOMContentLoaded', function() {
+            renderGameGrid();
+            console.log('🎮 GamePlayer-Raspberry 游戏选择器已加载');
+        });
     </script>
 </body>
 </html>

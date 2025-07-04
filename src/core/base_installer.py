@@ -11,7 +11,7 @@ class BaseInstaller(ABC):
     """
 
     def __init__(self, config_path=None):
-        """TODO: Add docstring"""
+        """TODO: 添加文档字符串"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.config = self._load_config(config_path) if config_path else {}
 

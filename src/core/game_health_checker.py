@@ -27,7 +27,7 @@ class GameHealthChecker:
     """游戏健康状态检查器"""
 
     def __init__(self):
-        """TODO: Add docstring"""
+        """TODO: 添加文档字符串"""
         self.project_root = project_root
         self.roms_dir = self.project_root / "data" / "roms"
         self.covers_dir = self.project_root / "data" / "web" / "images" / "covers"

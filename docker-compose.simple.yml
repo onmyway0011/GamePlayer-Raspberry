@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  gameplayer-simple:
+    build:
+      context: .
+      dockerfile: Dockerfile.simple
+    container_name: gameplayer-simple
+    ports:
+      - "3020:3020"   # Web界面
+      - "5900:5900"   # VNC端口
+    volumes:
+      - ./data/roms:/home/gamer/GamePlayer-Raspberry/data/roms:rw
+      - ./data/saves:/home/gamer/GamePlayer-Raspberry/data/saves:rw
+    environment:
+      - DISPLAY=:1
+      - MEDNAFEN_ALLOWMULTI=1
+    restart: unless-stopped

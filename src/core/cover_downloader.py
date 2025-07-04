@@ -23,7 +23,7 @@ class CoverDownloader:
     """游戏封面下载器"""
 
     def __init__(self):
-        """TODO: Add docstring"""
+        """TODO: 添加文档字符串"""
         self.project_root = project_root
         self.covers_dir = self.project_root / "data" / "web" / "images" / "covers"
         self.covers_dir.mkdir(parents=True, exist_ok=True)

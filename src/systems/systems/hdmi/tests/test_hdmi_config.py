@@ -172,7 +172,7 @@ def test_dry_run():
 
 
 def test_apply_hdmi_configs(tmp_path):
-    """TODO: Add docstring"""
+    """TODO: 添加文档字符串"""
     config_path = tmp_path / 'config.txt'
     config_path.write_text('# config for test\n')
     configurator = HDMIConfigurator(str(config_path))

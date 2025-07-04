@@ -20,7 +20,7 @@ class SaveManager:
     """游戏存档管理器"""
 
     def __init__(self, saves_dir: str = "saves", cloud_config: Optional[Dict] = None):
-        """TODO: Add docstring"""
+        """TODO: 添加文档字符串"""
         self.saves_dir = Path(saves_dir)
         self.saves_dir.mkdir(parents=True, exist_ok=True)
 
@@ -54,7 +54,7 @@ class SaveManager:
         try:
             with open(rom_file, 'rb') as f:
                 content = f.read()
-                game_id = hashlib.md5(content, usedforsecurity=False, usedforsecurity=False, usedforsecurity=False, usedforsecurity=False).hexdigest()[:16]
+                game_id = hashlib.md5(content, usedforsecurity=False).hexdigest()[:16]
         except Exception:
             # 如果无法读取文件，使用文件名
             game_id = hashlib.md5(rom_file.name.encode()).hexdigest()[:16]
@@ -160,7 +160,7 @@ class SaveManager:
                 with open(info_path, 'r', encoding='utf-8') as f:
                     return json.load(f)
             except Exception as e:
-        logger.warning(f"操作失败: {e}")
+                logger.warning(f"操作失败: {e}")
 
         # 返回默认信息
         return {

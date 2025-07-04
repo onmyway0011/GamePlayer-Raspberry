@@ -1,0 +1,121 @@
+version: '3.8'
+
+services:
+  # GamePlayer-Raspberry 图形化主服务
+  gameplayer-gui:
+    build:
+      context: .
+      dockerfile: Dockerfile.gui
+    container_name: gameplayer-raspberry-gui
+    hostname: gameplayer-gui
+    ports:
+      - "3020:3020"   # Web管理界面
+      - "5900:5900"   # VNC端口
+      - "6080:6080"   # noVNC Web端口 (预留)
+    volumes:
+      # ROM文件持久化
+      - ./data/roms:/home/gamer/GamePlayer-Raspberry/data/roms:rw
+      # 存档文件持久化
+      - ./data/saves:/home/gamer/GamePlayer-Raspberry/data/saves:rw
+      # 配置文件持久化
+      - ./config:/home/gamer/GamePlayer-Raspberry/config:rw
+      # 日志文件持久化
+      - ./logs:/home/gamer/GamePlayer-Raspberry/logs:rw
+      # 报告文件持久化
+      - ./reports:/home/gamer/GamePlayer-Raspberry/reports:rw
+      # X11套接字 (用于本地X11转发)
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+    environment:
+      # 显示设置
+      - DISPLAY=:1
+      - RESOLUTION=1920x1080
+      # 用户设置
+      - HOME=/home/gamer
+      - USER=gamer
+      # Python设置
+      - PYTHONPATH=/home/gamer/GamePlayer-Raspberry/src
+      - PYTHONUNBUFFERED=1
+      # 语言设置
+      - LANG=zh_CN.UTF-8
+      - LC_ALL=zh_CN.UTF-8
+      # 音频设置
+      - PULSE_RUNTIME_PATH=/tmp/pulse
+      # 游戏设置
+      - MEDNAFEN_ALLOWMULTI=1
+    # 共享内存大小 (用于图形渲染)
+    shm_size: 512m
+    # 特权模式 (用于音频和输入设备)
+    privileged: false
+    # 设备访问
+    devices:
+      - /dev/snd:/dev/snd  # 音频设备
+    # 重启策略
+    restart: unless-stopped
+    # 网络设置
+    networks:
+      - gameplayer-network
+    # 健康检查
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3020/api/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  # noVNC Web VNC客户端 (可选)
+  novnc:
+    image: theasp/novnc:latest
+    container_name: gameplayer-novnc
+    ports:
+      - "6080:8080"   # noVNC Web界面
+    environment:
+      - DISPLAY_WIDTH=1920
+      - DISPLAY_HEIGHT=1080
+      - VNC_SERVER=gameplayer-gui:5900
+      - VNC_PASSWORD=gamer123
+    depends_on:
+      - gameplayer-gui
+    restart: unless-stopped
+    networks:
+      - gameplayer-network
+
+  # 文件管理器 (可选)
+  filebrowser:
+    image: filebrowser/filebrowser:latest
+    container_name: gameplayer-files
+    ports:
+      - "8080:80"     # 文件管理界面
+    volumes:
+      - ./data:/srv/data:rw
+      - ./config:/srv/config:rw
+      - ./logs:/srv/logs:ro
+      - ./reports:/srv/reports:ro
+    environment:
+      - FB_BASEURL=/files
+    restart: unless-stopped
+    networks:
+      - gameplayer-network
+
+  # 系统监控 (可选)
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: gameplayer-monitor
+    ports:
+      - "9000:9000"   # Portainer管理界面
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - portainer_data:/data
+    restart: unless-stopped
+    networks:
+      - gameplayer-network
+
+networks:
+  gameplayer-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+
+volumes:
+  portainer_data:
+    driver: local
