@@ -145,26 +145,27 @@ WORKDIR /workspace
 CMD ["/bin/bash"]
 ```
 
-#### 2. 构建镜像
-```bash
-docker build -f Dockerfile.rpi-builder -t rpi-image-builder .
-```
+#### 2. 构建并进入容器（在宿主机终端执行）
 
-#### 3. 启动容器并挂载项目目录
 ```bash
+docker stop rpi-image-builder 2>/dev/null || true
+docker rm rpi-image-builder 2>/dev/null || true
 docker run --privileged -it \
   -v ~/AICODE/GamePlayer-Raspberry:/workspace \
   --name rpi-image-builder \
   rpi-image-builder
 ```
 
-#### 4. 容器内一键生成镜像
+#### 3. 进入容器后，执行镜像生成脚本（在容器内执行）
+
 ```bash
 cd /workspace
 bash src/scripts/pure_raspberry_image_builder.sh
 ```
 
-#### 5. 拷贝镜像回macOS烧录
+> 注意：不要在容器内再次运行 docker run ... 命令！
+
+#### 4. 拷贝镜像回macOS烧录
 - 生成的.img.gz文件在本地output/目录下，可用Raspberry Pi Imager烧录。
 
 ### ⚠️ 注意事项
@@ -807,72 +808,17 @@ python3 tools/dev/project_cleaner.py --project-root .
 cat docs/reports/code_optimization_summary.md
 ```
 
-### 🧪 测试
+#### 一键自动化生成树莓派镜像（全流程无人值守）
+
+在宿主机终端执行：
 
 ```bash
-# 运行所有测试
-python3 -m pytest tests/ -v
-
-# 运行特定测试
-python3 -m pytest tests/unit/test_rom_integration.py -v
-
-# 生成覆盖率报告
-python3 -m pytest --cov=src/core --cov=src/scripts tests/
-
-# Docker环境测试
-src/scripts/quick_docker_test.sh
+docker stop rpi-image-builder 2>/dev/null || true
+docker rm rpi-image-builder 2>/dev/null || true
+docker run --privileged -it \
+  -v ~/AICODE/GamePlayer-Raspberry:/workspace \
+  --name rpi-image-builder \
+  rpi-image-builder bash -c "cd /workspace && bash src/scripts/pure_raspberry_image_builder.sh"
 ```
 
-## ⚖️ 法律合规
-
-### ✅ 包含内容
-
-所有ROM文件均为完全合法的内容：
-- **开源自制游戏**: 现代开发者创作的免费游戏
-- **公有领域作品**: 无版权限制的经典游戏
-- **测试用ROM**: 用于模拟器测试的演示文件
-- **备用ROM**: 系统生成的最小测试文件
-
-### 🚫 不包含内容
-
-- **商业游戏**: 绝不包含任何受版权保护的商业游戏
-- **盗版ROM**: 不包含任何非法获取的ROM文件
-- **未授权内容**: 所有内容都有明确的使用许可
-
-## 🤝 贡献
-
-我们欢迎所有形式的贡献！
-
-### 🔧 贡献方式
-
-1. **Fork** 项目
-2. **创建** 功能分支 (`git checkout -b feature/AmazingFeature`)
-3. **提交** 更改 (`git commit -m 'Add some AmazingFeature'`)
-4. **推送** 到分支 (`git push origin feature/AmazingFeature`)
-5. **打开** Pull Request
-
-### 📋 贡献指南
-
-- 遵循现有代码风格
-- 添加适当的测试
-- 更新相关文档
-- 确保所有测试通过
-
-## 📄 许可证
-
-本项目采用 MIT 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情。
-
-## 🙏 致谢
-
-- **RetroPie** - 提供了优秀的游戏模拟平台
-- **Pygame** - 强大的Python游戏开发库
-- **开源游戏开发者** - 创作了精彩的自制游戏
-- **社区贡献者** - 持续改进和支持项目
-
----
-
-### 🎮 享受您的复古游戏时光！
-
-GamePlayer-Raspberry - 8种游戏系统，100+游戏ROM，完整金手指配置
-
-🎯 现在支持Docker图形化环境和一键镜像生成！
+- 镜像文件会自动生成在 `output/` 目录，无需人工干预。
