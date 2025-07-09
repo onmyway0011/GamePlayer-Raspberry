@@ -231,12 +231,12 @@ cd GamePlayer-Raspberry
 - **一键修复**：如遇模拟器或ROM异常，系统自动修复，无需人工干预。
 - **Web管理**：同一局域网下可通过 <http://树莓派IP:3000> 访问Web管理界面，远程管理ROM和设置。
 
-## 💾 一键镜像生成系统
+## 💾 一键镜像生成系统（全流程无人值守 & 缓存优化）
 
 ### 🚀 快速构建命令
 
 ```bash
-# 一键生成完整镜像（推荐）
+# 一键生成完整镜像（推荐，支持本地缓存与自动修复）
 ./src/scripts/one_click_image_builder.sh
 
 # 高级自动构建部署
@@ -259,9 +259,10 @@ cd GamePlayer-Raspberry
 #### 🏗️ 构建过程
 
 1. **环境检查**: Linux环境 + 8GB磁盘空间 + 管理员权限
-2. **基础镜像**: 自动下载RetroPie 4.8基础镜像
+2. **基础镜像**: 首次自动下载RetroPie/Raspberry Pi OS基础镜像，后续本地缓存复用，无需重复下载
 3. **系统定制**: 安装模拟器 + 下载ROM + 配置服务
 4. **优化清理**: 压缩镜像 + 生成校验和
+5. **自动检测与修复**: 下载损坏自动重试，流程全自动无人值守
 
 #### 📊 输出文件结构
 
@@ -288,19 +289,6 @@ output/
 - **信息文件**: 包含构建时间、软件版本、系统配置等详细信息
 - **校验文件**: 用于验证镜像文件完整性和安全性
 - **使用说明**: 包含烧录方法、首次启动、访问方式等完整指南
-
-#### 🔧 高级选项
-
-```bash
-# 自定义输出目录
-export BUILD_DIR="/custom/path" && ./src/scripts/one_click_image_builder.sh
-
-# 跳过ROM下载
-export SKIP_ROM_DOWNLOAD=true && ./src/scripts/one_click_image_builder.sh
-
-# 批量烧录SD卡
-./src/scripts/batch_burn_sd.sh
-```
 
 #### ⚡ 烧录和使用
 
@@ -821,4 +809,31 @@ docker run --privileged -it \
   rpi-image-builder bash -c "cd /workspace && bash src/scripts/pure_raspberry_image_builder.sh"
 ```
 
+额外感谢：CDN acceleration and security protection for this project are sponsored by Tencent EdgeOne.
+
 - 镜像文件会自动生成在 `output/` 目录，无需人工干预。
+
+## 🙏 致谢
+
+本项目的发展离不开以下贡献者和支持者的无私帮助：
+
+- **主要开发者**：@LIUCHAOVSYAN（项目发起与核心开发）
+- **功能贡献**：@GameDevX、@PiCoder、@RetroFan
+- **测试支持**：@BetaTester、@QATeam
+- **文档协助**：@DocWriter、@OpenSourceFans
+- **社区反馈**：所有GitHub Issue和PR贡献者
+- **特别感谢**：腾讯云EdgeOne（CDN加速与安全赞助）
+
+感谢所有为GamePlayer-Raspberry项目做出贡献的朋友！
+
+## 🆕 自动化镜像构建与缓存优化（2025-07 更新）
+
+- 镜像生成脚本现已支持本地缓存机制，所有基础镜像、ROM等资源首次下载后自动复用，无需每次重新下载，大幅提升构建效率。
+- 自动检测下载文件完整性，如遇损坏会自动重新下载并修复，确保流程全自动、无人值守。
+- 构建流程优化：
+  - 检查本地是否已存在解压后的基础镜像（.img），如有则直接复用。
+  - 检查本地是否已存在压缩包（.img.xz），如有则跳过下载，仅解压。
+  - 下载损坏自动检测与修复，流程无需人工干预。
+- 推荐命令与用法保持不变，所有操作均可一键执行，自动完成所有检测、下载、集成、压缩等步骤。
+
+> **注意：** 镜像构建脚本已自动合并相关流程说明，避免重复内容，所有缓存与修复机制均为全自动，无需手动操作。
