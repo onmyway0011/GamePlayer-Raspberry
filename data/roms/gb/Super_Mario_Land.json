@@ -1,0 +1,26 @@
+{
+  "name": "Super_Mario_Land",
+  "display_name": "Super Mario Land",
+  "system": "gb",
+  "year": 1989,
+  "priority": 1,
+  "file_size": 32768,
+  "file_path": "data/roms/gb/Super_Mario_Land.gb",
+  "created_date": "2025-07-08 16:36:27",
+  "type": "demo",
+  "description": "经典GB游戏 Super Mario Land 的演示版本",
+  "controls": {
+    "up": "↑ / W",
+    "down": "↓ / S",
+    "left": "← / A",
+    "right": "→ / D",
+    "a": "Space / Z",
+    "b": "Shift / X",
+    "start": "Enter",
+    "select": "Tab"
+  },
+  "cheats_available": true,
+  "genre": "Platform",
+  "players": "1-2",
+  "rating": "E (Everyone)"
+}

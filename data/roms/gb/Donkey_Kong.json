@@ -1,0 +1,26 @@
+{
+  "name": "Donkey_Kong",
+  "display_name": "Donkey Kong",
+  "system": "gb",
+  "year": 1994,
+  "priority": 2,
+  "file_size": 32768,
+  "file_path": "data/roms/gb/Donkey_Kong.gb",
+  "created_date": "2025-07-08 16:36:27",
+  "type": "demo",
+  "description": "经典GB游戏 Donkey Kong 的演示版本",
+  "controls": {
+    "up": "↑ / W",
+    "down": "↓ / S",
+    "left": "← / A",
+    "right": "→ / D",
+    "a": "Space / Z",
+    "b": "Shift / X",
+    "start": "Enter",
+    "select": "Tab"
+  },
+  "cheats_available": true,
+  "genre": "Classic",
+  "players": "1-2",
+  "rating": "E (Everyone)"
+}

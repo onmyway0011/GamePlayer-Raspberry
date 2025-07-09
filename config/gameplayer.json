@@ -1,0 +1,12 @@
+{
+  "version": "5.0.0",
+  "systems": [
+    "nes",
+    "snes",
+    "gb",
+    "gba",
+    "genesis"
+  ],
+  "auto_start": true,
+  "web_port": 8080
+}

@@ -1,0 +1,368 @@
+{
+  "download_summary": {
+    "total": 50,
+    "success": 37,
+    "failed": 0,
+    "skipped": 13
+  },
+  "total_games": 50,
+  "download_time": "2025-07-08 16:36:27",
+  "games_by_system": {
+    "nes": 20,
+    "snes": 15,
+    "gb": 8,
+    "genesis": 7
+  },
+  "game_list": [
+    {
+      "name": "Super Mario Bros",
+      "system": "NES",
+      "year": 1985,
+      "priority": 1,
+      "genre": "Platform"
+    },
+    {
+      "name": "Super Mario Bros 3",
+      "system": "NES",
+      "year": 1988,
+      "priority": 1,
+      "genre": "Platform"
+    },
+    {
+      "name": "The Legend of Zelda",
+      "system": "NES",
+      "year": 1986,
+      "priority": 1,
+      "genre": "Adventure"
+    },
+    {
+      "name": "Zelda II The Adventure of Link",
+      "system": "NES",
+      "year": 1987,
+      "priority": 2,
+      "genre": "Adventure"
+    },
+    {
+      "name": "Contra",
+      "system": "NES",
+      "year": 1987,
+      "priority": 1,
+      "genre": "Action"
+    },
+    {
+      "name": "Super Contra",
+      "system": "NES",
+      "year": 1988,
+      "priority": 2,
+      "genre": "Action"
+    },
+    {
+      "name": "Mega Man 2",
+      "system": "NES",
+      "year": 1988,
+      "priority": 1,
+      "genre": "Platform"
+    },
+    {
+      "name": "Mega Man 3",
+      "system": "NES",
+      "year": 1990,
+      "priority": 2,
+      "genre": "Platform"
+    },
+    {
+      "name": "Castlevania",
+      "system": "NES",
+      "year": 1986,
+      "priority": 1,
+      "genre": "Adventure"
+    },
+    {
+      "name": "Castlevania III",
+      "system": "NES",
+      "year": 1989,
+      "priority": 2,
+      "genre": "Adventure"
+    },
+    {
+      "name": "Metroid",
+      "system": "NES",
+      "year": 1986,
+      "priority": 1,
+      "genre": "Adventure"
+    },
+    {
+      "name": "Donkey Kong",
+      "system": "NES",
+      "year": 1981,
+      "priority": 1,
+      "genre": "Classic"
+    },
+    {
+      "name": "Pac Man",
+      "system": "NES",
+      "year": 1980,
+      "priority": 1,
+      "genre": "Classic"
+    },
+    {
+      "name": "Tetris",
+      "system": "NES",
+      "year": 1984,
+      "priority": 1,
+      "genre": "Puzzle"
+    },
+    {
+      "name": "Duck Hunt",
+      "system": "NES",
+      "year": 1984,
+      "priority": 2,
+      "genre": "Classic"
+    },
+    {
+      "name": "Excitebike",
+      "system": "NES",
+      "year": 1984,
+      "priority": 2,
+      "genre": "Classic"
+    },
+    {
+      "name": "Final Fantasy",
+      "system": "NES",
+      "year": 1987,
+      "priority": 1,
+      "genre": "RPG"
+    },
+    {
+      "name": "Dragon Quest",
+      "system": "NES",
+      "year": 1986,
+      "priority": 2,
+      "genre": "Classic"
+    },
+    {
+      "name": "Punch Out",
+      "system": "NES",
+      "year": 1987,
+      "priority": 2,
+      "genre": "Classic"
+    },
+    {
+      "name": "Kirby Adventure",
+      "system": "NES",
+      "year": 1993,
+      "priority": 2,
+      "genre": "Platform"
+    },
+    {
+      "name": "Super Mario World",
+      "system": "SNES",
+      "year": 1990,
+      "priority": 1,
+      "genre": "Platform"
+    },
+    {
+      "name": "Super Mario Kart",
+      "system": "SNES",
+      "year": 1992,
+      "priority": 1,
+      "genre": "Platform"
+    },
+    {
+      "name": "The Legend of Zelda A Link to the Past",
+      "system": "SNES",
+      "year": 1991,
+      "priority": 1,
+      "genre": "Adventure"
+    },
+    {
+      "name": "Super Metroid",
+      "system": "SNES",
+      "year": 1994,
+      "priority": 1,
+      "genre": "Adventure"
+    },
+    {
+      "name": "Donkey Kong Country",
+      "system": "SNES",
+      "year": 1994,
+      "priority": 1,
+      "genre": "Classic"
+    },
+    {
+      "name": "Super Castlevania IV",
+      "system": "SNES",
+      "year": 1991,
+      "priority": 2,
+      "genre": "Adventure"
+    },
+    {
+      "name": "F Zero",
+      "system": "SNES",
+      "year": 1990,
+      "priority": 2,
+      "genre": "Racing"
+    },
+    {
+      "name": "Star Fox",
+      "system": "SNES",
+      "year": 1993,
+      "priority": 2,
+      "genre": "Classic"
+    },
+    {
+      "name": "Super Mario RPG",
+      "system": "SNES",
+      "year": 1996,
+      "priority": 1,
+      "genre": "Platform"
+    },
+    {
+      "name": "Chrono Trigger",
+      "system": "SNES",
+      "year": 1995,
+      "priority": 1,
+      "genre": "RPG"
+    },
+    {
+      "name": "Final Fantasy VI",
+      "system": "SNES",
+      "year": 1994,
+      "priority": 1,
+      "genre": "RPG"
+    },
+    {
+      "name": "Secret of Mana",
+      "system": "SNES",
+      "year": 1993,
+      "priority": 2,
+      "genre": "Classic"
+    },
+    {
+      "name": "Contra III",
+      "system": "SNES",
+      "year": 1992,
+      "priority": 2,
+      "genre": "Action"
+    },
+    {
+      "name": "Street Fighter II",
+      "system": "SNES",
+      "year": 1992,
+      "priority": 2,
+      "genre": "Action"
+    },
+    {
+      "name": "Yoshi Island",
+      "system": "SNES",
+      "year": 1995,
+      "priority": 2,
+      "genre": "Classic"
+    },
+    {
+      "name": "Tetris",
+      "system": "GB",
+      "year": 1989,
+      "priority": 1,
+      "genre": "Puzzle"
+    },
+    {
+      "name": "Super Mario Land",
+      "system": "GB",
+      "year": 1989,
+      "priority": 1,
+      "genre": "Platform"
+    },
+    {
+      "name": "The Legend of Zelda Links Awakening",
+      "system": "GB",
+      "year": 1993,
+      "priority": 1,
+      "genre": "Adventure"
+    },
+    {
+      "name": "Metroid II",
+      "system": "GB",
+      "year": 1991,
+      "priority": 2,
+      "genre": "Adventure"
+    },
+    {
+      "name": "Pokemon Red",
+      "system": "GB",
+      "year": 1996,
+      "priority": 1,
+      "genre": "Classic"
+    },
+    {
+      "name": "Pokemon Blue",
+      "system": "GB",
+      "year": 1996,
+      "priority": 1,
+      "genre": "Classic"
+    },
+    {
+      "name": "Kirby Dream Land",
+      "system": "GB",
+      "year": 1992,
+      "priority": 2,
+      "genre": "Platform"
+    },
+    {
+      "name": "Donkey Kong",
+      "system": "GB",
+      "year": 1994,
+      "priority": 2,
+      "genre": "Classic"
+    },
+    {
+      "name": "Sonic the Hedgehog",
+      "system": "GENESIS",
+      "year": 1991,
+      "priority": 1,
+      "genre": "Platform"
+    },
+    {
+      "name": "Sonic 2",
+      "system": "GENESIS",
+      "year": 1992,
+      "priority": 1,
+      "genre": "Platform"
+    },
+    {
+      "name": "Streets of Rage",
+      "system": "GENESIS",
+      "year": 1991,
+      "priority": 2,
+      "genre": "Beat'em Up"
+    },
+    {
+      "name": "Golden Axe",
+      "system": "GENESIS",
+      "year": 1989,
+      "priority": 2,
+      "genre": "Beat'em Up"
+    },
+    {
+      "name": "Phantasy Star IV",
+      "system": "GENESIS",
+      "year": 1993,
+      "priority": 1,
+      "genre": "RPG"
+    },
+    {
+      "name": "Shinobi III",
+      "system": "GENESIS",
+      "year": 1993,
+      "priority": 2,
+      "genre": "Action"
+    },
+    {
+      "name": "Altered Beast",
+      "system": "GENESIS",
+      "year": 1988,
+      "priority": 2,
+      "genre": "Classic"
+    }
+  ]
+}

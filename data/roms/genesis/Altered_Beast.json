@@ -1,0 +1,26 @@
+{
+  "name": "Altered_Beast",
+  "display_name": "Altered Beast",
+  "system": "genesis",
+  "year": 1988,
+  "priority": 2,
+  "file_size": 262144,
+  "file_path": "data/roms/genesis/Altered_Beast.md",
+  "created_date": "2025-07-08 16:36:27",
+  "type": "demo",
+  "description": "经典GENESIS游戏 Altered Beast 的演示版本",
+  "controls": {
+    "up": "↑ / W",
+    "down": "↓ / S",
+    "left": "← / A",
+    "right": "→ / D",
+    "a": "Space / Z",
+    "b": "Shift / X",
+    "c": "C",
+    "start": "Enter"
+  },
+  "cheats_available": true,
+  "genre": "Classic",
+  "players": "1-2",
+  "rating": "E (Everyone)"
+}

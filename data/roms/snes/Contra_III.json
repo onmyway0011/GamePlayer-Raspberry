@@ -1,0 +1,30 @@
+{
+  "name": "Contra_III",
+  "display_name": "Contra III",
+  "system": "snes",
+  "year": 1992,
+  "priority": 2,
+  "file_size": 524288,
+  "file_path": "data/roms/snes/Contra_III.smc",
+  "created_date": "2025-07-08 16:36:27",
+  "type": "demo",
+  "description": "经典SNES游戏 Contra III 的演示版本",
+  "controls": {
+    "up": "↑ / W",
+    "down": "↓ / S",
+    "left": "← / A",
+    "right": "→ / D",
+    "a": "Space / Z",
+    "b": "Shift / X",
+    "x": "Q",
+    "y": "E",
+    "l": "1",
+    "r": "2",
+    "start": "Enter",
+    "select": "Tab"
+  },
+  "cheats_available": true,
+  "genre": "Action",
+  "players": "1-2",
+  "rating": "E (Everyone)"
+}

@@ -1,0 +1,26 @@
+{
+  "name": "The_Legend_of_Zelda_Links_Awakening",
+  "display_name": "The Legend of Zelda Links Awakening",
+  "system": "gb",
+  "year": 1993,
+  "priority": 1,
+  "file_size": 32768,
+  "file_path": "data/roms/gb/The_Legend_of_Zelda_Links_Awakening.gb",
+  "created_date": "2025-07-08 16:36:27",
+  "type": "demo",
+  "description": "经典GB游戏 The Legend of Zelda Links Awakening 的演示版本",
+  "controls": {
+    "up": "↑ / W",
+    "down": "↓ / S",
+    "left": "← / A",
+    "right": "→ / D",
+    "a": "Space / Z",
+    "b": "Shift / X",
+    "start": "Enter",
+    "select": "Tab"
+  },
+  "cheats_available": true,
+  "genre": "Adventure",
+  "players": "1-2",
+  "rating": "E (Everyone)"
+}

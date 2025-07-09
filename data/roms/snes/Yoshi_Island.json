@@ -1,0 +1,30 @@
+{
+  "name": "Yoshi_Island",
+  "display_name": "Yoshi Island",
+  "system": "snes",
+  "year": 1995,
+  "priority": 2,
+  "file_size": 524288,
+  "file_path": "data/roms/snes/Yoshi_Island.smc",
+  "created_date": "2025-07-08 16:36:27",
+  "type": "demo",
+  "description": "经典SNES游戏 Yoshi Island 的演示版本",
+  "controls": {
+    "up": "↑ / W",
+    "down": "↓ / S",
+    "left": "← / A",
+    "right": "→ / D",
+    "a": "Space / Z",
+    "b": "Shift / X",
+    "x": "Q",
+    "y": "E",
+    "l": "1",
+    "r": "2",
+    "start": "Enter",
+    "select": "Tab"
+  },
+  "cheats_available": true,
+  "genre": "Classic",
+  "players": "1-2",
+  "rating": "E (Everyone)"
+}

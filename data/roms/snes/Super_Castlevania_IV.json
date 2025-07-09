@@ -1,0 +1,30 @@
+{
+  "name": "Super_Castlevania_IV",
+  "display_name": "Super Castlevania IV",
+  "system": "snes",
+  "year": 1991,
+  "priority": 2,
+  "file_size": 524288,
+  "file_path": "data/roms/snes/Super_Castlevania_IV.smc",
+  "created_date": "2025-07-08 16:36:27",
+  "type": "demo",
+  "description": "经典SNES游戏 Super Castlevania IV 的演示版本",
+  "controls": {
+    "up": "↑ / W",
+    "down": "↓ / S",
+    "left": "← / A",
+    "right": "→ / D",
+    "a": "Space / Z",
+    "b": "Shift / X",
+    "x": "Q",
+    "y": "E",
+    "l": "1",
+    "r": "2",
+    "start": "Enter",
+    "select": "Tab"
+  },
+  "cheats_available": true,
+  "genre": "Adventure",
+  "players": "1-2",
+  "rating": "E (Everyone)"
+}

@@ -1,0 +1,26 @@
+{
+  "name": "Final_Fantasy",
+  "display_name": "Final Fantasy",
+  "system": "nes",
+  "year": 1987,
+  "priority": 1,
+  "file_size": 40976,
+  "file_path": "data/roms/nes/Final_Fantasy.nes",
+  "created_date": "2025-07-08 16:36:27",
+  "type": "demo",
+  "description": "经典NES游戏 Final Fantasy 的演示版本",
+  "controls": {
+    "up": "↑ / W",
+    "down": "↓ / S",
+    "left": "← / A",
+    "right": "→ / D",
+    "a": "Space / Z",
+    "b": "Shift / X",
+    "start": "Enter",
+    "select": "Tab"
+  },
+  "cheats_available": true,
+  "genre": "RPG",
+  "players": "1-2",
+  "rating": "E (Everyone)"
+}

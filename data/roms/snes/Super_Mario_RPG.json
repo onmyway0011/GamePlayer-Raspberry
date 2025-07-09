@@ -1,0 +1,30 @@
+{
+  "name": "Super_Mario_RPG",
+  "display_name": "Super Mario RPG",
+  "system": "snes",
+  "year": 1996,
+  "priority": 1,
+  "file_size": 524288,
+  "file_path": "data/roms/snes/Super_Mario_RPG.smc",
+  "created_date": "2025-07-08 16:36:27",
+  "type": "demo",
+  "description": "经典SNES游戏 Super Mario RPG 的演示版本",
+  "controls": {
+    "up": "↑ / W",
+    "down": "↓ / S",
+    "left": "← / A",
+    "right": "→ / D",
+    "a": "Space / Z",
+    "b": "Shift / X",
+    "x": "Q",
+    "y": "E",
+    "l": "1",
+    "r": "2",
+    "start": "Enter",
+    "select": "Tab"
+  },
+  "cheats_available": true,
+  "genre": "Platform",
+  "players": "1-2",
+  "rating": "E (Everyone)"
+}

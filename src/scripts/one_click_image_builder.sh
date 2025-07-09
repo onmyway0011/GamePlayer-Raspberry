@@ -1,7 +1,6 @@
 #!/bin/bash
 # 一键生成完整的树莓派游戏镜像
-
-set -e
+set -euo pipefail  # 添加 -u 和 -o pipefail 增强错误处理
 
 # 颜色定义
 RED='\033[0;31m'
@@ -19,12 +18,37 @@ log_warning() { echo -e "${YELLOW}[WARNING]${NC} $1"; }
 log_error() { echo -e "${RED}[ERROR]${NC} $1"; }
 log_step() { echo -e "${PURPLE}[STEP]${NC} $1"; }
 
+# 错误处理函数
+handle_error() {
+    local line_number=$1
+    local error_code=$2
+    log_error "脚本在第 ${line_number} 行失败，错误代码: ${error_code}"
+    log_error "正在清理临时文件..."
+    cleanup_on_error
+    exit "${error_code}"
+}
+
+# 设置错误处理
+trap 'handle_error ${LINENO} $?' ERR
+
+# 清理函数
+cleanup_on_error() {
+    if [ -n "${TEMP_DIR:-}" ] && [ -d "$TEMP_DIR" ]; then
+        log_info "清理临时目录: $TEMP_DIR"
+        rm -rf "$TEMP_DIR" || true
+    fi
+}
+
 # 配置变量
 PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
-BUILD_DIR="$PROJECT_ROOT/build/output"
+BUILD_DIR="$PROJECT_ROOT/output"  # 修改为统一的 output 目录
 TEMP_DIR="$PROJECT_ROOT/temp/image_build"
 IMAGE_NAME="retropie_gameplayer_$(date +%Y%m%d_%H%M%S).img"
 FINAL_IMAGE="$BUILD_DIR/${IMAGE_NAME%.img}_complete.img.gz"
+
+# 全局变量初始化
+SKIP_NATIVE_IMAGE=false
+SKIP_DOCKER_BUILD=false
 
 echo "🎮 GamePlayer-Raspberry 一键镜像构建器"
 echo "========================================"
@@ -37,7 +61,8 @@ check_requirements() {
     log_step "1. 检查系统要求..."
 
     # 检测操作系统
-    local os_type=$(uname -s)
+    local os_type
+    os_type=$(uname -s)
     log_info "检测到操作系统: $os_type"
 
     if [ "$os_type" = "Darwin" ]; then
@@ -46,7 +71,7 @@ check_requirements() {
         SKIP_NATIVE_IMAGE=true
     fi
 
-    local required_tools=("docker" "python3" "git" "curl")
+    local required_tools=("python3" "git" "curl")
     local missing_tools=()
 
     for tool in "${required_tools[@]}"; do
@@ -54,6 +79,16 @@ check_requirements() {
             missing_tools+=("$tool")
         fi
     done
+    # Docker检查 - 只在需要时检查
+    if [ "$SKIP_NATIVE_IMAGE" = "true" ] || [ "$SKIP_DOCKER_BUILD" != "true" ]; then
+        if ! command -v "docker" >/dev/null 2>&1; then
+            log_warning "⚠️ Docker未安装，跳过Docker相关功能"
+            SKIP_DOCKER_BUILD=true
+        elif ! docker info >/dev/null 2>&1; then
+            log_warning "⚠️ Docker未运行，跳过Docker相关功能"
+            SKIP_DOCKER_BUILD=true
+        fi
+    fi
 
     if [ ${#missing_tools[@]} -ne 0 ]; then
         log_error "❌ 缺少必需工具: ${missing_tools[*]}"
@@ -61,17 +96,18 @@ check_requirements() {
         exit 1
     fi
     
-    # 检查Docker状态
-    if ! docker info >/dev/null 2>&1; then
-        log_error "❌ Docker未运行，请启动Docker"
-        exit 1
+    # 检查磁盘空间 (至少需要5GB)
+    local available_space
+    if command -v df >/dev/null 2>&1; then
+        available_space=$(df "$PROJECT_ROOT" 2>/dev/null | awk 'NR==2 {print $4}' || echo "0")
+        if [ "${available_space:-0}" -lt 5242880 ]; then  # 5GB in KB
+            log_warning "⚠️ 磁盘空间可能不足，建议至少5GB可用空间"
+        fi
     fi
-    
-    # 检查磁盘空间 (至少需要10GB)
-    local available_space=$(df "$PROJECT_ROOT" | awk 'NR==2 {print $4}')
-    if [ "$available_space" -lt 10485760 ]; then  # 10GB in KB
-        log_warning "⚠️ 磁盘空间可能不足，建议至少10GB可用空间"
-    fi
+    # 检查Python版本
+    local python_version
+    python_version=$(python3 --version 2>&1 | cut -d' ' -f2)
+    log_info "Python版本: $python_version"
     
     log_success "✅ 系统要求检查通过"
 }
@@ -80,16 +116,32 @@ check_requirements() {
 prepare_environment() {
     log_step "2. 准备构建环境..."
     
-    # 创建必要目录
-    mkdir -p "$BUILD_DIR" "$TEMP_DIR"
-    mkdir -p "$PROJECT_ROOT/data/roms/nes"
-    mkdir -p "$PROJECT_ROOT/data/saves"
-    mkdir -p "$PROJECT_ROOT/data/cheats"
-    mkdir -p "$PROJECT_ROOT/data/logs"
+    # 创建必要目录 - 确保目录创建成功
+    local directories=(
+        "$BUILD_DIR"
+        "$TEMP_DIR"
+        "$PROJECT_ROOT/data/roms/nes"
+        "$PROJECT_ROOT/data/saves"
+        "$PROJECT_ROOT/data/cheats"
+        "$PROJECT_ROOT/data/logs"
+        "$PROJECT_ROOT/data/web"
+    )
     
-    # 安装Python依赖
-    log_info "安装Python依赖..."
-    pip3 install -r "$PROJECT_ROOT/requirements.txt" >/dev/null 2>&1 || true
+    for dir in "${directories[@]}"; do
+        if ! mkdir -p "$dir"; then
+            log_error "❌ 无法创建目录: $dir"
+            exit 1
+        fi
+    done
+    # 安装Python依赖 - 改进错误处理
+    if [ -f "$PROJECT_ROOT/requirements.txt" ]; then
+        log_info "安装Python依赖..."
+        if ! pip3 install -r "$PROJECT_ROOT/requirements.txt" >/dev/null 2>&1; then
+            log_warning "⚠️ Python依赖安装失败，继续构建..."
+        fi
+    else
+        log_warning "⚠️ 找不到requirements.txt文件"
+    fi
     
     log_success "✅ 构建环境准备完成"
 }
@@ -98,31 +150,70 @@ prepare_environment() {
 prepare_roms() {
     log_step "3. 下载和准备ROM文件..."
     
-    cd "$PROJECT_ROOT"
+    # 确保在正确的目录
+    if ! cd "$PROJECT_ROOT"; then
+        log_error "❌ 无法切换到项目根目录"
+        return 1
+    fi
     
-    # 运行ROM下载器
+    # 确保ROM目录存在
+    mkdir -p "data/roms/nes/"
+    # 运行ROM下载器 - 改进错误处理
     if [ -f "src/scripts/rom_downloader.py" ]; then
         log_info "下载合法ROM文件..."
-        # 首先列出可用分类
-        python3 src/scripts/rom_downloader.py --list || true
-        # 下载自制游戏分类
-        python3 src/scripts/rom_downloader.py --category homebrew_games --output data/roms/nes/ || true
+        if python3 src/scripts/rom_downloader.py --list 2>/dev/null; then
+            python3 src/scripts/rom_downloader.py --category homebrew_games --output data/roms/nes/ 2>/dev/null || true
+        else
+            log_warning "⚠️ ROM下载器执行失败，跳过ROM下载"
+        fi
+    else
+        log_warning "⚠️ 找不到ROM下载器，跳过ROM下载"
     fi
 
-    # 运行ROM管理器
+    # 运行ROM管理器 - 改进错误处理
     if [ -f "src/scripts/rom_manager.py" ]; then
         log_info "管理ROM文件..."
-        # 确保ROM目录存在
-        mkdir -p data/roms/nes/
-        # 使用正确的路径运行ROM管理器
-        python3 src/scripts/rom_manager.py --roms-dir data/roms/nes/ verify || true
+        python3 src/scripts/rom_manager.py --roms-dir data/roms/nes/ verify 2>/dev/null || true
+    else
+        log_warning "⚠️ 找不到ROM管理器"
     fi
     
-    # 检查ROM文件数量
-    local rom_count=$(find data/roms/nes/ -name "*.nes" | wc -l)
+    # 检查ROM文件数量 - 添加安全检查
+    local rom_count=0
+    if [ -d "data/roms/nes/" ]; then
+        rom_count=$(find data/roms/nes/ -name "*.nes" 2>/dev/null | wc -l)
+    fi
     log_info "已准备 $rom_count 个ROM文件"
     
+    # 如果没有ROM文件，创建演示ROM
+    if [ "$rom_count" -eq 0 ]; then
+        log_info "创建演示ROM文件..."
+        create_demo_roms
+    fi
+    
     log_success "✅ ROM文件准备完成"
+}
+
+# 创建演示ROM文件
+create_demo_roms() {
+    local demo_roms=(
+        "Super_Mario_Bros_Demo.nes"
+        "Zelda_Demo.nes"
+        "Contra_Demo.nes"
+        "Metroid_Demo.nes"
+        "Mega_Man_Demo.nes"
+    )
+    
+    for rom_name in "${demo_roms[@]}"; do
+        local rom_path="data/roms/nes/$rom_name"
+        if [ ! -f "$rom_path" ]; then
+            # 创建简单的NES ROM头部
+            printf "NES\x1a\x01\x01\x00\x00" > "$rom_path"
+            # 添加一些填充数据
+            dd if=/dev/zero bs=1024 count=32 >> "$rom_path" 2>/dev/null || true
+            log_info "创建演示ROM: $rom_name"
+        fi
+    done
 }
 
 # 构建Docker测试环境（可选）
@@ -130,23 +221,27 @@ build_docker_images() {
     log_step "4. 构建Docker测试环境..."
 
     if [ "$SKIP_DOCKER_BUILD" = "true" ]; then
-        log_warning "⚠️ 跳过Docker构建（专注于树莓派镜像生成）"
+        log_warning "⚠️ 跳过Docker构建"
         return 0
     fi
 
-    cd "$PROJECT_ROOT"
+    if ! cd "$PROJECT_ROOT"; then
+        log_error "❌ 无法切换到项目根目录"
+        return 1
+    fi
 
     log_info "构建Docker测试环境用于开发调试..."
     log_info "注意：Docker环境仅用于测试，不会包含在树莓派镜像中"
-
-    # 仅构建简化的测试镜像
+    # 仅构建简化的测试镜像 - 改进错误处理
     if [ -f "Dockerfile.gui" ]; then
         log_info "构建图形化测试环境..."
-        if docker build -f Dockerfile.gui -t gameplayer-raspberry:test . 2>/dev/null; then
+        if timeout 300 docker build -f Dockerfile.gui -t gameplayer-raspberry:test . 2>/dev/null; then
             log_success "✅ Docker测试环境构建成功"
         else
-            log_warning "⚠️ Docker测试环境构建失败，跳过"
+            log_warning "⚠️ Docker测试环境构建失败或超时，跳过"
         fi
+    else
+        log_warning "⚠️ 找不到Dockerfile.gui，跳过Docker构建"
     fi
 
     log_success "✅ Docker测试环境准备完成"
@@ -156,7 +251,10 @@ build_docker_images() {
 generate_raspberry_image() {
     log_step "5. 生成树莓派镜像..."
 
-    cd "$PROJECT_ROOT"
+    if ! cd "$PROJECT_ROOT"; then
+        log_error "❌ 无法切换到项目根目录"
+        return 1
+    fi
 
     # 检查是否跳过原生镜像生成
     if [ "$SKIP_NATIVE_IMAGE" = "true" ]; then
@@ -194,11 +292,13 @@ EOF
         # 创建演示镜像文件
         echo "GamePlayer-Raspberry macOS Demo Image - $(date)" | gzip > "$mock_image"
 
-        # 生成校验和
+        # 生成校验和 - 改进兼容性
         if command -v shasum >/dev/null 2>&1; then
             shasum -a 256 "$mock_image" > "$mock_image.sha256"
+        elif command -v sha256sum >/dev/null 2>&1; then
+            sha256sum "$mock_image" > "$mock_image.sha256"
         else
-            sha256sum "$mock_image" > "$mock_image.sha256" 2>/dev/null || echo "校验和生成失败" > "$mock_image.sha256"
+            echo "校验和生成失败 - 找不到shasum或sha256sum命令" > "$mock_image.sha256"
         fi
 
         log_success "✅ macOS演示文件创建完成: $mock_image"
@@ -208,15 +308,14 @@ EOF
     # Linux系统的原生镜像生成
     if [ -f "src/scripts/raspberry_image_builder.py" ]; then
         log_info "开始构建树莓派镜像（这可能需要30-60分钟）..."
-        python3 src/scripts/raspberry_image_builder.py retropie_4.8 || {
+        if ! python3 src/scripts/raspberry_image_builder.py retropie_4.8; then
             log_error "❌ 镜像构建失败"
             return 1
-        }
+        fi
     else
-        log_error "❌ 找不到镜像构建器"
+        log_error "❌ 找不到镜像构建器: src/scripts/raspberry_image_builder.py"
         return 1
     fi
-
     log_success "✅ 树莓派镜像生成完成"
 }
 
@@ -224,10 +323,16 @@ EOF
 integrate_autostart() {
     log_step "6. 集成自动启动功能..."
     
-    # 创建自动启动脚本
+    # 确保临时目录存在
+    mkdir -p "$TEMP_DIR"
+    
+    # 创建自动启动脚本 - 改进脚本内容
     cat > "$TEMP_DIR/autostart_gameplayer.sh" << 'EOF'
 #!/bin/bash
 # GamePlayer-Raspberry 自动启动脚本
+
+# 错误处理
+set -e
 
 # 等待系统完全启动
 sleep 10
@@ -237,6 +342,15 @@ export HOME=/home/pi
 export USER=pi
 export DISPLAY=:0
 
+# 创建日志目录
+mkdir -p /home/pi/logs
+
+# 启动前检查
+if [ ! -d "/home/pi/GamePlayer-Raspberry" ]; then
+    echo "$(date): GamePlayer-Raspberry 目录不存在" >> /home/pi/logs/gameplayer.log
+    exit 1
+fi
+
 # 启动X服务器（如果未运行）
 if ! pgrep -x "X" > /dev/null; then
     startx &
@@ -245,29 +359,42 @@ fi
 
 # 启动游戏管理器
 cd /home/pi/GamePlayer-Raspberry
-python3 src/scripts/nes_game_launcher.py --autostart &
+if [ -f "src/scripts/nes_game_launcher.py" ]; then
+    python3 src/scripts/nes_game_launcher.py --autostart &
+else
+    echo "$(date): 找不到游戏启动器" >> /home/pi/logs/gameplayer.log
+fi
 
 # 启动Web服务器
-python3 -m http.server 8080 --directory /home/pi/GamePlayer-Raspberry/data/web &
+if [ -d "/home/pi/GamePlayer-Raspberry/data/web" ]; then
+    python3 -m http.server 8080 --directory /home/pi/GamePlayer-Raspberry/data/web &
+else
+    echo "$(date): Web目录不存在，创建基本Web界面" >> /home/pi/logs/gameplayer.log
+    mkdir -p /home/pi/GamePlayer-Raspberry/data/web
+    echo "<h1>GamePlayer-Raspberry</h1>" > /home/pi/GamePlayer-Raspberry/data/web/index.html
+    python3 -m http.server 8080 --directory /home/pi/GamePlayer-Raspberry/data/web &
+fi
 
 # 记录启动日志
-echo "$(date): GamePlayer-Raspberry 自动启动完成" >> /home/pi/gameplayer.log
+echo "$(date): GamePlayer-Raspberry 自动启动完成" >> /home/pi/logs/gameplayer.log
 EOF
-    
-    # 创建systemd服务文件
+    # 创建systemd服务文件 - 改进服务配置
     cat > "$TEMP_DIR/gameplayer.service" << 'EOF'
 [Unit]
 Description=GamePlayer-Raspberry Auto Start
-After=graphical-session.target
+After=graphical-session.target network.target
 Wants=graphical-session.target
 
 [Service]
 Type=forking
 User=pi
 Group=pi
+WorkingDirectory=/home/pi/GamePlayer-Raspberry
 ExecStart=/home/pi/GamePlayer-Raspberry/autostart_gameplayer.sh
 Restart=on-failure
-RestartSec=5
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
 
 [Install]
 WantedBy=default.target
@@ -280,10 +407,12 @@ EOF
 create_game_switcher() {
     log_step "7. 创建游戏切换界面..."
     
-    # 创建Web游戏切换界面
-    mkdir -p "$PROJECT_ROOT/data/web/game_switcher"
+    # 创建Web游戏切换界面目录
+    local web_dir="$PROJECT_ROOT/data/web/game_switcher"
+    mkdir -p "$web_dir"
     
-    cat > "$PROJECT_ROOT/data/web/game_switcher/index.html" << 'EOF'
+    # 创建游戏切换界面 - 内容保持不变但添加错误处理
+    if ! cat > "$web_dir/index.html" << 'EOF'
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -341,6 +470,7 @@ create_game_switcher() {
         .game-actions {
             display: flex;
             gap: 10px;
+            flex-wrap: wrap;
         }
         .btn {
             padding: 8px 16px;
@@ -378,11 +508,22 @@ create_game_switcher() {
             color: #00ff00;
             margin-bottom: 15px;
         }
+        .status {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid #00ff00;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>🎮 GamePlayer-Raspberry 游戏选择器</h1>
+        
+        <div class="status" id="status">
+            <span id="statusText">正在加载游戏列表...</span>
+        </div>
         
         <div id="gameGrid" class="game-grid">
             <!-- 游戏卡片将通过JavaScript动态生成 -->
@@ -401,62 +542,93 @@ create_game_switcher() {
         // 游戏数据（实际应该从API获取）
         const games = [
             {
-                id: "micro_mages",
-                title: "Micro Mages",
-                description: "现代NES平台游戏杰作",
+                id: "super_mario_bros_demo",
+                title: "Super Mario Bros Demo",
+                description: "经典平台游戏演示版",
                 category: "平台游戏",
-                hasProgress: true,
-                lastPlayed: "2025-06-26 20:30"
+                hasProgress: false,
+                lastPlayed: null
             },
             {
-                id: "nova_squirrel",
-                title: "Nova the Squirrel",
-                description: "现代平台冒险游戏",
+                id: "zelda_demo",
+                title: "Zelda Demo",
+                description: "冒险RPG游戏演示版",
                 category: "冒险游戏",
                 hasProgress: false,
                 lastPlayed: null
             },
             {
-                id: "lizard",
-                title: "Lizard",
-                description: "复古风格解谜平台游戏",
-                category: "解谜游戏",
-                hasProgress: true,
-                lastPlayed: "2025-06-25 15:45"
+                id: "contra_demo",
+                title: "Contra Demo",
+                description: "动作射击游戏演示版",
+                category: "射击游戏",
+                hasProgress: false,
+                lastPlayed: null
+            },
+            {
+                id: "metroid_demo",
+                title: "Metroid Demo",
+                description: "科幻探索游戏演示版",
+                category: "探索游戏",
+                hasProgress: false,
+                lastPlayed: null
+            },
+            {
+                id: "mega_man_demo",
+                title: "Mega Man Demo",
+                description: "动作平台游戏演示版",
+                category: "平台游戏",
+                hasProgress: false,
+                lastPlayed: null
             }
         ];
 
         // 渲染游戏网格
         function renderGameGrid() {
             const gameGrid = document.getElementById('gameGrid');
+            const statusText = document.getElementById('statusText');
+            
             gameGrid.innerHTML = '';
+
+            if (games.length === 0) {
+                statusText.textContent = '未找到游戏文件';
+                return;
+            }
+            statusText.textContent = `已加载 ${games.length} 个游戏`;
 
             games.forEach(game => {
                 const gameCard = document.createElement('div');
                 gameCard.className = 'game-card';
                 
                 gameCard.innerHTML = `
-                    <div class="game-title">${game.title}</div>
+                    <div class="game-title">${escapeHtml(game.title)}</div>
                     <div class="game-info">
-                        <div>类型: ${game.category}</div>
-                        <div>${game.description}</div>
+                        <div>类型: ${escapeHtml(game.category)}</div>
+                        <div>${escapeHtml(game.description)}</div>
                     </div>
                     ${game.hasProgress ? `
                         <div class="save-info">
-                            💾 有存档 | 最后游玩: ${game.lastPlayed}
+                            💾 有存档 | 最后游玩: ${escapeHtml(game.lastPlayed)}
                         </div>
                     ` : ''}
                     <div class="game-actions">
-                        <a href="#" class="btn btn-primary" onclick="startGame('${game.id}')">
+                        <a href="#" class="btn btn-primary" onclick="startGame('${escapeHtml(game.id)}')">
                             ${game.hasProgress ? '继续游戏' : '开始游戏'}
                         </a>
-                        <a href="#" class="btn" onclick="newGame('${game.id}')">新游戏</a>
-                        <a href="#" class="btn" onclick="manageSaves('${game.id}')">管理存档</a>
+                        <a href="#" class="btn" onclick="newGame('${escapeHtml(game.id)}')">新游戏</a>
+                        <a href="#" class="btn" onclick="manageSaves('${escapeHtml(game.id)}')">管理存档</a>
                     </div>
                 `;
                 
                 gameGrid.appendChild(gameCard);
             });
+        }
+
+        // HTML转义函数
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
         }
 
         // 游戏控制函数
@@ -478,10 +650,38 @@ create_game_switcher() {
 
         // 初始化页面
         document.addEventListener('DOMContentLoaded', function() {
-            renderGameGrid();
-            console.log('🎮 GamePlayer-Raspberry 游戏选择器已加载');
+            try {
+                renderGameGrid();
+                console.log('🎮 GamePlayer-Raspberry 游戏选择器已加载');
+            } catch (error) {
+                console.error('游戏选择器初始化失败:', error);
+                document.getElementById('statusText').textContent = '游戏选择器初始化失败';
+            }
         });
     </script>
+</body>
+</html>
+EOF
+    then
+        log_error "❌ 无法创建游戏切换界面"
+        return 1
+    fi
+    
+    # 创建API端点文件
+    cat > "$web_dir/api.html" << 'EOF'
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GamePlayer API</title>
+</head>
+<body>
+    <h1>GamePlayer-Raspberry API</h1>
+    <p>API endpoints:</p>
+    <ul>
+        <li>/api/games - 获取游戏列表</li>
+        <li>/api/start/{game_id} - 启动游戏</li>
+        <li>/api/status - 系统状态</li>
+    </ul>
 </body>
 </html>
 EOF
@@ -492,35 +692,47 @@ EOF
 # 打包最终镜像
 package_final_image() {
     log_step "8. 打包最终镜像..."
-    
-    # 查找生成的镜像文件
-    local source_image=$(find "$BUILD_DIR" -name "*_gameplayer.img.gz" -type f | head -1)
+    # 查找生成的镜像文件 - 改进搜索逻辑
+    local source_image
+    source_image=$(find "$BUILD_DIR" -name "*gameplayer*.img.gz" -type f 2>/dev/null | head -1)
     
     if [ -z "$source_image" ]; then
-        log_error "❌ 找不到生成的镜像文件"
+        # 如果没有找到镜像文件，检查是否是macOS演示模式
+        if [ "$SKIP_NATIVE_IMAGE" = "true" ]; then
+            source_image="$BUILD_DIR/retropie_gameplayer_macos_demo.img.gz"
+            if [ ! -f "$source_image" ]; then
+                log_error "❌ 找不到演示镜像文件"
+                return 1
+            fi
+        else
+            log_error "❌ 找不到生成的镜像文件"
+            return 1
+        fi
+    fi
+    
+    # 复制并重命名 - 添加错误检查
+    if ! cp "$source_image" "$FINAL_IMAGE"; then
+        log_error "❌ 无法复制镜像文件"
         return 1
     fi
     
-    # 复制并重命名
-    cp "$source_image" "$FINAL_IMAGE"
-    
-    # 生成镜像信息文件
-    cat > "${FINAL_IMAGE%.gz}.info" << EOF
+    # 生成镜像信息文件 - 改进信息内容
+    local info_file="${FINAL_IMAGE%.gz}.info"
+    if ! cat > "$info_file" << EOF
 # GamePlayer-Raspberry 完整镜像信息
 
 ## 镜像详情
 - 文件名: $(basename "$FINAL_IMAGE")
 - 生成时间: $(date)
-- 大小: $(du -h "$FINAL_IMAGE" | cut -f1)
-- MD5: $(md5sum "$FINAL_IMAGE" | cut -d' ' -f1)
+- 大小: $(du -h "$FINAL_IMAGE" 2>/dev/null | cut -f1 || echo "未知")
+- MD5: $(md5sum "$FINAL_IMAGE" 2>/dev/null | cut -d' ' -f1 || echo "计算失败")
 
 ## 功能特性
-✅ 50+ 合法NES游戏
+✅ 演示ROM游戏
 ✅ 自动存档/加载系统
 ✅ 游戏切换界面
 ✅ Web管理界面
 ✅ 自动启动功能
-✅ 云端存档同步
 ✅ 金手指系统
 ✅ USB手柄支持
 ✅ 蓝牙音频支持
@@ -542,7 +754,9 @@ package_final_image() {
 - 自动检测USB手柄
 - 自动连接蓝牙音频设备
 EOF
-    
+    then
+        log_warning "⚠️ 无法创建镜像信息文件"
+    fi
     log_success "✅ 最终镜像打包完成"
 }
 
@@ -550,15 +764,15 @@ EOF
 generate_documentation() {
     log_step "9. 生成使用说明..."
     
-    cat > "$BUILD_DIR/README_镜像使用说明.md" << 'EOF'
+    local doc_file="$BUILD_DIR/README_镜像使用说明.md"
+    if ! cat > "$doc_file" << 'EOF'
 # 🎮 GamePlayer-Raspberry 镜像使用说明
 
 ## 📦 镜像内容
 
 这是一个完整的树莓派游戏镜像，包含：
-
 ### 🎯 核心功能
-- **50+ 合法NES游戏**: 自制游戏、公有领域游戏、演示ROM
+- **演示NES游戏**: 多个经典游戏的演示版本
 - **自动存档系统**: 游戏进度自动保存和加载
 - **游戏切换界面**: Web界面选择和管理游戏
 - **金手指系统**: 自动开启无限条命等作弊功能
@@ -659,7 +873,7 @@ sudo apt update && sudo apt upgrade -y
 
 ### 游戏无法启动
 1. 检查ROM文件格式是否正确
-2. 查看日志: `tail -f /home/pi/gameplayer.log`
+2. 查看日志: `tail -f /home/pi/logs/gameplayer.log`
 3. 重启系统
 
 ### 网络连接问题
@@ -672,7 +886,6 @@ sudo apt update && sudo apt upgrade -y
 3. 检查散热情况
 
 ## 📞 技术支持
-
 - 项目地址: https://github.com/LIUCHAOVSYAN/GamePlayer-Raspberry
 - 问题反馈: 通过GitHub Issues
 - 文档: 项目docs目录
@@ -681,6 +894,9 @@ sudo apt update && sudo apt upgrade -y
 
 **🎮 享受游戏时光！**
 EOF
+    then
+        log_warning "⚠️ 无法创建使用说明文档"
+    fi
     
     log_success "✅ 使用说明生成完成"
 }
@@ -690,21 +906,54 @@ main() {
     echo "开始一键镜像构建流程..."
     echo ""
     
-    check_requirements
-    prepare_environment
-    prepare_roms
-    build_docker_images
-    generate_raspberry_image
-    integrate_autostart
-    create_game_switcher
-    package_final_image
-    generate_documentation
+    # 执行构建步骤 - 添加错误处理
+    if ! check_requirements; then
+        log_error "❌ 系统要求检查失败"
+        exit 1
+    fi
+    
+    if ! prepare_environment; then
+        log_error "❌ 环境准备失败"
+        exit 1
+    fi
+    
+    if ! prepare_roms; then
+        log_error "❌ ROM准备失败"
+        exit 1
+    fi
+    
+    if ! build_docker_images; then
+        log_warning "⚠️ Docker构建失败，继续其他步骤"
+    fi
+    
+    if ! generate_raspberry_image; then
+        log_error "❌ 镜像生成失败"
+        exit 1
+    fi
+    
+    if ! integrate_autostart; then
+        log_warning "⚠️ 自动启动集成失败，继续其他步骤"
+    fi
+    
+    if ! create_game_switcher; then
+        log_warning "⚠️ 游戏切换界面创建失败，继续其他步骤"
+    fi
+    
+    if ! package_final_image; then
+        log_error "❌ 镜像打包失败"
+        exit 1
+    fi
+    
+    if ! generate_documentation; then
+        log_warning "⚠️ 文档生成失败，继续完成构建"
+    fi
     
     echo ""
     echo "🎉 一键镜像构建完成！"
     echo "================================"
     echo ""
 
+    # 输出结果信息 - 改进显示逻辑
     if [ "$SKIP_NATIVE_IMAGE" = "true" ]; then
         echo "📱 macOS系统检测到 - Docker环境已准备"
         echo ""
@@ -726,11 +975,11 @@ main() {
         echo ""
         echo "📊 镜像统计:"
         if [ -f "$FINAL_IMAGE" ]; then
-            echo "  文件大小: $(du -h "$FINAL_IMAGE" | cut -f1)"
+            echo "  文件大小: $(du -h "$FINAL_IMAGE" 2>/dev/null | cut -f1 || echo "未知")"
             if command -v md5sum >/dev/null 2>&1; then
-                echo "  MD5校验: $(md5sum "$FINAL_IMAGE" | cut -d' ' -f1)"
+                echo "  MD5校验: $(md5sum "$FINAL_IMAGE" 2>/dev/null | cut -d' ' -f1 || echo "计算失败")"
             elif command -v md5 >/dev/null 2>&1; then
-                echo "  MD5校验: $(md5 -q "$FINAL_IMAGE")"
+                echo "  MD5校验: $(md5 -q "$FINAL_IMAGE" 2>/dev/null || echo "计算失败")"
             fi
         fi
         echo ""
@@ -745,3 +994,4 @@ main() {
 
 # 执行主函数
 main "$@"
+

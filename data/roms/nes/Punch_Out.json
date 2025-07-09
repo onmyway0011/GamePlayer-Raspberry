@@ -1,0 +1,26 @@
+{
+  "name": "Punch_Out",
+  "display_name": "Punch Out",
+  "system": "nes",
+  "year": 1987,
+  "priority": 2,
+  "file_size": 40976,
+  "file_path": "data/roms/nes/Punch_Out.nes",
+  "created_date": "2025-07-08 16:36:27",
+  "type": "demo",
+  "description": "经典NES游戏 Punch Out 的演示版本",
+  "controls": {
+    "up": "↑ / W",
+    "down": "↓ / S",
+    "left": "← / A",
+    "right": "→ / D",
+    "a": "Space / Z",
+    "b": "Shift / X",
+    "start": "Enter",
+    "select": "Tab"
+  },
+  "cheats_available": true,
+  "genre": "Classic",
+  "players": "1-2",
+  "rating": "E (Everyone)"
+}

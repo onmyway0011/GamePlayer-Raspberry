@@ -1,0 +1,26 @@
+{
+  "name": "Pokemon_Red",
+  "display_name": "Pokemon Red",
+  "system": "gb",
+  "year": 1996,
+  "priority": 1,
+  "file_size": 32768,
+  "file_path": "data/roms/gb/Pokemon_Red.gb",
+  "created_date": "2025-07-08 16:36:27",
+  "type": "demo",
+  "description": "经典GB游戏 Pokemon Red 的演示版本",
+  "controls": {
+    "up": "↑ / W",
+    "down": "↓ / S",
+    "left": "← / A",
+    "right": "→ / D",
+    "a": "Space / Z",
+    "b": "Shift / X",
+    "start": "Enter",
+    "select": "Tab"
+  },
+  "cheats_available": true,
+  "genre": "Classic",
+  "players": "1-2",
+  "rating": "E (Everyone)"
+}

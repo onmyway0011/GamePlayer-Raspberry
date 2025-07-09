@@ -1,0 +1,26 @@
+{
+  "name": "Tetris",
+  "display_name": "Tetris",
+  "system": "gb",
+  "year": 1989,
+  "priority": 1,
+  "file_size": 32768,
+  "file_path": "data/roms/gb/Tetris.gb",
+  "created_date": "2025-07-08 16:36:27",
+  "type": "demo",
+  "description": "经典GB游戏 Tetris 的演示版本",
+  "controls": {
+    "up": "↑ / W",
+    "down": "↓ / S",
+    "left": "← / A",
+    "right": "→ / D",
+    "a": "Space / Z",
+    "b": "Shift / X",
+    "start": "Enter",
+    "select": "Tab"
+  },
+  "cheats_available": true,
+  "genre": "Puzzle",
+  "players": "1-2",
+  "rating": "E (Everyone)"
+}

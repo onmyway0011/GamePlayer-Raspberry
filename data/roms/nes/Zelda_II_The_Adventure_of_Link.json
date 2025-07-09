@@ -1,0 +1,26 @@
+{
+  "name": "Zelda_II_The_Adventure_of_Link",
+  "display_name": "Zelda II The Adventure of Link",
+  "system": "nes",
+  "year": 1987,
+  "priority": 2,
+  "file_size": 40976,
+  "file_path": "data/roms/nes/Zelda_II_The_Adventure_of_Link.nes",
+  "created_date": "2025-07-08 16:36:27",
+  "type": "demo",
+  "description": "经典NES游戏 Zelda II The Adventure of Link 的演示版本",
+  "controls": {
+    "up": "↑ / W",
+    "down": "↓ / S",
+    "left": "← / A",
+    "right": "→ / D",
+    "a": "Space / Z",
+    "b": "Shift / X",
+    "start": "Enter",
+    "select": "Tab"
+  },
+  "cheats_available": true,
+  "genre": "Adventure",
+  "players": "1-2",
+  "rating": "E (Everyone)"
+}

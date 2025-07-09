@@ -1,0 +1,26 @@
+{
+  "name": "Mega_Man_3",
+  "display_name": "Mega Man 3",
+  "system": "nes",
+  "year": 1990,
+  "priority": 2,
+  "file_size": 40976,
+  "file_path": "data/roms/nes/Mega_Man_3.nes",
+  "created_date": "2025-07-08 16:36:27",
+  "type": "demo",
+  "description": "经典NES游戏 Mega Man 3 的演示版本",
+  "controls": {
+    "up": "↑ / W",
+    "down": "↓ / S",
+    "left": "← / A",
+    "right": "→ / D",
+    "a": "Space / Z",
+    "b": "Shift / X",
+    "start": "Enter",
+    "select": "Tab"
+  },
+  "cheats_available": true,
+  "genre": "Platform",
+  "players": "1-2",
+  "rating": "E (Everyone)"
+}

@@ -1,0 +1,26 @@
+{
+  "name": "Shinobi_III",
+  "display_name": "Shinobi III",
+  "system": "genesis",
+  "year": 1993,
+  "priority": 2,
+  "file_size": 262144,
+  "file_path": "data/roms/genesis/Shinobi_III.md",
+  "created_date": "2025-07-08 16:36:27",
+  "type": "demo",
+  "description": "经典GENESIS游戏 Shinobi III 的演示版本",
+  "controls": {
+    "up": "↑ / W",
+    "down": "↓ / S",
+    "left": "← / A",
+    "right": "→ / D",
+    "a": "Space / Z",
+    "b": "Shift / X",
+    "c": "C",
+    "start": "Enter"
+  },
+  "cheats_available": true,
+  "genre": "Action",
+  "players": "1-2",
+  "rating": "E (Everyone)"
+}

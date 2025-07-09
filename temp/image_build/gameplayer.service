@@ -1,15 +1,18 @@
 [Unit]
 Description=GamePlayer-Raspberry Auto Start
-After=graphical-session.target
+After=graphical-session.target network.target
 Wants=graphical-session.target
 
 [Service]
 Type=forking
 User=pi
 Group=pi
+WorkingDirectory=/home/pi/GamePlayer-Raspberry
 ExecStart=/home/pi/GamePlayer-Raspberry/autostart_gameplayer.sh
 Restart=on-failure
-RestartSec=5
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
 
 [Install]
 WantedBy=default.target

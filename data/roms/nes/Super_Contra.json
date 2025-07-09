@@ -1,0 +1,26 @@
+{
+  "name": "Super_Contra",
+  "display_name": "Super Contra",
+  "system": "nes",
+  "year": 1988,
+  "priority": 2,
+  "file_size": 40976,
+  "file_path": "data/roms/nes/Super_Contra.nes",
+  "created_date": "2025-07-08 16:36:27",
+  "type": "demo",
+  "description": "经典NES游戏 Super Contra 的演示版本",
+  "controls": {
+    "up": "↑ / W",
+    "down": "↓ / S",
+    "left": "← / A",
+    "right": "→ / D",
+    "a": "Space / Z",
+    "b": "Shift / X",
+    "start": "Enter",
+    "select": "Tab"
+  },
+  "cheats_available": true,
+  "genre": "Action",
+  "players": "1-2",
+  "rating": "E (Everyone)"
+}
