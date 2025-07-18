@@ -1,7 +1,7 @@
 # --- PYTHONPATH AUTO PATCH ---
 import sys
 import os
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "src")))
 # --- END PATCH ---
 from core.virtuanes_installer import VirtuaNESInstaller
 from pathlib import Path
@@ -34,7 +34,7 @@ def test_config_loading():
             tmp.write('{"version": "0.97", "enabled": true}')
             tmp.flush()
             
-            installer = VirtuaNESInstaller(config_path=tmp.name)
+            installer = VirtuaNESInstaller(tmp.name)
             print("✓ 配置文件加载成功")
             print(f"  版本: {installer.config.get('version', 'unknown')}")
             print(f"  启用状态: {installer.config.get('enabled', False)}")
@@ -63,7 +63,7 @@ def test_install_paths():
     print("\n=== 测试安装路径 ===")
     
     # 设置测试环境变量
-    os.environ["TEST_ENV"] = "false"
+    os.environ["TEST_ENV"] = "true"
     
     try:
         # 创建临时配置文件
@@ -71,7 +71,7 @@ def test_install_paths():
             tmp.write('{"install_dir": "tmp/install", "config_dir": "tmp/config", "core_dir": "tmp/core"}')
             tmp.flush()
             
-            installer = VirtuaNESInstaller(config_path=tmp.name)
+            installer = VirtuaNESInstaller(tmp.name)
 
             print(f"  安装目录: {installer.config.get('install_dir')}")
             print(f"  配置目录: {installer.config.get('config_dir')}")
@@ -100,22 +100,21 @@ def test_config_generation():
             tmp.write('{"config_dir": "tmp/config"}')
             tmp.flush()
             
-            installer = VirtuaNESInstaller(config_path=tmp.name)
+            installer = VirtuaNESInstaller(tmp.name)
             
             # 创建临时目录
             with tempfile.TemporaryDirectory() as temp_dir:
                 temp_config_dir = Path(temp_dir) / "config"
                 temp_config_dir.mkdir()
                 
-                # 临时修改配置目录
-            original_config_dir = installer.config_dir
+                # 在测试环境中使用临时目录
             installer.config_dir = temp_config_dir
+            
+            # 确保目录存在
+            temp_config_dir.mkdir(parents=True, exist_ok=True)
             
             # 生成配置
             result = installer.configure_virtuanes()
-            
-            # 恢复原始配置目录
-            installer.config_dir = original_config_dir
             
             if result:
                 config_file = temp_config_dir / "virtuanes.cfg"
@@ -146,15 +145,14 @@ def test_retroarch_integration():
             temp_core_dir = Path(temp_dir) / "cores"
             temp_core_dir.mkdir()
             
-            # 临时修改核心目录
-            original_core_dir = installer.core_dir
+            # 在测试环境中使用临时目录
             installer.core_dir = temp_core_dir
+            
+            # 确保目录存在
+            temp_core_dir.mkdir(parents=True, exist_ok=True)
             
             # 测试集成
             result = installer.integrate_with_retroarch()
-            
-            # 恢复原始核心目录
-            installer.core_dir = original_core_dir
             
             if result:
                 core_info_file = temp_core_dir / "virtuanes_libretro.info"
@@ -185,15 +183,14 @@ def test_launch_script_creation():
             temp_install_dir = Path(temp_dir) / "install"
             temp_install_dir.mkdir()
             
-            # 临时修改安装目录
-            original_install_dir = installer.install_dir
+            # 在测试环境中使用临时目录
             installer.install_dir = temp_install_dir
+            
+            # 确保目录存在
+            temp_install_dir.mkdir(parents=True, exist_ok=True)
             
             # 测试启动脚本创建
             result = installer.create_launch_script()
-            
-            # 恢复原始安装目录
-            installer.install_dir = original_install_dir
             
             if result:
                 launch_script = temp_install_dir / "launch_virtuanes.sh"

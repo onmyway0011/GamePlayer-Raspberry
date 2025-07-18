@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GamePlayer-Raspberry - 游戏启动器</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div id="app">
+        <!-- 顶部导航栏 -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="logo">
+                    <i class="fas fa-gamepad"></i>
+                    GamePlayer-Raspberry
+                </h1>
+                <nav class="nav">
+                    <button class="nav-btn active" data-tab="games">
+                        <i class="fas fa-play-circle"></i>
+                        游戏库
+                    </button>
+                    <button class="nav-btn" data-tab="settings">
+                        <i class="fas fa-cog"></i>
+                        设置
+                    </button>
+                    <button class="nav-btn" data-tab="stats">
+                        <i class="fas fa-chart-bar"></i>
+                        统计
+                    </button>
+                </nav>
+                <div class="header-actions">
+                    <button class="btn btn-primary" id="refreshBtn">
+                        <i class="fas fa-sync-alt"></i>
+                        刷新
+                    </button>
+                    <div class="system-status">
+                        <div class="status-indicator" id="systemStatus">
+                            <i class="fas fa-circle"></i>
+                            <span>在线</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- 主要内容区域 -->
+        <main class="main">
+            <!-- 游戏库标签页 -->
+            <div class="tab-content active" id="gamesTab">
+                <!-- 系统选择器 -->
+                <div class="system-selector">
+                    <h2>选择游戏系统</h2>
+                    <div class="system-grid">
+                        <div class="system-card" data-system="nes">
+                            <div class="system-icon">
+                                <i class="fas fa-tv"></i>
+                            </div>
+                            <h3>NES</h3>
+                            <p>任天堂红白机</p>
+                            <div class="game-count" id="nesCount">0 个游戏</div>
+                        </div>
+                        <div class="system-card" data-system="snes">
+                            <div class="system-icon">
+                                <i class="fas fa-gamepad"></i>
+                            </div>
+                            <h3>SNES</h3>
+                            <p>超级任天堂</p>
+                            <div class="game-count" id="snesCount">0 个游戏</div>
+                        </div>
+                        <div class="system-card" data-system="gameboy">
+                            <div class="system-icon">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
+                            <h3>Game Boy</h3>
+                            <p>任天堂掌机</p>
+                            <div class="game-count" id="gameboyCount">0 个游戏</div>
+                        </div>
+                        <div class="system-card" data-system="gba">
+                            <div class="system-icon">
+                                <i class="fas fa-tablet-alt"></i>
+                            </div>
+                            <h3>GBA</h3>
+                            <p>Game Boy Advance</p>
+                            <div class="game-count" id="gbaCount">0 个游戏</div>
+                        </div>
+                        <div class="system-card" data-system="genesis">
+                            <div class="system-icon">
+                                <i class="fas fa-chess"></i>
+                            </div>
+                            <h3>Genesis</h3>
+                            <p>世嘉创世纪</p>
+                            <div class="game-count" id="genesisCount">0 个游戏</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 游戏列表 -->
+                <div class="game-section" id="gameSection" style="display: none;">
+                    <div class="section-header">
+                        <button class="btn btn-secondary" id="backBtn">
+                            <i class="fas fa-arrow-left"></i>
+                            返回
+                        </button>
+                        <h2 id="systemTitle">游戏列表</h2>
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="searchInput" placeholder="搜索游戏...">
+                        </div>
+                    </div>
+                    <div class="game-grid" id="gameGrid">
+                        <!-- 游戏卡片将在这里动态生成 -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 设置标签页 -->
+            <div class="tab-content" id="settingsTab">
+                <div class="settings-container">
+                    <h2>系统设置</h2>
+                    
+                    <div class="settings-section">
+                        <h3>显示设置</h3>
+                        <div class="setting-item">
+                            <label for="fullscreen">全屏模式</label>
+                            <input type="checkbox" id="fullscreen" checked>
+                        </div>
+                        <div class="setting-item">
+                            <label for="resolution">分辨率</label>
+                            <select id="resolution">
+                                <option value="1920x1080">1920x1080</option>
+                                <option value="1680x1050">1680x1050</option>
+                                <option value="1440x900">1440x900</option>
+                                <option value="1366x768">1366x768</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="settings-section">
+                        <h3>音频设置</h3>
+                        <div class="setting-item">
+                            <label for="audioEnabled">启用音频</label>
+                            <input type="checkbox" id="audioEnabled" checked>
+                        </div>
+                        <div class="setting-item">
+                            <label for="volume">音量</label>
+                            <input type="range" id="volume" min="0" max="100" value="80">
+                            <span id="volumeValue">80%</span>
+                        </div>
+                    </div>
+
+                    <div class="settings-section">
+                        <h3>控制设置</h3>
+                        <div class="setting-item">
+                            <label for="gamepadEnabled">启用手柄</label>
+                            <input type="checkbox" id="gamepadEnabled" checked>
+                        </div>
+                        <div class="setting-item">
+                            <label for="autoDetectGamepad">自动检测手柄</label>
+                            <input type="checkbox" id="autoDetectGamepad" checked>
+                        </div>
+                    </div>
+
+                    <div class="settings-actions">
+                        <button class="btn btn-primary" id="saveSettingsBtn">
+                            <i class="fas fa-save"></i>
+                            保存设置
+                        </button>
+                        <button class="btn btn-secondary" id="resetSettingsBtn">
+                            <i class="fas fa-undo"></i>
+                            重置设置
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 统计标签页 -->
+            <div class="tab-content" id="statsTab">
+                <div class="stats-container">
+                    <h2>系统统计</h2>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-play"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="totalGames">0</h3>
+                                <p>总游戏数</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="playTime">0h</h3>
+                                <p>总游戏时间</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="favoriteGames">0</h3>
+                                <p>收藏游戏</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="achievements">0</h3>
+                                <p>成就数量</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="system-stats">
+                        <h3>系统分布</h3>
+                        <div class="chart-container">
+                            <canvas id="systemChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- 游戏启动对话框 -->
+        <div class="modal" id="gameModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="gameTitle">游戏标题</h3>
+                    <button class="modal-close" id="closeModal">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="game-info">
+                        <div class="game-cover" id="gameCover">
+                            <i class="fas fa-gamepad"></i>
+                        </div>
+                        <div class="game-details">
+                            <p><strong>系统:</strong> <span id="gameSystem">-</span></p>
+                            <p><strong>文件:</strong> <span id="gameFile">-</span></p>
+                            <p><strong>大小:</strong> <span id="gameSize">-</span></p>
+                        </div>
+                    </div>
+                    <div class="game-options">
+                        <div class="option-group">
+                            <label for="saveSlot">存档位置</label>
+                            <select id="saveSlot">
+                                <option value="1">存档位置 1</option>
+                                <option value="2">存档位置 2</option>
+                                <option value="3">存档位置 3</option>
+                                <option value="4">存档位置 4</option>
+                                <option value="5">存档位置 5</option>
+                            </select>
+                        </div>
+                        <div class="option-group">
+                            <label for="cheatsEnabled">启用金手指</label>
+                            <input type="checkbox" id="cheatsEnabled">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" id="launchGameBtn">
+                        <i class="fas fa-play"></i>
+                        启动游戏
+                    </button>
+                    <button class="btn btn-secondary" id="cancelBtn">
+                        取消
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 加载指示器 -->
+        <div class="loading" id="loading">
+            <div class="loading-spinner"></div>
+            <p>加载中...</p>
+        </div>
+        <!-- 通知容器 -->
+        <div class="notifications" id="notifications"></div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

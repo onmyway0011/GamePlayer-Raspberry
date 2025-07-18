@@ -27,7 +27,7 @@
       ".smc",
       ".sfc"
     ],
-    "installed": false,
+    "installed": true,
     "description": "Mednafen SNES模拟器"
   },
   "gameboy": {
@@ -41,7 +41,9 @@
     ],
     "extensions": [
       ".gb",
-      ".gbc"
+      ".gbc",
+      ".zip",
+      ".7z"
     ],
     "installed": false,
     "description": "Mednafen Game Boy模拟器"
@@ -72,7 +74,9 @@
     ],
     "extensions": [
       ".md",
-      ".gen"
+      ".gen",
+      ".bin",
+      ".iso"
     ],
     "installed": false,
     "description": "Mednafen Genesis模拟器"

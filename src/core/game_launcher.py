@@ -232,7 +232,6 @@ class GameLauncher:
             return False
 
     def launch_game(self, system: str, game_id: str, rom_file: str,
-        """TODO: Add docstring"""
                    cheats: List[Dict] = None, save_slot: int = 1) -> Tuple[bool, str]:
         """启动游戏"""
         try:
@@ -320,7 +319,6 @@ class GameLauncher:
         except Exception as e:
             print(f"❌ 停止游戏失败: {e}")
             return False
-
     def get_running_games(self) -> Dict:
         """获取正在运行的游戏"""
         # 清理已结束的进程

@@ -1,0 +1,1084 @@
+{
+  "systems": {
+    "nes": {
+      "count": 71,
+      "roms": [
+        {
+          "name": "Micro Mages",
+          "filename": "Micro_Mages.nes",
+          "size": 40976
+        },
+        {
+          "name": "Robot Battle",
+          "filename": "robot_battle.nes",
+          "size": 24592
+        },
+        {
+          "name": "Dragon Quest",
+          "filename": "Dragon_Quest.nes",
+          "size": 40976
+        },
+        {
+          "name": "Castlevania",
+          "filename": "Castlevania.json",
+          "size": 603
+        },
+        {
+          "name": "Space Fighter",
+          "filename": "space_fighter.nes",
+          "size": 24592
+        },
+        {
+          "name": "Pac Man",
+          "filename": "Pac_Man.json",
+          "size": 585
+        },
+        {
+          "name": "Castlevania Iii",
+          "filename": "Castlevania_III.nes",
+          "size": 40976
+        },
+        {
+          "name": "Puzzle Master",
+          "filename": "puzzle_master.nes",
+          "size": 24592
+        },
+        {
+          "name": "Kirby Adventure",
+          "filename": "Kirby_Adventure.nes",
+          "size": 40976
+        },
+        {
+          "name": "Contra Demo",
+          "filename": "Contra_Demo.json",
+          "size": 229
+        },
+        {
+          "name": "Chase",
+          "filename": "chase.nes",
+          "size": 40976
+        },
+        {
+          "name": "Super Platform",
+          "filename": "super_platform.nes",
+          "size": 24592
+        },
+        {
+          "name": "Final Fantasy",
+          "filename": "Final_Fantasy.json",
+          "size": 605
+        },
+        {
+          "name": "Excitebike",
+          "filename": "Excitebike.json",
+          "size": 597
+        },
+        {
+          "name": "Punch Out",
+          "filename": "Punch_Out.json",
+          "size": 593
+        },
+        {
+          "name": "Castlevania",
+          "filename": "Castlevania.nes",
+          "size": 40976
+        },
+        {
+          "name": "Mega Man Demo",
+          "filename": "Mega_Man_Demo.json",
+          "size": 235
+        },
+        {
+          "name": "Tetris Demo",
+          "filename": "Tetris_Demo.json",
+          "size": 229
+        },
+        {
+          "name": "Contra",
+          "filename": "Contra.nes",
+          "size": 40976
+        },
+        {
+          "name": "Metroid",
+          "filename": "Metroid.json",
+          "size": 587
+        },
+        {
+          "name": "Duck Hunt",
+          "filename": "Duck_Hunt.nes",
+          "size": 40976
+        },
+        {
+          "name": "Contra",
+          "filename": "Contra.json",
+          "size": 580
+        },
+        {
+          "name": "Ninja Warrior",
+          "filename": "ninja_warrior.nes",
+          "size": 24592
+        },
+        {
+          "name": "The Legend Of Zelda",
+          "filename": "The_Legend_of_Zelda.nes",
+          "size": 40976
+        },
+        {
+          "name": "Donkey Kong",
+          "filename": "Donkey_Kong.nes",
+          "size": 40976
+        },
+        {
+          "name": "Blade Buster",
+          "filename": "Blade_Buster.json",
+          "size": 225
+        },
+        {
+          "name": "Kirby Adventure",
+          "filename": "Kirby_Adventure.json",
+          "size": 618
+        },
+        {
+          "name": "Dragon Quest Demo",
+          "filename": "Dragon_Quest_Demo.json",
+          "size": 247
+        },
+        {
+          "name": "Magic Kingdom",
+          "filename": "magic_kingdom.nes",
+          "size": 24592
+        },
+        {
+          "name": "Tetris",
+          "filename": "Tetris.json",
+          "size": 580
+        },
+        {
+          "name": "Super Mario Bros Demo",
+          "filename": "Super_Mario_Bros_Demo.json",
+          "size": 259
+        },
+        {
+          "name": "Micro Mages",
+          "filename": "Micro_Mages.json",
+          "size": 232
+        },
+        {
+          "name": "Tetris",
+          "filename": "Tetris.nes",
+          "size": 40976
+        },
+        {
+          "name": "Pac Man",
+          "filename": "Pac_Man.nes",
+          "size": 40976
+        },
+        {
+          "name": "Metroid Demo",
+          "filename": "Metroid_Demo.json",
+          "size": 232
+        },
+        {
+          "name": "Zelda Ii The Adventure Of Link",
+          "filename": "Zelda_II_The_Adventure_of_Link.json",
+          "size": 679
+        },
+        {
+          "name": "Dragon Quest",
+          "filename": "Dragon_Quest.json",
+          "size": 605
+        },
+        {
+          "name": "Card Master",
+          "filename": "card_master.nes",
+          "size": 24592
+        },
+        {
+          "name": "Sports Champion",
+          "filename": "sports_champion.nes",
+          "size": 24592
+        },
+        {
+          "name": "The Legend Of Zelda Demo",
+          "filename": "The_Legend_of_Zelda_Demo.json",
+          "size": 268
+        },
+        {
+          "name": "Mega Man 3",
+          "filename": "Mega_Man_3.json",
+          "size": 598
+        },
+        {
+          "name": "Excitebike",
+          "filename": "Excitebike.nes",
+          "size": 40976
+        },
+        {
+          "name": "Metroid",
+          "filename": "Metroid.nes",
+          "size": 40976
+        },
+        {
+          "name": "Spacegulls",
+          "filename": "spacegulls.nes",
+          "size": 40976
+        },
+        {
+          "name": "Castlevania Iii",
+          "filename": "Castlevania_III.json",
+          "size": 619
+        },
+        {
+          "name": "Super Mario Bros 3",
+          "filename": "Super_Mario_Bros_3.nes",
+          "size": 40976
+        },
+        {
+          "name": "Nova The Squirrel",
+          "filename": "nova_the_squirrel.nes",
+          "size": 40976
+        },
+        {
+          "name": "Racing Pro",
+          "filename": "racing_pro.nes",
+          "size": 24592
+        },
+        {
+          "name": "Blade Buster",
+          "filename": "Blade_Buster.nes",
+          "size": 40976
+        },
+        {
+          "name": "Super Contra",
+          "filename": "Super_Contra.nes",
+          "size": 40976
+        },
+        {
+          "name": "Pac-Man Demo",
+          "filename": "Pac-Man_Demo.json",
+          "size": 232
+        },
+        {
+          "name": "Rom Catalog",
+          "filename": "rom_catalog.json",
+          "size": 1764
+        },
+        {
+          "name": "Castlevania Demo",
+          "filename": "Castlevania_Demo.json",
+          "size": 244
+        },
+        {
+          "name": "Super Mario Bros",
+          "filename": "Super_Mario_Bros.nes",
+          "size": 40976
+        },
+        {
+          "name": "Super Mario Bros 3",
+          "filename": "Super_Mario_Bros_3.json",
+          "size": 630
+        },
+        {
+          "name": "Adventure Quest",
+          "filename": "adventure_quest.nes",
+          "size": 24592
+        },
+        {
+          "name": "Zelda Ii The Adventure Of Link",
+          "filename": "Zelda_II_The_Adventure_of_Link.nes",
+          "size": 40976
+        },
+        {
+          "name": "Donkey Kong",
+          "filename": "Donkey_Kong.json",
+          "size": 601
+        },
+        {
+          "name": "Lizard",
+          "filename": "Lizard.json",
+          "size": 223
+        },
+        {
+          "name": "Mega Man 2",
+          "filename": "Mega_Man_2.json",
+          "size": 598
+        },
+        {
+          "name": "Mega Man 2",
+          "filename": "Mega_Man_2.nes",
+          "size": 40976
+        },
+        {
+          "name": "Mega Man 3",
+          "filename": "Mega_Man_3.nes",
+          "size": 40976
+        },
+        {
+          "name": "Final Fantasy Demo",
+          "filename": "Final_Fantasy_Demo.json",
+          "size": 250
+        },
+        {
+          "name": "Duck Hunt",
+          "filename": "Duck_Hunt.json",
+          "size": 593
+        },
+        {
+          "name": "Final Fantasy",
+          "filename": "Final_Fantasy.nes",
+          "size": 40976
+        },
+        {
+          "name": "Super Mario Bros",
+          "filename": "Super_Mario_Bros.json",
+          "size": 622
+        },
+        {
+          "name": "Punch Out",
+          "filename": "Punch_Out.nes",
+          "size": 40976
+        },
+        {
+          "name": "The Legend Of Zelda",
+          "filename": "The_Legend_of_Zelda.json",
+          "size": 635
+        },
+        {
+          "name": "Twin Dragons",
+          "filename": "twin_dragons.nes",
+          "size": 40976
+        },
+        {
+          "name": "Lizard",
+          "filename": "Lizard.nes",
+          "size": 40976
+        },
+        {
+          "name": "Super Contra",
+          "filename": "Super_Contra.json",
+          "size": 604
+        }
+      ]
+    },
+    "snes": {
+      "count": 53,
+      "roms": [
+        {
+          "name": "Final Fantasy Vi Demo",
+          "filename": "Final_Fantasy_VI_Demo.smc",
+          "size": 524288
+        },
+        {
+          "name": "Star Fox",
+          "filename": "Star_Fox.smc",
+          "size": 524288
+        },
+        {
+          "name": "Super Mario Rpg",
+          "filename": "Super_Mario_RPG.json",
+          "size": 678
+        },
+        {
+          "name": "F Zero",
+          "filename": "F_Zero.json",
+          "size": 640
+        },
+        {
+          "name": "Racing Pro",
+          "filename": "racing_pro.smc",
+          "size": 24592
+        },
+        {
+          "name": "Contra Iii",
+          "filename": "Contra_III.json",
+          "size": 656
+        },
+        {
+          "name": "Street Fighter Ii Demo",
+          "filename": "Street_Fighter_II_Demo.smc",
+          "size": 524288
+        },
+        {
+          "name": "F Zero",
+          "filename": "F_Zero.smc",
+          "size": 524288
+        },
+        {
+          "name": "Donkey Kong Country Demo",
+          "filename": "Donkey_Kong_Country_Demo.json",
+          "size": 271
+        },
+        {
+          "name": "Super Metroid Demo",
+          "filename": "Super_Metroid_Demo.json",
+          "size": 253
+        },
+        {
+          "name": "Final Fantasy Vi",
+          "filename": "Final_Fantasy_VI.smc",
+          "size": 524288
+        },
+        {
+          "name": "Super Mario World Demo",
+          "filename": "Super_Mario_World_Demo.smc",
+          "size": 524288
+        },
+        {
+          "name": "Adventure Quest",
+          "filename": "adventure_quest.smc",
+          "size": 24592
+        },
+        {
+          "name": "Secret Of Mana",
+          "filename": "Secret_of_Mana.json",
+          "size": 673
+        },
+        {
+          "name": "Zelda Link To Past",
+          "filename": "Zelda_Link_to_Past.smc",
+          "size": 524288
+        },
+        {
+          "name": "Super Mario Kart Demo",
+          "filename": "Super_Mario_Kart_Demo.json",
+          "size": 262
+        },
+        {
+          "name": "Super Mario Kart Demo",
+          "filename": "Super_Mario_Kart_Demo.smc",
+          "size": 524288
+        },
+        {
+          "name": "Super Castlevania Iv",
+          "filename": "Super_Castlevania_IV.smc",
+          "size": 524288
+        },
+        {
+          "name": "Chrono Trigger Demo",
+          "filename": "Chrono_Trigger_Demo.json",
+          "size": 256
+        },
+        {
+          "name": "Super Mario World Demo",
+          "filename": "Super_Mario_World_Demo.json",
+          "size": 265
+        },
+        {
+          "name": "Star Fox",
+          "filename": "Star_Fox.json",
+          "size": 649
+        },
+        {
+          "name": "F-Zero Demo",
+          "filename": "F-Zero_Demo.smc",
+          "size": 524288
+        },
+        {
+          "name": "Chrono Trigger Demo",
+          "filename": "Chrono_Trigger_Demo.smc",
+          "size": 524288
+        },
+        {
+          "name": "Contra Iii",
+          "filename": "Contra_III.smc",
+          "size": 524288
+        },
+        {
+          "name": "Space Fighter",
+          "filename": "space_fighter.smc",
+          "size": 24592
+        },
+        {
+          "name": "Secret Of Mana Demo",
+          "filename": "Secret_of_Mana_Demo.smc",
+          "size": 524288
+        },
+        {
+          "name": "Robot Battle",
+          "filename": "robot_battle.smc",
+          "size": 24592
+        },
+        {
+          "name": "Super Mario Rpg",
+          "filename": "Super_Mario_RPG.smc",
+          "size": 524288
+        },
+        {
+          "name": "Puzzle Master",
+          "filename": "puzzle_master.smc",
+          "size": 24592
+        },
+        {
+          "name": "Donkey Kong Country",
+          "filename": "Donkey_Kong_Country.smc",
+          "size": 524288
+        },
+        {
+          "name": "F-Zero Demo",
+          "filename": "F-Zero_Demo.json",
+          "size": 232
+        },
+        {
+          "name": "Secret Of Mana Demo",
+          "filename": "Secret_of_Mana_Demo.json",
+          "size": 256
+        },
+        {
+          "name": "Super Mario Kart",
+          "filename": "Super_Mario_Kart.smc",
+          "size": 524288
+        },
+        {
+          "name": "Super Platform",
+          "filename": "super_platform.smc",
+          "size": 24592
+        },
+        {
+          "name": "Super Castlevania Iv",
+          "filename": "Super_Castlevania_IV.json",
+          "size": 699
+        },
+        {
+          "name": "Donkey Kong Country Demo",
+          "filename": "Donkey_Kong_Country_Demo.smc",
+          "size": 524288
+        },
+        {
+          "name": "Chrono Trigger",
+          "filename": "Chrono_Trigger.smc",
+          "size": 524288
+        },
+        {
+          "name": "Super Mario World",
+          "filename": "Super_Mario_World.smc",
+          "size": 524288
+        },
+        {
+          "name": "Super Metroid",
+          "filename": "Super_Metroid.smc",
+          "size": 524288
+        },
+        {
+          "name": "Street Fighter Ii Demo",
+          "filename": "Street_Fighter_II_Demo.json",
+          "size": 265
+        },
+        {
+          "name": "Ninja Warrior",
+          "filename": "ninja_warrior.smc",
+          "size": 24592
+        },
+        {
+          "name": "The Legend Of Zelda: A Link To The Past Demo",
+          "filename": "The_Legend_of_Zelda:_A_Link_to_the_Past_Demo.smc",
+          "size": 524288
+        },
+        {
+          "name": "Secret Of Mana",
+          "filename": "Secret_of_Mana.smc",
+          "size": 524288
+        },
+        {
+          "name": "Super Metroid Demo",
+          "filename": "Super_Metroid_Demo.smc",
+          "size": 524288
+        },
+        {
+          "name": "Street Fighter Ii",
+          "filename": "Street_Fighter_II.smc",
+          "size": 524288
+        },
+        {
+          "name": "Yoshi Island",
+          "filename": "Yoshi_Island.json",
+          "size": 665
+        },
+        {
+          "name": "Yoshi Island",
+          "filename": "Yoshi_Island.smc",
+          "size": 524288
+        },
+        {
+          "name": "Magic Kingdom",
+          "filename": "magic_kingdom.smc",
+          "size": 24592
+        },
+        {
+          "name": "The Legend Of Zelda A Link To The Past",
+          "filename": "The_Legend_of_Zelda_A_Link_to_the_Past.smc",
+          "size": 32767
+        },
+        {
+          "name": "Card Master",
+          "filename": "card_master.smc",
+          "size": 24592
+        },
+        {
+          "name": "The Legend Of Zelda: A Link To The Past Demo",
+          "filename": "The_Legend_of_Zelda:_A_Link_to_the_Past_Demo.json",
+          "size": 331
+        },
+        {
+          "name": "Final Fantasy Vi Demo",
+          "filename": "Final_Fantasy_VI_Demo.json",
+          "size": 262
+        },
+        {
+          "name": "Sports Champion",
+          "filename": "sports_champion.smc",
+          "size": 24592
+        }
+      ]
+    },
+    "gameboy": {
+      "count": 31,
+      "roms": [
+        {
+          "name": "The Legend Of Zelda: Link'S Awakening Demo",
+          "filename": "The_Legend_of_Zelda:_Link's_Awakening_Demo.json",
+          "size": 324
+        },
+        {
+          "name": "Space Fighter",
+          "filename": "space_fighter.gb",
+          "size": 24592
+        },
+        {
+          "name": "Robot Battle",
+          "filename": "robot_battle.gb",
+          "size": 24592
+        },
+        {
+          "name": "Deadeus",
+          "filename": "Deadeus.gb",
+          "size": 32768
+        },
+        {
+          "name": "Ninja Warrior",
+          "filename": "ninja_warrior.gb",
+          "size": 24592
+        },
+        {
+          "name": "Racing Pro",
+          "filename": "racing_pro.gb",
+          "size": 24592
+        },
+        {
+          "name": "Tetris Demo",
+          "filename": "Tetris_Demo.json",
+          "size": 231
+        },
+        {
+          "name": "Metroid Ii Demo",
+          "filename": "Metroid_II_Demo.gb",
+          "size": 32768
+        },
+        {
+          "name": "Tetris",
+          "filename": "Tetris.gb",
+          "size": 32768
+        },
+        {
+          "name": "Deadeus",
+          "filename": "Deadeus.json",
+          "size": 217
+        },
+        {
+          "name": "Pokemon Red",
+          "filename": "Pokemon_Red.gb",
+          "size": 32768
+        },
+        {
+          "name": "Super Mario Land Demo",
+          "filename": "Super_Mario_Land_Demo.gb",
+          "size": 32768
+        },
+        {
+          "name": "Tobu Tobu Girl",
+          "filename": "Tobu_Tobu_Girl.gb",
+          "size": 32768
+        },
+        {
+          "name": "The Legend Of Zelda: Link'S Awakening Demo",
+          "filename": "The_Legend_of_Zelda:_Link's_Awakening_Demo.gb",
+          "size": 32768
+        },
+        {
+          "name": "Puzzle Master",
+          "filename": "puzzle_master.gb",
+          "size": 24592
+        },
+        {
+          "name": "Adventure Quest",
+          "filename": "adventure_quest.gb",
+          "size": 24592
+        },
+        {
+          "name": "Pokemon Red Demo",
+          "filename": "Pokemon_Red_Demo.json",
+          "size": 246
+        },
+        {
+          "name": "Super Platform",
+          "filename": "super_platform.gb",
+          "size": 24592
+        },
+        {
+          "name": "Sports Champion",
+          "filename": "sports_champion.gb",
+          "size": 24592
+        },
+        {
+          "name": "Magic Kingdom",
+          "filename": "magic_kingdom.gb",
+          "size": 24592
+        },
+        {
+          "name": "Metroid Ii Demo",
+          "filename": "Metroid_II_Demo.json",
+          "size": 243
+        },
+        {
+          "name": "Zelda Links Awakening",
+          "filename": "Zelda_Links_Awakening.gb",
+          "size": 32768
+        },
+        {
+          "name": "Pokemon Red Demo",
+          "filename": "Pokemon_Red_Demo.gb",
+          "size": 32768
+        },
+        {
+          "name": "The Legend Of Zelda Links Awakening",
+          "filename": "The_Legend_of_Zelda_Links_Awakening.gb",
+          "size": 32768
+        },
+        {
+          "name": "Card Master",
+          "filename": "card_master.gb",
+          "size": 24592
+        },
+        {
+          "name": "Super Mario Land",
+          "filename": "Super_Mario_Land.gb",
+          "size": 32768
+        },
+        {
+          "name": "Super Mario Land Demo",
+          "filename": "Super_Mario_Land_Demo.json",
+          "size": 261
+        },
+        {
+          "name": "Pokemon Blue",
+          "filename": "Pokemon_Blue.gb",
+          "size": 32768
+        },
+        {
+          "name": "Tobu Tobu Girl",
+          "filename": "Tobu_Tobu_Girl.json",
+          "size": 231
+        },
+        {
+          "name": "Metroid Ii",
+          "filename": "Metroid_II.gb",
+          "size": 32768
+        },
+        {
+          "name": "Tetris Demo",
+          "filename": "Tetris_Demo.gb",
+          "size": 32768
+        }
+      ]
+    },
+    "gba": {
+      "count": 27,
+      "roms": [
+        {
+          "name": "The Legend Of Zelda: The Minish Cap Demo",
+          "filename": "The_Legend_of_Zelda:_The_Minish_Cap_Demo.gba",
+          "size": 262144
+        },
+        {
+          "name": "Fire Emblem Demo",
+          "filename": "Fire_Emblem_Demo.json",
+          "size": 245
+        },
+        {
+          "name": "Super Platform",
+          "filename": "super_platform.gba",
+          "size": 24592
+        },
+        {
+          "name": "Robot Battle",
+          "filename": "robot_battle.gba",
+          "size": 24592
+        },
+        {
+          "name": "The Legend Of Zelda: The Minish Cap Demo",
+          "filename": "The_Legend_of_Zelda:_The_Minish_Cap_Demo.json",
+          "size": 317
+        },
+        {
+          "name": "Pokemon Sapphire",
+          "filename": "Pokemon_Sapphire.gba",
+          "size": 131072
+        },
+        {
+          "name": "Space Fighter",
+          "filename": "space_fighter.gba",
+          "size": 24592
+        },
+        {
+          "name": "Pokemon Ruby",
+          "filename": "Pokemon_Ruby.gba",
+          "size": 131072
+        },
+        {
+          "name": "Puzzle Master",
+          "filename": "puzzle_master.gba",
+          "size": 24592
+        },
+        {
+          "name": "Card Master",
+          "filename": "card_master.gba",
+          "size": 24592
+        },
+        {
+          "name": "The Legend Of Zelda The Minish Cap",
+          "filename": "The_Legend_of_Zelda_The_Minish_Cap.gba",
+          "size": 262144
+        },
+        {
+          "name": "Sports Champion",
+          "filename": "sports_champion.gba",
+          "size": 24592
+        },
+        {
+          "name": "Golden Sun",
+          "filename": "Golden_Sun.gba",
+          "size": 131072
+        },
+        {
+          "name": "Ninja Warrior",
+          "filename": "ninja_warrior.gba",
+          "size": 24592
+        },
+        {
+          "name": "Magic Kingdom",
+          "filename": "magic_kingdom.gba",
+          "size": 24592
+        },
+        {
+          "name": "Pokemon Ruby Demo",
+          "filename": "Pokemon_Ruby_Demo.json",
+          "size": 248
+        },
+        {
+          "name": "Golden Sun Demo",
+          "filename": "Golden_Sun_Demo.json",
+          "size": 242
+        },
+        {
+          "name": "Golden Sun Demo",
+          "filename": "Golden_Sun_Demo.gba",
+          "size": 262144
+        },
+        {
+          "name": "Metroid: Fusion Demo",
+          "filename": "Metroid:_Fusion_Demo.gba",
+          "size": 262144
+        },
+        {
+          "name": "Adventure Quest",
+          "filename": "adventure_quest.gba",
+          "size": 24592
+        },
+        {
+          "name": "Fire Emblem",
+          "filename": "Fire_Emblem.gba",
+          "size": 131072
+        },
+        {
+          "name": "Mario Kart Super Circuit",
+          "filename": "Mario_Kart_Super_Circuit.gba",
+          "size": 131072
+        },
+        {
+          "name": "Racing Pro",
+          "filename": "racing_pro.gba",
+          "size": 24592
+        },
+        {
+          "name": "Advance Wars",
+          "filename": "Advance_Wars.gba",
+          "size": 131072
+        },
+        {
+          "name": "Pokemon Ruby Demo",
+          "filename": "Pokemon_Ruby_Demo.gba",
+          "size": 262144
+        },
+        {
+          "name": "Metroid: Fusion Demo",
+          "filename": "Metroid:_Fusion_Demo.json",
+          "size": 257
+        },
+        {
+          "name": "Fire Emblem Demo",
+          "filename": "Fire_Emblem_Demo.gba",
+          "size": 262144
+        }
+      ]
+    },
+    "genesis": {
+      "count": 29,
+      "roms": [
+        {
+          "name": "Sonic The Hedgehog",
+          "filename": "Sonic_the_Hedgehog.md",
+          "size": 524288
+        },
+        {
+          "name": "Robot Battle",
+          "filename": "robot_battle.md",
+          "size": 24592
+        },
+        {
+          "name": "Space Fighter",
+          "filename": "space_fighter.md",
+          "size": 24592
+        },
+        {
+          "name": "Streets Of Rage Demo",
+          "filename": "Streets_of_Rage_Demo.json",
+          "size": 264
+        },
+        {
+          "name": "Racing Pro",
+          "filename": "racing_pro.md",
+          "size": 24592
+        },
+        {
+          "name": "Ninja Warrior",
+          "filename": "ninja_warrior.md",
+          "size": 24592
+        },
+        {
+          "name": "Streets Of Rage",
+          "filename": "Streets_of_Rage.md",
+          "size": 524288
+        },
+        {
+          "name": "Shinobi Iii",
+          "filename": "Shinobi_III.md",
+          "size": 262144
+        },
+        {
+          "name": "Shinobi Demo",
+          "filename": "Shinobi_Demo.json",
+          "size": 240
+        },
+        {
+          "name": "Shinobi Iii",
+          "filename": "Shinobi_III.json",
+          "size": 605
+        },
+        {
+          "name": "Adventure Quest",
+          "filename": "adventure_quest.md",
+          "size": 24592
+        },
+        {
+          "name": "Puzzle Master",
+          "filename": "puzzle_master.md",
+          "size": 24592
+        },
+        {
+          "name": "Sonic 2",
+          "filename": "Sonic_2.md",
+          "size": 524288
+        },
+        {
+          "name": "Altered Beast",
+          "filename": "Altered_Beast.json",
+          "size": 614
+        },
+        {
+          "name": "Golden Axe Demo",
+          "filename": "Golden_Axe_Demo.md",
+          "size": 524288
+        },
+        {
+          "name": "Sports Champion",
+          "filename": "sports_champion.md",
+          "size": 24592
+        },
+        {
+          "name": "Phantasy Star Demo",
+          "filename": "Phantasy_Star_Demo.json",
+          "size": 258
+        },
+        {
+          "name": "Shinobi Demo",
+          "filename": "Shinobi_Demo.md",
+          "size": 524288
+        },
+        {
+          "name": "Super Platform",
+          "filename": "super_platform.md",
+          "size": 24592
+        },
+        {
+          "name": "Sonic The Hedgehog Demo",
+          "filename": "Sonic_the_Hedgehog_Demo.md",
+          "size": 524288
+        },
+        {
+          "name": "Magic Kingdom",
+          "filename": "magic_kingdom.md",
+          "size": 24592
+        },
+        {
+          "name": "Phantasy Star Demo",
+          "filename": "Phantasy_Star_Demo.md",
+          "size": 524288
+        },
+        {
+          "name": "Golden Axe Demo",
+          "filename": "Golden_Axe_Demo.json",
+          "size": 249
+        },
+        {
+          "name": "Golden Axe",
+          "filename": "Golden_Axe.md",
+          "size": 524288
+        },
+        {
+          "name": "Streets Of Rage Demo",
+          "filename": "Streets_of_Rage_Demo.md",
+          "size": 524288
+        },
+        {
+          "name": "Phantasy Star Iv",
+          "filename": "Phantasy_Star_IV.md",
+          "size": 524288
+        },
+        {
+          "name": "Sonic The Hedgehog Demo",
+          "filename": "Sonic_the_Hedgehog_Demo.json",
+          "size": 273
+        },
+        {
+          "name": "Altered Beast",
+          "filename": "Altered_Beast.md",
+          "size": 262144
+        },
+        {
+          "name": "Card Master",
+          "filename": "card_master.md",
+          "size": 24592
+        }
+      ]
+    }
+  }
+}

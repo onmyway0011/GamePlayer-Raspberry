@@ -1,0 +1,24 @@
+🧪 GamePlayer-Raspberry 自动化测试与修复报告
+============================================================
+📅 时间: 2025-07-16T16:01:09.379561
+🔍 总测试数: 10
+✅ 通过测试: 9
+❌ 失败测试: 1
+🔧 发现问题: 2
+✅ 已修复: 0
+❌ 修复失败: 0
+
+📊 测试详情:
+  ✅ core_modules
+  ❌ game_launcher
+  ✅ emulator_configs
+  ✅ rom_management
+  ✅ web_interface
+  ✅ docker_setup
+  ✅ build_scripts
+  ✅ dependencies
+  ✅ file_permissions
+  ✅ system_integration
+
+📋 详细报告: /Users/ON-MY-WAY/快手/AICODE/GamePlayer-Raspberry/test_fix_report_20250716_160109.json
+============================================================

@@ -44,7 +44,7 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-from src.core.base_installer import BaseInstaller
+from .base_installer import BaseInstaller
 
 
 class VirtuaNESInstaller(BaseInstaller):
@@ -54,39 +54,32 @@ class VirtuaNESInstaller(BaseInstaller):
     提供完整的 VirtuaNES 0.97 自动化安装和配置功能。
     """
 
-    def __init__(self, config_file: str = "config/project_config.json"):
+    def __init__(self, config_path: str = "config/project_config.json"):
         """
         初始化 VirtuaNES 安装器
 
         Args:
-            config_file (str): 配置文件路径
+            config_path (str): 配置文件路径
         """
-        super().__init__(config_file)
+        super().__init__(config_path)
         self.virtuanes_config = self.config.get("emulator", {}).get("virtuanes", {})
 
         # 检查是否为测试环境
         is_test_env = os.environ.get("TEST_ENV", "false").lower() == "true"
 
-        if is_test_env:
-            # 测试环境使用临时目录
-            import tempfile
-            temp_dir = Path(tempfile.gettempdir()) / "virtuanes_test"
-            temp_dir.mkdir(exist_ok=True)
+        # 设置默认路径
+        self.install_dir = Path(self.virtuanes_config.get("install_path", "tmp/install"))
+        self.config_dir = Path(self.virtuanes_config.get("config_path", "tmp/config"))
+        self.core_dir = Path(self.virtuanes_config.get("core_path", "tmp/core"))
 
-            self.install_dir = temp_dir / "install"
-            self.config_dir = temp_dir / "config"
-            self.core_dir = temp_dir / "cores"
+        # 仅在非测试环境下使用生产路径
+        if not is_test_env:
+            self.install_dir = Path(self.virtuanes_config.get("install_path", "/opt/retropie/emulators/virtuanes"))
+            self.config_dir = Path(self.virtuanes_config.get("config_path", "/opt/retropie/configs/nes"))
+            self.core_dir = Path(self.virtuanes_config.get("core_path", "/opt/retropie/libretrocores"))
 
-            # 设置测试环境标志
-            self.is_test_env = True
-        else:
-            # 生产环境使用实际路径
-            self.install_dir = Path("/opt/retropie/emulators/virtuanes")
-            self.config_dir = Path(self.virtuanes_config.get("config_path", "/home/pi/RetroPie/configs/nes/"))
-            self.core_dir = Path(self.virtuanes_config.get("core_path", "/opt/retropie/emulators/retroarch/cores/"))
-
-            # 设置生产环境标志
-            self.is_test_env = False
+        # 设置环境标志
+        self.is_test_env = is_test_env
 
         # 创建必要的目录
         self.install_dir.mkdir(parents=True, exist_ok=True)
