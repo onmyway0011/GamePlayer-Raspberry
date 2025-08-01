@@ -1,0 +1,165 @@
+{
+  "timestamp": "2025-08-01T09:49:06.413375",
+  "project": "GamePlayer-Raspberry",
+  "test_summary": {
+    "start_time": "2025-08-01 09:49:06.387496",
+    "total_tests": 10,
+    "passed_tests": 9,
+    "failed_tests": 1,
+    "issues_found": [
+      {
+        "type": "missing_emulator",
+        "command": "mednafen",
+        "severity": "low"
+      },
+      {
+        "type": "missing_emulator",
+        "command": "snes9x-gtk",
+        "severity": "low"
+      },
+      {
+        "type": "missing_emulator",
+        "command": "vbam",
+        "severity": "low"
+      }
+    ],
+    "test_details": {
+      "core_modules": {
+        "status": "pass",
+        "issues": [],
+        "details": {
+          "nes_emulator": "✅ 语法正确",
+          "game_launcher": "✅ 语法正确",
+          "game_health_checker": "✅ 语法正确",
+          "rom_manager": "✅ 语法正确",
+          "cheat_manager": "✅ 语法正确",
+          "save_manager": "✅ 语法正确",
+          "device_manager": "✅ 语法正确",
+          "audio_manager": "✅ 语法正确"
+        }
+      },
+      "game_launcher": {
+        "status": "fail",
+        "issues": [
+          {
+            "type": "missing_emulator",
+            "command": "mednafen",
+            "severity": "low"
+          },
+          {
+            "type": "missing_emulator",
+            "command": "snes9x-gtk",
+            "severity": "low"
+          },
+          {
+            "type": "missing_emulator",
+            "command": "vbam",
+            "severity": "low"
+          }
+        ],
+        "details": {
+          "config/emulators/emulator_config.json": "✅ 配置文件有效",
+          "config/emulators/general_settings.json": "✅ 配置文件有效",
+          "emulator_mednafen": "⚠️ 未安装",
+          "emulator_snes9x-gtk": "⚠️ 未安装",
+          "emulator_vbam": "⚠️ 未安装"
+        }
+      },
+      "emulator_configs": {
+        "status": "pass",
+        "issues": [],
+        "details": {
+          "emulator_config.json": "✅ 配置文件有效",
+          "general_settings.json": "✅ 配置文件有效"
+        }
+      },
+      "rom_management": {
+        "status": "pass",
+        "issues": [],
+        "details": {
+          "roms_nes": "✅ 37 个ROM文件",
+          "roms_snes": "✅ 36 个ROM文件",
+          "roms_gameboy": "✅ 24 个ROM文件",
+          "roms_gba": "✅ 22 个ROM文件",
+          "roms_genesis": "✅ 22 个ROM文件"
+        }
+      },
+      "web_interface": {
+        "status": "pass",
+        "issues": [],
+        "details": {
+          "web_files": "✅ 3 个Web文件"
+        }
+      },
+      "docker_setup": {
+        "status": "pass",
+        "issues": [],
+        "details": {
+          "Dockerfile.raspberry": "✅ 存在",
+          "docker-compose.gui.yml": "✅ 存在",
+          "docker-compose.simple.yml": "✅ 存在"
+        }
+      },
+      "build_scripts": {
+        "status": "pass",
+        "issues": [],
+        "details": {
+          "src/scripts/one_click_image_builder.sh": "✅ 语法正确",
+          "src/scripts/raspberry_image_builder.py": "✅ 语法正确"
+        }
+      },
+      "dependencies": {
+        "status": "pass",
+        "issues": [],
+        "details": {
+          "requirements": "✅ 52 个依赖包",
+          "system_python3": "✅ 已安装",
+          "system_bash": "✅ 已安装",
+          "system_git": "✅ 已安装"
+        }
+      },
+      "file_permissions": {
+        "status": "pass",
+        "issues": [],
+        "details": {
+          "quick_image_generator.sh": "✅ 可执行",
+          "quick_demo.sh": "✅ 可执行",
+          "build_complete_image.sh": "✅ 可执行",
+          "one_click_rpi_image_generator.sh": "✅ 可执行",
+          "create_simulation_image.sh": "✅ 可执行",
+          "quick_build_image.sh": "✅ 可执行",
+          "build_real_raspberry_image.sh": "✅ 可执行",
+          "autostart_gameplayer.sh": "✅ 可执行",
+          "install.sh": "✅ 可执行",
+          "auto_update_scheduler.sh": "✅ 可执行",
+          "auto_install_top_nes_emulators.sh": "✅ 可执行",
+          "one_click_image_builder.sh": "✅ 可执行",
+          "pure_raspberry_image_builder.sh": "✅ 可执行",
+          "docker_auto_fix_and_build.sh": "✅ 可执行",
+          "auto_build_and_deploy.sh": "✅ 可执行",
+          "docker_build_and_run.sh": "✅ 可执行"
+        }
+      },
+      "system_integration": {
+        "status": "pass",
+        "issues": [],
+        "details": {
+          "import_nes_emulator": "✅ 可导入",
+          "import_game_launcher": "✅ 可导入",
+          "import_game_health_checker": "✅ 可导入"
+        }
+      }
+    },
+    "end_time": "2025-08-01 09:49:06.413338",
+    "duration": 0.025842
+  },
+  "fix_summary": {
+    "iterations": 3,
+    "max_iterations": 3,
+    "final_status": "partial",
+    "fixed_issues": 0,
+    "failed_fixes": 0,
+    "fix_details": {}
+  },
+  "overall_status": "success"
+}
